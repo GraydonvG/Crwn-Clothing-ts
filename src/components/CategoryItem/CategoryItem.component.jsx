@@ -1,4 +1,4 @@
-import './CategoryItem.scss';
+import './CategoryItem.styles.scss';
 
 function CategoryItem({ title, imageUrl }) {
   return (
