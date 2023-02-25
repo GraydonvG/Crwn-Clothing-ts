@@ -2,7 +2,6 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
   font-size: 0;
   gap: 16px;
 }
@@ -32,17 +31,17 @@
     }
   }
 
-  &.large {
-    height: 380px;
-  }
+  // &.large {
+  //   height: 380px;
+  // }
 
-  &:first-child {
-    margin-right: 0.47em;
-  }
+  // &:first-child {
+  //   margin-right: 0.47em;
+  // }
 
-  &:last-child {
-    margin-left: 0.47em;
-  }
+  // &:last-child {
+  //   margin-left: 0.47em;
+  // }
 
   .background-image {
     width: 100%;
@@ -64,7 +63,7 @@
 
     h2 {
       font-weight: bold;
-      font-size: 1.375rem;
+      font-size: 1.4rem;
       color: #4a4a4a;
       margin: 0;
     }
@@ -72,6 +71,7 @@
     p {
       font-weight: lighter;
       font-size: 1rem;
+      margin: 0.5em 0;
     }
   }
 }
