@@ -1,11 +1,11 @@
 .button-container {
   min-width: 165px;
-  width: auto;
-  height: 50px;
+  width: fit-content;
+  height: fit-content;
   letter-spacing: 0.5px;
-  line-height: 50px;
-  padding: 0 35px 0 35px;
-  font-size: 15px;
+  // line-height: 2.2em;
+  padding: 1em 2em;
+  font-size: 1rem;
   background-color: black;
   color: white;
   text-transform: uppercase;
