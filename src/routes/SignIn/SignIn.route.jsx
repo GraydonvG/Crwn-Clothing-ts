@@ -1,4 +1,4 @@
-import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../Utilities/firebase.utility';
+import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../Utilities/firebase/firebase.utility';
 import SignUpForm from '../../components/SignUpForm/SignUpForm.component';
 
 function SignIn() {
