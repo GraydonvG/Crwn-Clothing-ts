@@ -1,11 +1,21 @@
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { signOutUser } from '../../Utilities/firebase/firebase.utility';
 
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import { UserContext } from '../../contexts/user.context';
 
 import './NavigationBar.styles.scss';
 
 function Navigation() {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+  console.log(currentUser);
+
+  async function handleSignOutUser() {
+    await signOutUser();
+    setCurrentUser(null);
+  }
+
   return (
     <Fragment>
       <div className="navigation">
@@ -20,11 +30,20 @@ function Navigation() {
             to="/shop">
             SHOP
           </Link>
-          <Link
-            className="nav-link"
-            to="/auth">
-            SIGN IN
-          </Link>
+          {currentUser ? (
+            <Link
+              className="nav-link"
+              to="/auth"
+              onClick={handleSignOutUser}>
+              SIGN OUT
+            </Link>
+          ) : (
+            <Link
+              className="nav-link"
+              to="/auth">
+              SIGN IN
+            </Link>
+          )}
         </div>
       </div>
       <Outlet />

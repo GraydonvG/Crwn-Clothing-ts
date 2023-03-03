@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
@@ -7,6 +7,8 @@ import {
 
 import FormInput from '../FormInput/FormInput.component';
 import Button from '../Button/Button.component';
+
+import { UserContext } from '../../contexts/user.context';
 
 import './SignInForm.styles.scss';
 
@@ -18,6 +20,8 @@ const defaultFromFields = {
 function SignInForm({ logGoogleUser }) {
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
+
+  const { setCurrentUser } = useContext(UserContext);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -34,7 +38,7 @@ function SignInForm({ logGoogleUser }) {
 
     try {
       const response = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log(response);
+      setCurrentUser(response.user);
       resetFromFields();
     } catch (error) {
       if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
@@ -48,6 +52,7 @@ function SignInForm({ logGoogleUser }) {
   async function logGoogleUser() {
     const response = await signInWithGooglePopup();
     const userDocRef = await createUserDocumentFromAuth(response.user);
+    setCurrentUser(response.user);
   }
 
   return (
@@ -87,7 +92,7 @@ function SignInForm({ logGoogleUser }) {
             type="button"
             buttonType={'google'}
             onClick={logGoogleUser}>
-            SIGN IN WITH GOOGLE
+            GOOGLE SIGN IN
           </Button>
         </div>
       </form>
