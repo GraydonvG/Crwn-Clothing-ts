@@ -7,8 +7,9 @@
     margin: 10px 0;
   }
 
-  .buttons {
+  .sign-in-buttons-container {
     display: flex;
-    gap: 1em;
+    flex-wrap: wrap;
+    gap: 2em;
   }
 }

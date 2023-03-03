@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Navigation from './routes/NavigationBar/NavigationBar.route';
 import Home from './routes/Home/Home.route';
-import SignIn from './routes/SignIn/SignIn.route';
+import Authentication from './routes/Authentication/Authentication.route';
 import Shop from './routes/Shop/Shop.route';
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
           element={<Shop />}
         />
         <Route
-          path="sign-in"
-          element={<SignIn />}
+          path="auth"
+          element={<Authentication />}
         />
       </Route>
     </Routes>

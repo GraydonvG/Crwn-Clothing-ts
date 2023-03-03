@@ -1,7 +1,13 @@
 import { useState } from 'react';
-import { signInAuthUserWithEmailAndPassword } from '../../Utilities/firebase/firebase.utility';
+import {
+  signInAuthUserWithEmailAndPassword,
+  signInWithGooglePopup,
+  createUserDocumentFromAuth,
+} from '../../Utilities/firebase/firebase.utility';
+
 import FormInput from '../FormInput/FormInput.component';
 import Button from '../Button/Button.component';
+
 import './SignInForm.styles.scss';
 
 const defaultFromFields = {
@@ -31,8 +37,17 @@ function SignInForm({ logGoogleUser }) {
       console.log(response);
       resetFromFields();
     } catch (error) {
-      console.log('error signing in', error);
+      if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+        alert('Unable to sign in. Incorrect email or password.');
+      } else {
+        console.log('error signing in', error);
+      }
     }
+  }
+
+  async function logGoogleUser() {
+    const response = await signInWithGooglePopup();
+    const userDocRef = await createUserDocumentFromAuth(response.user);
   }
 
   return (
@@ -66,9 +81,10 @@ function SignInForm({ logGoogleUser }) {
             onChange: handleInputChange,
           }}
         />
-        <div className="buttons">
+        <div className="sign-in-buttons-container">
           <Button type="submit">SIGN IN</Button>
           <Button
+            type="button"
             buttonType={'google'}
             onClick={logGoogleUser}>
             SIGN IN WITH GOOGLE
