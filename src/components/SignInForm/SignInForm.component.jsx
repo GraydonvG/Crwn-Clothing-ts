@@ -1,14 +1,8 @@
-import { useState, useContext } from 'react';
-import {
-  signInAuthUserWithEmailAndPassword,
-  signInWithGooglePopup,
-  createUserDocumentFromAuth,
-} from '../../Utilities/firebase/firebase.utility';
+import { useState } from 'react';
+import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../Utilities/firebase/firebase.utility';
 
 import FormInput from '../FormInput/FormInput.component';
 import Button from '../Button/Button.component';
-
-import { UserContext } from '../../contexts/user.context';
 
 import './SignInForm.styles.scss';
 
@@ -17,11 +11,9 @@ const defaultFromFields = {
   password: '',
 };
 
-function SignInForm({ logGoogleUser }) {
+function SignInForm() {
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
-
-  const { setCurrentUser } = useContext(UserContext);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -37,8 +29,7 @@ function SignInForm({ logGoogleUser }) {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password);
-      setCurrentUser(response.user);
+      await signInAuthUserWithEmailAndPassword(email, password);
       resetFromFields();
     } catch (error) {
       if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
@@ -49,10 +40,8 @@ function SignInForm({ logGoogleUser }) {
     }
   }
 
-  async function logGoogleUser() {
-    const response = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(response.user);
-    setCurrentUser(response.user);
+  async function signInWithGoogle() {
+    await signInWithGooglePopup();
   }
 
   return (
@@ -91,8 +80,8 @@ function SignInForm({ logGoogleUser }) {
           <Button
             type="button"
             buttonType={'google'}
-            onClick={logGoogleUser}>
-            GOOGLE SIGN IN
+            onClick={signInWithGoogle}>
+            SIGN IN WITH GOOGLE
           </Button>
         </div>
       </form>
