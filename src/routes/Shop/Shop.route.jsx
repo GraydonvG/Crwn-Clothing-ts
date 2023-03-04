@@ -1,8 +1,22 @@
+import { Fragment, useContext } from 'react';
+
+import { ProductsContext } from '../../contexts/products.context';
+
+import ProductCard from '../../components/ProductCard/ProductCard.component';
+
+import './Shop.styles.scss';
+
 function Shop() {
+  const { products } = useContext(ProductsContext);
   return (
-    <span>
-      <h2>Shop Page</h2>
-    </span>
+    <div className="products-container">
+      {products.map((product) => (
+        <ProductCard
+          key={product.id}
+          product={product}
+        />
+      ))}
+    </div>
   );
 }
 
