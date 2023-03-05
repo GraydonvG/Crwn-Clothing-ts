@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../Utilities/firebase/firebase.utility';
+import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../FormInput/FormInput.component';
 import Button from '../Button/Button.component';
@@ -76,12 +76,12 @@ function SignInForm() {
           }}
         />
         <div className="sign-in-buttons-container">
-          <Button type="submit">SIGN IN</Button>
+          <Button type="submit">Sign in</Button>
           <Button
             type="button"
             buttonType={'google'}
             onClick={signInWithGoogle}>
-            SIGN IN WITH GOOGLE
+            Sign in with google
           </Button>
         </div>
       </form>

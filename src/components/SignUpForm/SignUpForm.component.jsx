@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from '../../Utilities/firebase/firebase.utility';
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../FormInput/FormInput.component';
 import Button from '../Button/Button.component';
@@ -108,7 +105,7 @@ function SignUpForm() {
             onChange: handleInputChange,
           }}
         />
-        <Button type="submit">SIGN UP</Button>
+        <Button type="submit">Sign up</Button>
       </form>
     </div>
   );
