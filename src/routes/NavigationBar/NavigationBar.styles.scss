@@ -5,7 +5,7 @@
   margin-bottom: 25px;
 
   .logo-container {
-    width: 100%;
+    width: fit-content;
     height: auto;
     display: flex;
     place-items: center;
@@ -20,6 +20,7 @@
     justify-content: flex-end;
 
     .nav-link {
+      flex-wrap: nowrap;
       padding: 0.6em 0.9em;
       cursor: pointer;
     }
