@@ -1,5 +1,7 @@
 import CategoryItem from '../CategoryItem/CategoryItem.component';
 
+import './CategoryList.styles.scss';
+
 function CategoryList() {
   const categories = [
     {
