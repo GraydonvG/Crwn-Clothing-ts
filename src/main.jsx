@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { UserProvider } from './contexts/user.context';
 import { ProductProvider } from './contexts/products.context';
-import { CartDropdowntProvider } from './contexts/cart-dropdown.context';
+import { CartDropdownProvider } from './contexts/cart-dropdown.context';
 
 import './main.scss';
 
@@ -14,9 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <UserProvider>
         <ProductProvider>
-          <CartDropdowntProvider>
+          <CartDropdownProvider>
             <App />
-          </CartDropdowntProvider>
+          </CartDropdownProvider>
         </ProductProvider>
       </UserProvider>
     </BrowserRouter>

@@ -2,9 +2,10 @@ import { createContext, useState } from 'react';
 
 export const CartDropdownContext = createContext({
   isVisible: false,
+  setIsVisible: () => {},
 });
 
-export function CartDropdowntProvider({ children }) {
+export function CartDropdownProvider({ children }) {
   const [isVisible, setIsVisible] = useState();
   const value = { isVisible, setIsVisible };
 
