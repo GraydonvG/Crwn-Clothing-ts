@@ -28,17 +28,15 @@ export function CartProvider({ children }) {
   const [cartCount, setCartCount] = useState(0);
   const [cartPrice, setCartPrice] = useState(0);
 
-  // Update the number of items in the cart whenever an item is added to the cart
-  // The total is displayed in the cart icon
   useEffect(() => {
+    // Update the number of items in the cart whenever an item is added to the cart
+    // The total is displayed in the cart icon
     const newCartCount = cartItems.reduce((totalCount, item) => totalCount + item.quantity, 0);
 
     setCartCount(newCartCount);
-  }, [cartItems]);
 
-  // Update the total price for all that have been added to the cart
-  // The total is displayed in the cart dropdown
-  useEffect(() => {
+    // Update the total price for all that have been added to the cart
+    // The total is displayed in the cart dropdown
     const totalCartPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);
 
     setCartPrice(totalCartPrice);
