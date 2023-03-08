@@ -1,15 +1,13 @@
 .cart-dropdown-container {
   position: absolute;
-  width: 240px;
-  height: 340px;
-  display: flex;
-  flex-direction: column;
   padding: 20px;
   border: 1px solid black;
   background-color: white;
   top: 90px;
   right: 40px;
   z-index: 5;
+  min-width: 200px;
+  width: clamp(300px, 12rem, 700px);
 
   .empty-message {
     font-size: 1.2rem;
@@ -17,13 +15,14 @@
   }
 
   .cart-items {
-    height: 240px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: auto;
+    max-height: 500px;
   }
 
   button {
-    margin-top: auto;
+    margin-top: 15px;
+    width: 100%;
   }
 }
