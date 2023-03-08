@@ -4,19 +4,20 @@ function CartItem({ cartItem }) {
   const { name, imageUrl, price, quantity } = cartItem;
 
   function calculatePrice() {
-    return price * quantity;
+    const amount = price * quantity;
+    return `$${amount}`;
   }
 
   return (
     <div className="cart-item-container">
       <img
         src={imageUrl}
-        alt="prodduct image"
+        alt={`${name}`}
       />
       <div className="item-details">
         <span className="name">{name}</span>
-        <span>{quantity}</span>
-        <span>{calculatePrice()}</span>
+        <span className="quantity">{`Quantity: ${quantity}`}</span>
+        <span className="price">{calculatePrice()}</span>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-function addCartItme(itemToAdd, cartItems) {
+function addCartItem(itemToAdd, cartItems) {
   const itemExists = cartItems.find((cartItem) => cartItem.id === itemToAdd.id);
 
   if (itemExists) {
@@ -10,6 +10,12 @@ function addCartItme(itemToAdd, cartItems) {
   }
   return [...cartItems, { ...itemToAdd, quantity: 1 }];
 }
+
+// function calculateNumberOfItemsInCart(cartItems, numberOfCartItems) {
+//   return cartItems.reduce((count, cartItem) => {
+//     return count + cartItem.quantity;
+//   }, numberOfCartItems);
+// }
 
 export const CartContext = createContext({
   isVisible: false,
@@ -23,8 +29,9 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   function addItemToCart(itemToAdd) {
-    setCartItems(addCartItme(itemToAdd, cartItems));
+    setCartItems(addCartItem(itemToAdd, cartItems));
   }
+
   const value = { isVisible, setIsVisible, cartItems, addItemToCart };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

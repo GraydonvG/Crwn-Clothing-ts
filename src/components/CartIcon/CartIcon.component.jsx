@@ -7,7 +7,7 @@ import { ReactComponent as ShoppingCartIcon } from '../../assets/shopping-bag.sv
 import './CartIcon.styles.scss';
 
 function CartIcon() {
-  const { isVisible, setIsVisible } = useContext(CartContext);
+  const { isVisible, setIsVisible, cartItems } = useContext(CartContext);
 
   function toggleCartDropdown() {
     return setIsVisible(!isVisible);
@@ -18,7 +18,11 @@ function CartIcon() {
       className="cart-icon-container"
       onClick={toggleCartDropdown}>
       <ShoppingCartIcon className="shopping-cart-icon" />
-      <span className="item-count">10</span>
+      <span className="item-count">
+        {cartItems.reduce((count, cartItem) => {
+          return count + cartItem.quantity;
+        }, 0)}
+      </span>
     </div>
   );
 }
