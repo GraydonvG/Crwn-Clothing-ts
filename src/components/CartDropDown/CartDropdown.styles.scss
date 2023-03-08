@@ -6,12 +6,10 @@
   top: 90px;
   right: 40px;
   z-index: 5;
-  min-width: 200px;
   width: clamp(300px, 15rem, 850px);
 
   .empty-message {
     font-size: 1.2rem;
-    margin: 50px auto;
   }
 
   .cart-items {
@@ -19,6 +17,12 @@
     flex-direction: column;
     overflow-y: auto;
     max-height: 500px;
+  }
+
+  .total-cart-price {
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-top: 15px;
   }
 
   button {
