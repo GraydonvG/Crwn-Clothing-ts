@@ -1,0 +1,22 @@
+.checkout-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 20px 0;
+  border-bottom: 1px solid grey;
+
+  .quantity-container {
+    display: flex;
+    column-gap: 10px;
+  }
+
+  .quantity-container,
+  .remove-item-button {
+    height: fit-content;
+  }
+
+  img {
+    width: 30%;
+  }
+}

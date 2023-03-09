@@ -1,0 +1,9 @@
+.checkout-container {
+  width: 600px;
+  margin: 20px auto;
+
+  .checkout-column-title {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

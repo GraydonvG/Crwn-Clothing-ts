@@ -32,7 +32,7 @@ function CartDropdown() {
           </Link>
         </Fragment>
       ) : (
-        <span className="empty-message">Cart is empty</span>
+        <span className="empty-message">Cart is currently empty</span>
       )}
     </div>
   );

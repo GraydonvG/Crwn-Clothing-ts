@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { CartContext } from '../../contexts/cart.context';
 
-import CartItem from '../../components/CartItem/CartItem.component';
+import CheckoutItem from '../../components/CheckoutItem/CheckoutItem.component';
 
 import './Checkout.styles.scss';
 
@@ -11,14 +11,12 @@ function Checkout() {
 
   return (
     <div className="checkout-container">
-      <div className="checkout-items">
-        {cartItems.map((item) => (
-          <CartItem
-            key={item.id}
-            cartItem={item}
-          />
-        ))}
-      </div>
+      {cartItems.map((item) => (
+        <CheckoutItem
+          key={item.id}
+          checkoutItem={item}
+        />
+      ))}
     </div>
   );
 }
