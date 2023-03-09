@@ -46,7 +46,19 @@ export function CartProvider({ children }) {
     setCartItems(addCartItem(itemToAdd, cartItems));
   }
 
-  const value = { isVisible, setIsVisible, cartItems, addItemToCart, cartCount, cartPrice };
+  function toggleCartDropdown() {
+    return setIsVisible(!isVisible);
+  }
+
+  const value = {
+    isVisible,
+    toggleCartDropdown,
+    cartItems,
+    addItemToCart,
+    cartCount,
+    cartPrice,
+    setCartItems,
+  };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

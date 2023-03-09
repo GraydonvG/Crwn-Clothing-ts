@@ -1,4 +1,5 @@
 import { useContext, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CartContext } from '../../contexts/cart.context';
 
@@ -8,7 +9,7 @@ import Button from '../Button/Button.component';
 import './CartDropdown.styles.scss';
 
 function CartDropdown() {
-  const { cartItems, cartPrice } = useContext(CartContext);
+  const { cartItems, cartPrice, toggleCartDropdown } = useContext(CartContext);
   return (
     <div className="cart-dropdown-container">
       <div className="cart-items">
@@ -22,7 +23,13 @@ function CartDropdown() {
       {cartItems.length > 0 ? (
         <Fragment>
           <span className="total-cart-price">Total: ${cartPrice}</span>
-          <Button type="button">Got to checkout</Button>
+          <Link to="/checkout">
+            <Button
+              type="button"
+              onClick={toggleCartDropdown}>
+              Got to checkout
+            </Button>
+          </Link>
         </Fragment>
       ) : (
         <span className="empty-message">Cart is empty</span>

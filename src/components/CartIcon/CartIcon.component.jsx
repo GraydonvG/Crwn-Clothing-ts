@@ -7,11 +7,7 @@ import { ReactComponent as ShoppingCartIcon } from '../../assets/shopping-bag.sv
 import './CartIcon.styles.scss';
 
 function CartIcon() {
-  const { isVisible, setIsVisible, cartCount } = useContext(CartContext);
-
-  function toggleCartDropdown() {
-    return setIsVisible(!isVisible);
-  }
+  const { toggleCartDropdown, cartCount } = useContext(CartContext);
 
   return (
     <div
