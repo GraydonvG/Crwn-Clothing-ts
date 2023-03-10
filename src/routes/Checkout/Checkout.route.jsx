@@ -11,12 +11,13 @@ function Checkout() {
 
   return (
     <div className="checkout-container">
-      {cartItems.map((item) => (
-        <CheckoutItem
-          key={item.id}
-          checkoutItem={item}
-        />
-      ))}
+      {cartItems.length > 0 &&
+        cartItems.map((item) => (
+          <CheckoutItem
+            key={item.id}
+            checkoutItem={item}
+          />
+        ))}
     </div>
   );
 }

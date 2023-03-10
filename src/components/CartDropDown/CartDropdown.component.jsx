@@ -13,12 +13,13 @@ function CartDropdown() {
   return (
     <div className="cart-dropdown-container">
       <div className="cart-items">
-        {cartItems.map((item) => (
-          <CartItem
-            key={item.id}
-            cartItem={item}
-          />
-        ))}
+        {cartItems.length > 0 &&
+          cartItems.map((item) => (
+            <CartItem
+              key={item.id}
+              cartItem={item}
+            />
+          ))}
       </div>
       {cartItems.length > 0 ? (
         <Fragment>
