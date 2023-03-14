@@ -1,21 +1,25 @@
 .cart-dropdown-container {
   position: absolute;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   border: 1px solid black;
   background-color: white;
-  top: 65px;
-  right: -25px;
+  top: 90px;
+  right: 40px;
   z-index: 5;
 
   .empty-message {
-    font-size: 1.2rem;
+    font-size: 18px;
+    margin: 50px auto;
   }
 
   .cart-items {
+    max-height: 380px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    max-height: 500px;
   }
 
   .total-cart-price {
@@ -26,6 +30,5 @@
 
   button {
     margin-top: 15px;
-    width: 100%;
   }
 }

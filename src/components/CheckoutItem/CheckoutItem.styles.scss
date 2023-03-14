@@ -1,6 +1,7 @@
 .checkout-item-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 20px;
   align-items: center;
   margin: 20px 0;
   padding: 20px 0;
@@ -11,12 +12,11 @@
     column-gap: 10px;
   }
 
-  .quantity-container,
-  .remove-item-button {
-    height: fit-content;
+  img {
+    width: 100%;
   }
 
-  img {
-    width: 30%;
+  .remove-item-button {
+    width: fit-content;
   }
 }

@@ -1,38 +1,25 @@
 .navigation {
-  min-height: 70px;
-  height: fit-content;
+  height: 70px;
   width: 100%;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   margin-bottom: 25px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: rgba(255, 255, 255, 0.932);
 
   .logo-container {
-    width: fit-content;
-    height: auto;
-    display: flex;
-    place-items: center;
-    padding: 0 0.9em;
-
-    .logo {
-      width: 4rem;
-      height: auto;
-    }
+    height: 100%;
+    width: 70px;
+    padding: 25px;
   }
 
   .nav-links-container {
-    width: 100%;
+    width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
     .nav-link {
-      flex-wrap: nowrap;
-      padding: 0 0.9em;
+      padding: 10px 15px;
       cursor: pointer;
     }
   }

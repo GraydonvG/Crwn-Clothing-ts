@@ -1,15 +1,15 @@
 .button-container {
   display: flex;
   justify-content: center;
-  min-width: 165px;
-  letter-spacing: 0.5px;
+  width: auto;
   padding: 1em 2em;
-  font-size: 1rem;
+  font-size: 15px;
+  font-weight: bolder;
+  font-family: 'Open Sans Condensed';
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   background-color: black;
   color: white;
-  text-transform: uppercase;
-  font-family: 'Open Sans Condensed';
-  font-weight: bolder;
   border: 1px solid transparent;
   cursor: pointer;
 
