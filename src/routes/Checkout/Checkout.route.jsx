@@ -7,7 +7,7 @@ import CheckoutItem from '../../components/CheckoutItem/CheckoutItem.component';
 import './Checkout.styles.scss';
 
 function Checkout() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, cartPrice } = useContext(CartContext);
 
   return (
     <div className="checkout-container">
@@ -18,6 +18,7 @@ function Checkout() {
             checkoutItem={item}
           />
         ))}
+      <span className="total-checkout-price">Total: ${cartPrice}</span>
     </div>
   );
 }

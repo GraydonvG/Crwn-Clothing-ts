@@ -9,7 +9,15 @@
 
   .quantity-container {
     display: flex;
+    align-items: center;
     column-gap: 10px;
+
+    .item-quantity-button {
+      background-color: transparent;
+      border: none;
+      font-size: x-large;
+      font-weight: bold;
+    }
   }
 
   img {
@@ -18,5 +26,9 @@
 
   .remove-item-button {
     width: fit-content;
+    background-color: transparent;
+    border: none;
+    font-size: x-large;
+    font-weight: bold;
   }
 }

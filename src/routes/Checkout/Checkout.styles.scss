@@ -6,4 +6,8 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
   }
+
+  .total-checkout-price {
+    text-align: right;
+  }
 }
