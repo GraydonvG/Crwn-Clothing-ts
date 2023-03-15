@@ -7,43 +7,29 @@ function checkIfItemExists(item, cartItems) {
 
 // If the item exisis - update the quantity
 // If the item does not exist - add the item and append a quantity of one
-function handleCartItem(itemToHandle, cartItems, event) {
-  const itemExists = checkIfItemExists(itemToHandle, cartItems);
-  const cartItemEventValue = event.target.value;
+function addCartItem(itemToAdd, cartItems) {
+  const itemExists = checkIfItemExists(itemToAdd, cartItems);
 
   if (itemExists) {
-    switch (cartItemEventValue) {
-      case 'decrement':
-        if (itemToHandle.quantity === 1) {
-          return removeItemHandler(itemToHandle, cartItems);
-        } else {
-          return cartItems.map((cartItem) =>
-            cartItem.id === itemToHandle.id && cartItem.quantity > 0
-              ? { ...cartItem, quantity: cartItem.quantity - 1 }
-              : cartItem
-          );
-        }
-      case 'remove':
-        return removeItemHandler(itemToHandle, cartItems);
-      default:
-        return cartItems.map((cartItem) =>
-          cartItem.id === itemToHandle.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
-        );
-    }
+    return cartItems.map((cartItem) =>
+      cartItem.id === itemToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+    );
   }
-  return [...cartItems, { ...itemToHandle, quantity: 1 }];
+
+  return [...cartItems, { ...itemToAdd, quantity: 1 }];
 }
 
-function removeItemHandler(itemToRemove, cartItems) {
+function removeCartItem(itemToRemove, cartItems) {
   return cartItems.filter((item) => !(item.id === itemToRemove.id));
 }
 
 export const CartContext = createContext({
-  isVisible: false,
-  setIsVisible: () => {},
-  cartItems: [],
-  addItemToCart: () => {},
-  cartCount: 0,
+  // isVisible: false,
+  // setIsVisible: () => {},
+  // cartItems: [],
+  // handleCartItems: () => {},
+  // cartCount: 0,
+  // cartPrice: 0,
 });
 
 export function CartProvider({ children }) {
@@ -67,8 +53,12 @@ export function CartProvider({ children }) {
     setCartPrice(totalCartPrice);
   }, [cartItems]);
 
-  function handleCartItems(itemToHandle) {
-    setCartItems(handleCartItem(itemToHandle, cartItems, event));
+  function addItemToCart(itemToAdd) {
+    setCartItems(addCartItem(itemToAdd, cartItems));
+  }
+
+  function removeItemFromCart(itemToRemove) {
+    setCartItems(removeCartItem(itemToRemove, cartItems));
   }
 
   function toggleCartDropdown() {
@@ -83,7 +73,8 @@ export function CartProvider({ children }) {
     isVisible,
     toggleCartDropdown,
     cartItems,
-    handleCartItems,
+    addItemToCart,
+    removeItemFromCart,
     cartCount,
     cartPrice,
     setCartItems,
