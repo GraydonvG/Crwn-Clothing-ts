@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 
 // Checks if an item has already been added to the cart
-function checkIfItemExists(item, cartItems) {
-  return cartItems.find((cartItem) => cartItem.id === item.id);
+function checkIfItemExists(itemToCheck, cartItems) {
+  return cartItems.find((cartItem) => cartItem.id === itemToCheck.id);
 }
 
 // If the item exisis - update the quantity
@@ -20,7 +20,14 @@ function addCartItem(itemToAdd, cartItems) {
 }
 
 function removeCartItem(itemToRemove, cartItems) {
-  return cartItems.filter((item) => !(item.id === itemToRemove.id));
+  const itemExists = checkIfItemExists(itemToRemove, cartItems);
+  if (itemExists.quantity === 1) {
+    return cartItems.filter((item) => !(item.id === itemToRemove.id));
+  }
+
+  return cartItems.map((cartItem) =>
+    cartItem.id === itemToAdd.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
+  );
 }
 
 export const CartContext = createContext({

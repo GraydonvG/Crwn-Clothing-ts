@@ -6,10 +6,14 @@ import './CheckoutItem.styles.scss';
 
 function CheckoutItem({ checkoutItem }) {
   const { imageUrl, name, price, quantity } = checkoutItem;
-  const { handleCartItems, calculateItemPrice, itemPrice, setItemPrice } = useContext(CartContext);
+  const { addItemToCart, removeItemFromCart, calculateItemPrice, itemPrice, setItemPrice } = useContext(CartContext);
 
-  function adjustItemQuantity(event) {
-    handleCartItems(checkoutItem, event);
+  function addToCart() {
+    addItemToCart(checkoutItem);
+  }
+
+  function removeFromCart() {
+    removeItemFromCart(checkoutItem);
   }
 
   // Update the items price displayed at the checkout page whenever the quantity changes
@@ -27,15 +31,13 @@ function CheckoutItem({ checkoutItem }) {
       <div className="quantity-container">
         <button
           className="item-quantity-button decrement-quantity"
-          value="decrement"
-          onClick={adjustItemQuantity}>
+          onClick={removeFromCart}>
           &lt;
         </button>
         <span className="item-quantity">{quantity}</span>
         <button
           className="item-quantity-button increment-quantity"
-          value="increment"
-          onClick={adjustItemQuantity}>
+          onClick={addToCart}>
           &gt;
         </button>
       </div>
@@ -43,7 +45,7 @@ function CheckoutItem({ checkoutItem }) {
       <button
         className="remove-item-button"
         value="remove"
-        onClick={adjustItemQuantity}>
+        onClick={removeFromCart}>
         X
       </button>
     </div>
