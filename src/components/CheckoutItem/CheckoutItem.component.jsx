@@ -4,16 +4,16 @@ import { CartContext } from '../../contexts/cart.context';
 
 import './CheckoutItem.styles.scss';
 
-function CheckoutItem({ checkoutItem }) {
-  const { imageUrl, name, price, quantity, priceByQuantity } = checkoutItem;
+function CheckoutItem({ cartItem }) {
+  const { imageUrl, name, price, quantity, priceByQuantity } = cartItem;
   const { addItemToCart, removeItemFromCart } = useContext(CartContext);
 
   function addToCart() {
-    addItemToCart(checkoutItem);
+    addItemToCart(cartItem);
   }
 
   function removeFromCart(event) {
-    removeItemFromCart(checkoutItem, event);
+    removeItemFromCart(cartItem, event);
   }
 
   return (
