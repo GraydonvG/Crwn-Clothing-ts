@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+
+import { CartContext } from '../../contexts/cart.context';
 
 import './CartItem.styles.scss';
 
 function CartItem({ cartItem }) {
   const { name, imageUrl, price, quantity } = cartItem;
-  const [itemPrice, setItemPrice] = useState(0);
+  const { calculateItemPrice, itemPrice, setItemPrice } = useContext(CartContext);
 
   // Update the items price displayed in the cart dropdown whenever the quantity changes
   useEffect(() => {
-    const newItemPrice = price * quantity;
-    setItemPrice(newItemPrice);
+    setItemPrice(calculateItemPrice(price, quantity));
   }, [quantity]);
 
   return (

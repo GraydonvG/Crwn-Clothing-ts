@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { CartContext } from '../../contexts/cart.context';
 
@@ -6,21 +6,15 @@ import './CheckoutItem.styles.scss';
 
 function CheckoutItem({ checkoutItem }) {
   const { imageUrl, name, price, quantity } = checkoutItem;
-  const { setItemQuantity, removeItem } = useContext(CartContext);
-  const [itemPrice, setItemPrice] = useState(0);
+  const { handleCartItems, calculateItemPrice, itemPrice, setItemPrice } = useContext(CartContext);
 
-  function handleAdjustItemQuantity(event) {
-    setItemQuantity(checkoutItem, event);
-  }
-
-  function handleRemoveItemFromCheckout(event) {
-    removeItem(checkoutItem, event);
+  function adjustItemQuantity(event) {
+    handleCartItems(checkoutItem, event);
   }
 
   // Update the items price displayed at the checkout page whenever the quantity changes
   useEffect(() => {
-    const newItemPrice = price * quantity;
-    setItemPrice(newItemPrice);
+    setItemPrice(calculateItemPrice(price, quantity));
   }, [quantity]);
 
   return (
@@ -34,14 +28,14 @@ function CheckoutItem({ checkoutItem }) {
         <button
           className="item-quantity-button decrement-quantity"
           value="decrement"
-          onClick={handleAdjustItemQuantity}>
+          onClick={adjustItemQuantity}>
           &lt;
         </button>
         <span className="item-quantity">{quantity}</span>
         <button
           className="item-quantity-button increment-quantity"
           value="increment"
-          onClick={handleAdjustItemQuantity}>
+          onClick={adjustItemQuantity}>
           &gt;
         </button>
       </div>
@@ -49,7 +43,7 @@ function CheckoutItem({ checkoutItem }) {
       <button
         className="remove-item-button"
         value="remove"
-        onClick={handleRemoveItemFromCheckout}>
+        onClick={adjustItemQuantity}>
         X
       </button>
     </div>
