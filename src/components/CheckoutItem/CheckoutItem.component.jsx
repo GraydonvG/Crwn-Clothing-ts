@@ -18,31 +18,34 @@ function CheckoutItem({ checkoutItem }) {
 
   return (
     <div className="checkout-item-container">
-      <img
-        src={imageUrl}
-        alt={`${name}`}
-      />
-      <span className="item-description">{name}</span>
-      <div className="quantity-container">
-        <button
-          className="item-quantity-button decrement-quantity"
+      <div className="image-container">
+        <img
+          src={imageUrl}
+          alt={`${name}`}
+        />
+      </div>
+      <span className="name">{name}</span>
+
+      <span className="quantity">
+        <span
+          className="arrow"
           onClick={removeFromCart}>
           &lt;
-        </button>
-        <span className="item-quantity">{quantity}</span>
-        <button
-          className="item-quantity-button increment-quantity"
+        </span>
+        {quantity}
+        <span
+          className="arrow"
           onClick={addToCart}>
           &gt;
-        </button>
-      </div>
-      <span className="item-price">${priceByQuantity}</span>
-      <button
-        className="remove-item-button"
+        </span>
+      </span>
+      <span className="price">${priceByQuantity}</span>
+      <div
+        className="remove-button"
         value="remove"
         onClick={removeFromCart}>
-        X
-      </button>
+        &#10005;
+      </div>
     </div>
   );
 }
