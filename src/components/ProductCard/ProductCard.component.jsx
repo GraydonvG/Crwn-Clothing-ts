@@ -8,10 +8,10 @@ import './ProductCard.styles.scss';
 
 function ProductCard({ product }) {
   const { name, price, imageUrl } = product;
-  const { handleCartItems } = useContext(CartContext);
+  const { addItemToCart } = useContext(CartContext);
 
-  function addItemToCartHandler() {
-    handleCartItems(product);
+  function addToCard() {
+    addItemToCart(product);
   }
 
   return (
@@ -27,7 +27,7 @@ function ProductCard({ product }) {
       <Button
         type="button"
         buttonType="inverted"
-        onClick={addItemToCartHandler}>
+        onClick={addToCard}>
         Add to cart
       </Button>
     </div>

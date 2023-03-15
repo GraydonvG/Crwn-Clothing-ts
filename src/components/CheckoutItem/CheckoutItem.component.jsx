@@ -1,25 +1,20 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 import { CartContext } from '../../contexts/cart.context';
 
 import './CheckoutItem.styles.scss';
 
 function CheckoutItem({ checkoutItem }) {
-  const { imageUrl, name, price, quantity } = checkoutItem;
-  const { addItemToCart, removeItemFromCart, calculateItemPrice, itemPrice, setItemPrice } = useContext(CartContext);
+  const { imageUrl, name, price, quantity, priceByQuantity } = checkoutItem;
+  const { addItemToCart, removeItemFromCart } = useContext(CartContext);
 
   function addToCart() {
     addItemToCart(checkoutItem);
   }
 
-  function removeFromCart() {
-    removeItemFromCart(checkoutItem);
+  function removeFromCart(event) {
+    removeItemFromCart(checkoutItem, event);
   }
-
-  // Update the items price displayed at the checkout page whenever the quantity changes
-  useEffect(() => {
-    setItemPrice(calculateItemPrice(price, quantity));
-  }, [quantity]);
 
   return (
     <div className="checkout-item-container">
@@ -41,7 +36,7 @@ function CheckoutItem({ checkoutItem }) {
           &gt;
         </button>
       </div>
-      <span className="item-price">${itemPrice}</span>
+      <span className="item-price">${priceByQuantity}</span>
       <button
         className="remove-item-button"
         value="remove"

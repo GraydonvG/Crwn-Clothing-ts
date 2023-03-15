@@ -5,28 +5,35 @@ function checkIfItemExists(itemToCheck, cartItems) {
   return cartItems.find((cartItem) => cartItem.id === itemToCheck.id);
 }
 
-// If the item exisis - update the quantity
-// If the item does not exist - add the item and append a quantity of one
+// If the item exisis - increment the quantity and adjust the priceByQuantity accordingly
+// If the item does not exist - add the item and append a quantity of one and a priceByQuantity equal to the price of a single item
 function addCartItem(itemToAdd, cartItems) {
   const itemExists = checkIfItemExists(itemToAdd, cartItems);
 
   if (itemExists) {
     return cartItems.map((cartItem) =>
-      cartItem.id === itemToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+      cartItem.id === itemToAdd.id
+        ? { ...cartItem, quantity: cartItem.quantity + 1, priceByQuantity: cartItem.price * (cartItem.quantity + 1) }
+        : cartItem
     );
   }
 
-  return [...cartItems, { ...itemToAdd, quantity: 1 }];
+  return [...cartItems, { ...itemToAdd, quantity: 1, priceByQuantity: itemToAdd.price }];
 }
 
-function removeCartItem(itemToRemove, cartItems) {
+// Decrement item quantity if item quantity > 1 and adjust priceByQuantity accordingly
+// Remove item if quantity < 1 or if user selects remove button
+function removeCartItem(itemToRemove, cartItems, event) {
   const itemExists = checkIfItemExists(itemToRemove, cartItems);
-  if (itemExists.quantity === 1) {
+
+  if (itemExists.quantity === 1 || event.target.value === 'remove') {
     return cartItems.filter((item) => !(item.id === itemToRemove.id));
   }
 
   return cartItems.map((cartItem) =>
-    cartItem.id === itemToAdd.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
+    cartItem.id === itemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1, priceByQuantity: cartItem.price * (cartItem.quantity - 1) }
+      : cartItem
   );
 }
 
@@ -44,7 +51,6 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [cartPrice, setCartPrice] = useState(0);
-  const [itemPrice, setItemPrice] = useState(0);
 
   useEffect(() => {
     // Update the number of items in the cart whenever an item is added to the cart
@@ -64,16 +70,12 @@ export function CartProvider({ children }) {
     setCartItems(addCartItem(itemToAdd, cartItems));
   }
 
-  function removeItemFromCart(itemToRemove) {
-    setCartItems(removeCartItem(itemToRemove, cartItems));
+  function removeItemFromCart(itemToRemove, event) {
+    setCartItems(removeCartItem(itemToRemove, cartItems, event));
   }
 
   function toggleCartDropdown() {
     return setIsVisible(!isVisible);
-  }
-
-  function calculateItemPrice(price, quantity) {
-    return price * quantity;
   }
 
   const value = {
@@ -85,9 +87,6 @@ export function CartProvider({ children }) {
     cartCount,
     cartPrice,
     setCartItems,
-    calculateItemPrice,
-    itemPrice,
-    setItemPrice,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

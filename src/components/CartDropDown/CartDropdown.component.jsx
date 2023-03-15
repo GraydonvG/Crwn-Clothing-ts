@@ -30,7 +30,7 @@ function CartDropdown() {
       </div>
       {cartItems.length > 0 ? (
         <Fragment>
-          <span className="total-cart-price">Total: ${cartPrice}</span>
+          <span className="total-cart-price">Cart Total: ${cartPrice}</span>
           <Button
             type="button"
             onClick={goToCheckoutHandler}>
