@@ -14,21 +14,22 @@
 
     .item-quantity-button {
       background-color: transparent;
-      border: none;
-      font-size: x-large;
-      font-weight: bold;
     }
+  }
+
+  .remove-item-button {
+    width: fit-content;
   }
 
   img {
     width: 100%;
   }
 
-  .remove-item-button {
-    width: fit-content;
+  button {
     background-color: transparent;
     border: none;
     font-size: x-large;
     font-weight: bold;
+    cursor: pointer;
   }
 }
