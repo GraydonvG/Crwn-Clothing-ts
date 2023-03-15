@@ -62,7 +62,9 @@ export function CartProvider({ children }) {
     const newCartCount = cartItems.reduce((totalCount, item) => totalCount + item.quantity, 0);
 
     setCartCount(newCartCount);
+  }, [cartItems]);
 
+  useEffect(() => {
     // Update the total price for all that have been added to the cart
     // The total is displayed in the cart dropdown
     const totalCartPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);
