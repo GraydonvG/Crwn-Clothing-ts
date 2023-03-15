@@ -17,24 +17,26 @@
     }
   }
   .name,
-  .quantity,
+  .quantity-container,
   .price {
     width: 23%;
   }
 
-  .quantity {
+  .quantity-container {
     display: flex;
+    align-items: center;
 
-    .arrow {
+    .quantity-arrow {
+      user-select: none;
       cursor: pointer;
     }
 
-    .value {
+    .quantity-value {
       margin: 0 10px;
     }
   }
 
-  .remove-button {
+  .clear-product-button {
     padding-left: 12px;
     cursor: pointer;
   }

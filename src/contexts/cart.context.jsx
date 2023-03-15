@@ -5,11 +5,10 @@ function checkIfItemExists(itemToCheck, cartItems) {
   return cartItems.find((cartItem) => cartItem.id === itemToCheck.id);
 }
 
-// If the item exisis - increment the quantity and adjust the priceByQuantity accordingly
-// If the item does not exist - add the item and append a quantity of one and a priceByQuantity equal to the price of a single item
 function addCartItem(itemToAdd, cartItems) {
   const itemExists = checkIfItemExists(itemToAdd, cartItems);
 
+  // If the item exisis - increment the quantity and adjust the priceByQuantity accordingly
   if (itemExists) {
     return cartItems.map((cartItem) =>
       cartItem.id === itemToAdd.id
@@ -18,23 +17,28 @@ function addCartItem(itemToAdd, cartItems) {
     );
   }
 
+  // If the item does not exist - add the item and append a quantity of one and a priceByQuantity equal to the price of a single item
   return [...cartItems, { ...itemToAdd, quantity: 1, priceByQuantity: itemToAdd.price }];
 }
 
-// Decrement item quantity if item quantity > 1 and adjust priceByQuantity accordingly
-// Remove item if quantity < 1 or if user selects remove button
 function removeCartItem(itemToRemove, cartItems, event) {
   const itemExists = checkIfItemExists(itemToRemove, cartItems);
 
-  if (itemExists.quantity === 1 || event.target.value === 'remove') {
+  // Remove item if quantity < 1
+  if (itemExists.quantity === 1) {
     return cartItems.filter((item) => !(item.id === itemToRemove.id));
   }
 
+  // Decrement item quantity if item quantity > 1 and adjust priceByQuantity accordingly
   return cartItems.map((cartItem) =>
     cartItem.id === itemToRemove.id
       ? { ...cartItem, quantity: cartItem.quantity - 1, priceByQuantity: cartItem.price * (cartItem.quantity - 1) }
       : cartItem
   );
+}
+
+function clearCartItem(itemToClear, cartItems) {
+  return cartItems.filter((item) => !(item.id === itemToClear.id));
 }
 
 export const CartContext = createContext({
@@ -70,8 +74,12 @@ export function CartProvider({ children }) {
     setCartItems(addCartItem(itemToAdd, cartItems));
   }
 
-  function removeItemFromCart(itemToRemove, event) {
-    setCartItems(removeCartItem(itemToRemove, cartItems, event));
+  function removeItemFromCart(itemToRemove) {
+    setCartItems(removeCartItem(itemToRemove, cartItems));
+  }
+
+  function clearItemFromCart(itemToClear) {
+    setCartItems(clearCartItem(itemToClear, cartItems));
   }
 
   function toggleCartDropdown() {
@@ -84,6 +92,7 @@ export function CartProvider({ children }) {
     cartItems,
     addItemToCart,
     removeItemFromCart,
+    clearItemFromCart,
     cartCount,
     cartPrice,
     setCartItems,

@@ -5,15 +5,19 @@ import { CartContext } from '../../contexts/cart.context';
 import './CheckoutItem.styles.scss';
 
 function CheckoutItem({ cartItem }) {
-  const { imageUrl, name, price, quantity, priceByQuantity } = cartItem;
-  const { addItemToCart, removeItemFromCart } = useContext(CartContext);
+  const { imageUrl, name, quantity, priceByQuantity } = cartItem;
+  const { addItemToCart, removeItemFromCart, clearItemFromCart } = useContext(CartContext);
 
   function addToCart() {
     addItemToCart(cartItem);
   }
 
-  function removeFromCart(event) {
-    removeItemFromCart(cartItem, event);
+  function removeProductFromCart() {
+    removeItemFromCart(cartItem);
+  }
+
+  function clearProductFromCart() {
+    clearItemFromCart(cartItem);
   }
 
   return (
@@ -26,24 +30,24 @@ function CheckoutItem({ cartItem }) {
       </div>
       <span className="name">{name}</span>
 
-      <span className="quantity">
-        <span
-          className="arrow"
-          onClick={removeFromCart}>
-          &lt;
-        </span>
-        {quantity}
-        <span
-          className="arrow"
+      <span className="quantity-container">
+        <div
+          className="quantity-arrow"
+          onClick={removeProductFromCart}>
+          &#10094;
+        </div>
+        <span className="quantity-value">{quantity}</span>
+        <div
+          className="quantity-arrow"
           onClick={addToCart}>
-          &gt;
-        </span>
+          &#10095;
+        </div>
       </span>
       <span className="price">${priceByQuantity}</span>
       <div
-        className="remove-button"
+        className="clear-product-button"
         value="remove"
-        onClick={removeFromCart}>
+        onClick={clearProductFromCart}>
         &#10005;
       </div>
     </div>
