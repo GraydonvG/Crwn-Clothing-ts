@@ -9,7 +9,7 @@ import Button from '../Button/Button.component';
 import './CartDropdown.styles.scss';
 
 function CartDropdown() {
-  const { cartItems, cartPrice, toggleCartDropdown } = useContext(CartContext);
+  const { cartItems, cartTotalPrice, toggleCartDropdown } = useContext(CartContext);
   const navigate = useNavigate();
 
   function goToCheckoutHandler() {
@@ -30,7 +30,7 @@ function CartDropdown() {
       </div>
       {cartItems.length > 0 ? (
         <Fragment>
-          <span className="total-cart-price">Cart Total: ${cartPrice}</span>
+          <span className="total-cart-price">Cart Total: ${cartTotalPrice}</span>
           <Button
             type="button"
             onClick={goToCheckoutHandler}>

@@ -21,7 +21,7 @@ function addCartItem(itemToAdd, cartItems) {
   return [...cartItems, { ...itemToAdd, quantity: 1, priceByQuantity: itemToAdd.price }];
 }
 
-function removeCartItem(itemToRemove, cartItems, event) {
+function removeCartItem(itemToRemove, cartItems) {
   const itemExists = checkIfItemExists(itemToRemove, cartItems);
 
   // Remove item if quantity < 1
@@ -42,34 +42,36 @@ function clearCartItem(itemToClear, cartItems) {
 }
 
 export const CartContext = createContext({
-  // isVisible: false,
-  // setIsVisible: () => {},
-  // cartItems: [],
-  // handleCartItems: () => {},
-  // cartCount: 0,
-  // cartPrice: 0,
+  isVisible: false,
+  toggleCartDropdown: () => {},
+  cartItems: [],
+  addItemToCart: () => {},
+  removeItemFromCart: () => {},
+  clearItemFromCart: () => {},
+  cartCount: 0,
+  cartTotalPrice: 0,
 });
 
 export function CartProvider({ children }) {
   const [isVisible, setIsVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const [cartPrice, setCartPrice] = useState(0);
+  const [cartTotalPrice, setCartTotalPrice] = useState(0);
 
+  // Update the number of items in the cart whenever an item is added to the cart
+  // The total is displayed in the cart icon
   useEffect(() => {
-    // Update the number of items in the cart whenever an item is added to the cart
-    // The total is displayed in the cart icon
     const newCartCount = cartItems.reduce((totalCount, item) => totalCount + item.quantity, 0);
 
     setCartCount(newCartCount);
   }, [cartItems]);
 
+  // Update the total price for all that have been added to the cart
+  // The total is displayed in the cart dropdown and checkout page
   useEffect(() => {
-    // Update the total price for all that have been added to the cart
-    // The total is displayed in the cart dropdown
-    const totalCartPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);
+    const totalCartPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.priceByQuantity, 0);
 
-    setCartPrice(totalCartPrice);
+    setCartTotalPrice(totalCartPrice);
   }, [cartItems]);
 
   function addItemToCart(itemToAdd) {
@@ -96,8 +98,7 @@ export function CartProvider({ children }) {
     removeItemFromCart,
     clearItemFromCart,
     cartCount,
-    cartPrice,
-    setCartItems,
+    cartTotalPrice,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
