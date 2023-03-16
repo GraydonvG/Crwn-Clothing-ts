@@ -1,4 +1,4 @@
-import { useContext, Fragment } from 'react';
+import { useContext } from 'react';
 
 import { CategoriesContext } from '../../contexts/categories.context';
 
