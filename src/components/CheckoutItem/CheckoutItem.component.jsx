@@ -8,7 +8,7 @@ function CheckoutItem({ cartItem }) {
   const { imageUrl, name, quantity, priceByQuantity } = cartItem;
   const { addItemToCart, removeItemFromCart, clearItemFromCart } = useContext(CartContext);
 
-  function addToCart() {
+  function addProductToCart() {
     addItemToCart(cartItem);
   }
 
@@ -29,8 +29,7 @@ function CheckoutItem({ cartItem }) {
         />
       </div>
       <span className="name">{name}</span>
-
-      <span className="quantity-container">
+      <div className="quantity-container">
         <div
           className="quantity-arrow"
           onClick={removeProductFromCart}>
@@ -39,14 +38,13 @@ function CheckoutItem({ cartItem }) {
         <span className="quantity-value">{quantity}</span>
         <div
           className="quantity-arrow"
-          onClick={addToCart}>
+          onClick={addProductToCart}>
           &#10095;
         </div>
-      </span>
+      </div>
       <span className="price">${priceByQuantity}</span>
       <div
         className="clear-product-button"
-        value="remove"
         onClick={clearProductFromCart}>
         &#10005;
       </div>
