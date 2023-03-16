@@ -8,7 +8,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDk7C6MsLlS4PkkBxDrq1-OjIsfhzyZyRg',
@@ -19,7 +19,9 @@ const firebaseConfig = {
   appId: '1:171035978542:web:c0db8299e92eaf1aa228bf',
 };
 
+// eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore();
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -27,7 +29,9 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export function signInWithGooglePopup() {
+  signInWithPopup(auth, googleProvider);
+}
 
 export async function createAuthUserWithEmailAndPassword(email, password) {
   if (!email || !password) return;
@@ -41,7 +45,6 @@ export async function signInAuthUserWithEmailAndPassword(email, password) {
   return await signInWithEmailAndPassword(auth, email, password);
 }
 
-const db = getFirestore();
 export async function createUserDocumentFromAuth(userAuth, additionalInformation = {}) {
   if (!userAuth) return;
 
@@ -67,6 +70,38 @@ export async function createUserDocumentFromAuth(userAuth, additionalInformation
   }
 }
 
-export const signOutUser = async () => signOut(auth);
+export async function signOutUser() {
+  signOut(auth);
+}
 
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+export function onAuthStateChangedListener(callback) {
+  onAuthStateChanged(auth, callback);
+}
+
+export async function addCollectionAndDocuments(collectionKey, objectsToAdd) {
+  const collectionRef = collection(db, collectionKey);
+
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+}
+
+export async function getCategoriesAndDocuments() {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+}

@@ -41,7 +41,7 @@ function SignInForm() {
   }
 
   async function signInWithGoogle() {
-    await signInWithGooglePopup();
+    signInWithGooglePopup();
   }
 
   return (

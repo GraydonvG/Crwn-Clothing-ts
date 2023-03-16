@@ -6,12 +6,12 @@ import Button from '../Button/Button.component';
 
 import './ProductCard.styles.scss';
 
-function ProductCard({ product }) {
-  const { name, price, imageUrl } = product;
+function ProductCard({ category }) {
+  const { name, price, imageUrl } = category;
   const { addItemToCart } = useContext(CartContext);
 
   function addToCard() {
-    addItemToCart(product);
+    addItemToCart(category);
   }
 
   return (

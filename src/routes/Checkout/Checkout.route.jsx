@@ -16,7 +16,9 @@ function Checkout() {
       <div className="checkout-header">
         {headersArray.map((header) => {
           return (
-            <div className="header-block">
+            <div
+              className="header-block"
+              key={header}>
               <span>{header}</span>
             </div>
           );
