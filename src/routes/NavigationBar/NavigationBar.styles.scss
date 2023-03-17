@@ -16,7 +16,7 @@
   }
 
   .nav-links-container {
-    width: 50%;
+    // width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -26,6 +26,10 @@
       min-width: fit-content;
       padding: 10px 15px;
       cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
