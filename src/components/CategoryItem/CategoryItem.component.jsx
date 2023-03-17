@@ -2,7 +2,7 @@ import './CategoryItem.styles.scss';
 
 function CategoryItem({ title, imageUrl }) {
   return (
-    <div className="category-container">
+    <div className="category-item-container">
       <div
         className="background-image"
         style={{ backgroundImage: `url(${imageUrl})` }}></div>

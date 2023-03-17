@@ -30,7 +30,7 @@ function SignUpForm() {
   async function handleSubmitSignUpForm(event) {
     event.preventDefault();
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       alert('passwords do not match');
       return;
     }
