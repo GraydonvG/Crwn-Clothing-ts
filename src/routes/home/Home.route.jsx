@@ -1,7 +1,7 @@
-import CategoryList from '../../components/CategoryList/CategoryList.component';
+import Directory from '../../components/Directory/Directory.component';
 
 function Home() {
-  return <CategoryList />;
+  return <Directory />;
 }
 
 export default Home;

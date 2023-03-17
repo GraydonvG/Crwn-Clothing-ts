@@ -1,12 +1,37 @@
 .category-preview-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 
-  .title {
-    font-size: 28px;
-    margin-bottom: 25px;
-    cursor: pointer;
+  .category-preview-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .title,
+    .see-more-container {
+      cursor: pointer;
+    }
+
+    .title {
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    .see-more-container {
+      position: absolute;
+      right: 0px;
+    }
+
+    .see-more,
+    .see-more-arrows {
+      font-size: 16px;
+    }
+
+    .see-more-arrows {
+      margin-left: 4px;
+    }
   }
 
   .preview {

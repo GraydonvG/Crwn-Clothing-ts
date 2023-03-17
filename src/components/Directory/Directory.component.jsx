@@ -1,8 +1,8 @@
-import CategoryItem from '../CategoryItem/CategoryItem.component';
+import DirectoryItem from '../DirectoryItem/DirectoryItem.component';
 
-import './CategoryList.styles.scss';
+import './Directory.styles.scss';
 
-function CategoryList() {
+function Directory() {
   const categories = [
     {
       id: 1,
@@ -34,7 +34,7 @@ function CategoryList() {
   return (
     <div className="categories-container">
       {categories.map(({ id, title, imageUrl }) => (
-        <CategoryItem
+        <DirectoryItem
           key={id}
           title={title}
           imageUrl={imageUrl}
@@ -44,4 +44,4 @@ function CategoryList() {
   );
 }
 
-export default CategoryList;
+export default Directory;
