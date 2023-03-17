@@ -23,6 +23,7 @@
     justify-content: flex-end;
 
     .nav-link {
+      min-width: fit-content;
       padding: 10px 15px;
       cursor: pointer;
     }
