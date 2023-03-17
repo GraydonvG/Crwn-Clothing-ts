@@ -9,17 +9,14 @@
     align-items: center;
     position: relative;
 
-    .title,
-    .see-more-container {
-      cursor: pointer;
-    }
-
     .title {
       margin-bottom: 25px;
       font-size: 28px;
     }
 
     .see-more-container {
+      cursor: pointer;
+
       position: absolute;
       right: 0px;
     }

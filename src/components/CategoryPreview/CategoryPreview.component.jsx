@@ -19,9 +19,7 @@ function CategoryPreview({ title, products }) {
     <div className="category-preview-container">
       <div className="category-preview-header">
         <h2>
-          <Link to={`${title}`}>
-            <span className="title">{title.toUpperCase()}</span>
-          </Link>
+          <span className="title">{title.toUpperCase()}</span>
         </h2>
         <div className="see-more-container">
           <Link
