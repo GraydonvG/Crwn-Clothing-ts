@@ -1,6 +1,7 @@
 .directory-item-container {
-  min-width: 30%;
-  height: 240px;
+  width: 30%;
+  min-width: 180px;
+  height: 430px;
   flex: 1 1 auto;
   display: flex;
   align-items: center;
@@ -24,14 +25,6 @@
 
   &.large {
     height: 380px;
-  }
-
-  &:first-child {
-    margin-right: 7.5px;
-  }
-
-  &:last-child {
-    margin-left: 7.5px;
   }
 
   .background-image {
