@@ -38,7 +38,7 @@ function CartDropdown() {
           </Button>
         </Fragment>
       ) : (
-        <span className="empty-message">Cart is currently empty</span>
+        <span className="empty-message">Your cart is empty</span>
       )}
     </div>
   );

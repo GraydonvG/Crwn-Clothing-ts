@@ -44,7 +44,7 @@ function CheckoutItem({ cartItem }) {
       </div>
       <span className="price">${priceByQuantity}</span>
       <div
-        className="clear-product-button"
+        className="clear-product-from-checkout"
         onClick={clearProductFromCart}>
         &#10005;
       </div>
