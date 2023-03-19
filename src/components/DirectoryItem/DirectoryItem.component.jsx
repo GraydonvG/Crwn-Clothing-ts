@@ -11,13 +11,9 @@ function DirectoryItem({ title, imageUrl, route }) {
 
   const navigate = useNavigate();
 
-  function setPreviousPageHandler() {
-    setPreviousPage('/');
-  }
-
   function navigateToCategoryHandler() {
     navigate(route);
-    setPreviousPageHandler();
+    setPreviousPage('/');
   }
 
   return (
