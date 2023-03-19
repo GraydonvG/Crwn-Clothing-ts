@@ -2,12 +2,12 @@ import { useContext } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { PathContext } from '../../contexts/path.context';
+import { PageContext } from '../../contexts/page.context';
 
 import './DirectoryItem.styles.scss';
 
-function DirectoryItem({ title, imageUrl }) {
-  const { setPreviousPage } = useContext(PathContext);
+function DirectoryItem({ title, imageUrl, route }) {
+  const { setPreviousPage } = useContext(PageContext);
 
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function DirectoryItem({ title, imageUrl }) {
   }
 
   function navigateToCategoryHandler() {
-    navigate(`shop/${title.toLowerCase()}`);
+    navigate(route);
     setPreviousPageHandler();
   }
 

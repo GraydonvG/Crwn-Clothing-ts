@@ -2,14 +2,14 @@ import { useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { PathContext } from '../../contexts/path.context';
+import { PageContext } from '../../contexts/page.context';
 
 import ProductCard from '../ProductCard/ProductCard.component';
 
 import './CategoryPreview.styles.scss';
 
 function CategoryPreview({ title, products }) {
-  const { setPreviousPage } = useContext(PathContext);
+  const { setPreviousPage } = useContext(PageContext);
 
   function setPreviousPageHandler() {
     setPreviousPage('/shop');
@@ -19,7 +19,11 @@ function CategoryPreview({ title, products }) {
     <div className="category-preview-container">
       <div className="category-preview-header">
         <h2>
-          <span className="title">{title.toUpperCase()}</span>
+          <Link
+            to={`${title}`}
+            onClick={setPreviousPageHandler}>
+            <span className="title">{title.toUpperCase()}</span>
+          </Link>
         </h2>
         <div className="see-more-container">
           <Link

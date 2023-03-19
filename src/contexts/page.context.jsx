@@ -1,14 +1,14 @@
 import { createContext, useState } from 'react';
 
-export const PathContext = createContext({
+export const PageContext = createContext({
   previousPage: '',
   setPreviousPage: () => {},
 });
 
-export function PathProvider({ children }) {
+export function PageProvider({ children }) {
   const [previousPage, setPreviousPage] = useState('');
 
   const value = { previousPage, setPreviousPage };
 
-  return <PathContext.Provider value={value}>{children}</PathContext.Provider>;
+  return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
 }
