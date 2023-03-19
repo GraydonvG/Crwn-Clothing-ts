@@ -10,7 +10,7 @@
   }
 
   .item-details {
-    width: 70%;
+    width: 55%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,5 +25,6 @@
 
   .clear-product-from-cart {
     align-self: center;
+    cursor: pointer;
   }
 }
