@@ -28,7 +28,7 @@ function CartDropdown() {
             />
           ))}
       </div>
-      {cartItems.length > 0 ? (
+      {cartItems.length ? (
         <Fragment>
           <span className="total-cart-price">Cart Total: ${cartTotalPrice}</span>
           <Button
