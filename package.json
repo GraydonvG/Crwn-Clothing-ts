@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite --open",
-    "build": "vite build",
+    "build": "CI= vite build",
     "preview": "vite preview"
   },
   "dependencies": {
