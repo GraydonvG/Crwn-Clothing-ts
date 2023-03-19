@@ -42,7 +42,7 @@ function clearCartItem(itemToClear, cartItems) {
 }
 
 export const CartContext = createContext({
-  isVisible: false,
+  isCartOpen: false,
   toggleCartDropdown: () => {},
   cartItems: [],
   addItemToCart: () => {},
@@ -53,7 +53,7 @@ export const CartContext = createContext({
 });
 
 export function CartProvider({ children }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [cartTotalPrice, setCartTotalPrice] = useState(0);
@@ -87,11 +87,11 @@ export function CartProvider({ children }) {
   }
 
   function toggleCartDropdown() {
-    return setIsVisible(!isVisible);
+    return setIsCartOpen(!isCartOpen);
   }
 
   const value = {
-    isVisible,
+    isCartOpen,
     toggleCartDropdown,
     cartItems,
     addItemToCart,

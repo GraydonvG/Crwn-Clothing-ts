@@ -15,7 +15,7 @@ import './NavigationBar.styles.scss';
 
 function Navigation() {
   const { currentUser } = useContext(UserContext);
-  const { isVisible } = useContext(CartContext);
+  const { isCartOpen } = useContext(CartContext);
 
   return (
     <Fragment>
@@ -47,7 +47,7 @@ function Navigation() {
           )}
           <CartIcon />
         </div>
-        {isVisible && <CartDropdown />}
+        {isCartOpen && <CartDropdown />}
       </div>
       <Outlet />
     </Fragment>
