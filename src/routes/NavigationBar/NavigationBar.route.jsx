@@ -9,7 +9,7 @@ import { signOutUser } from '../../utils/firebase/firebase.utility';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 
 import CartIcon from '../../components/CartIcon/CartIcon.component';
-import CartDropdown from '../../components/CartDropdown/CartDropdown.component';
+// import CartDropdown from '../../components/CartDropdown/CartDropdown.component';
 
 import './NavigationBar.styles.scss';
 
@@ -47,7 +47,7 @@ function Navigation() {
           )}
           <CartIcon />
         </div>
-        <CartDropdown />
+        {/* {isCartOpen && <CartDropdown />} */}
       </div>
       <Outlet />
     </Fragment>
