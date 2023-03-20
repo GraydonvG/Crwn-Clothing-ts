@@ -2,14 +2,14 @@ import { useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { PageContext } from '../../contexts/page.context';
+import { NavigationContext } from '../../contexts/navigation.context';
 
 import ProductCard from '../product-card/product-card.component';
 
 import './category-preview.styles.scss';
 
 function CategoryPreview({ title, products }) {
-  const { setPreviousPage } = useContext(PageContext);
+  const { setPreviousPage } = useContext(NavigationContext);
 
   function setPreviousPageHandler() {
     setPreviousPage('/shop');
