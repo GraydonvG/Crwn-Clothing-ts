@@ -1,7 +1,5 @@
 import { createContext, useReducer } from 'react';
 
-import { createAction } from '../utils/reducer/reducer.utils';
-
 // Checks if an item has already been added to the cart
 function checkIfItemExists(itemToCheck, cartItems) {
   return cartItems.find((cartItem) => cartItem.id === itemToCheck.id);
