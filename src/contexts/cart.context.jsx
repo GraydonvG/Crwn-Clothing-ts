@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useReducer } from 'react';
+
+import { createAction } from '../utils/reducer/reducer.utils';
 
 // Checks if an item has already been added to the cart
 function checkIfItemExists(itemToCheck, cartItems) {
@@ -8,16 +10,14 @@ function checkIfItemExists(itemToCheck, cartItems) {
 function addCartItem(itemToAdd, cartItems) {
   const itemExists = checkIfItemExists(itemToAdd, cartItems);
 
-  // If the item exisis - increment the quantity and adjust the priceByQuantity accordingly
+  // If the item exisis - increment the quantity
   if (itemExists) {
     return cartItems.map((cartItem) =>
-      cartItem.id === itemToAdd.id
-        ? { ...cartItem, quantity: cartItem.quantity + 1, priceByQuantity: cartItem.price * (cartItem.quantity + 1) }
-        : cartItem
+      cartItem.id === itemToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
     );
   }
 
-  // If the item does not exist - add the item and append a quantity of one and a priceByQuantity equal to the price of a single item
+  // If the item does not exist - add the item and append a quantity of one
   return [...cartItems, { ...itemToAdd, quantity: 1, priceByQuantity: itemToAdd.price }];
 }
 
@@ -29,11 +29,9 @@ function removeCartItem(itemToRemove, cartItems) {
     return cartItems.filter((item) => !(item.id === itemToRemove.id));
   }
 
-  // Decrement item quantity if item quantity > 1 and adjust priceByQuantity accordingly
+  // Decrement item quantity if item quantity > 1
   return cartItems.map((cartItem) =>
-    cartItem.id === itemToRemove.id
-      ? { ...cartItem, quantity: cartItem.quantity - 1, priceByQuantity: cartItem.price * (cartItem.quantity - 1) }
-      : cartItem
+    cartItem.id === itemToRemove.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
   );
 }
 
@@ -52,42 +50,75 @@ export const CartContext = createContext({
   cartTotalPrice: 0,
 });
 
+export const CART_ACTION_TYPES = {
+  TOGGLE_CART_DROPDOWN: 'TOGGLE_CART_DROPDOWN',
+  SET_CART_ITEMS: 'SET_CART_ITEMS',
+};
+
+const INITIAL_STATE = {
+  isCartOpen: false,
+  cartItems: [],
+  cartCount: 0,
+  cartTotalPrice: 0,
+};
+
+function cartReducer(state, action) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case CART_ACTION_TYPES.SET_CART_ITEMS:
+      return {
+        ...state,
+        ...payload,
+      };
+    case CART_ACTION_TYPES.TOGGLE_CART_DROPDOWN:
+      return {
+        ...state,
+        isCartOpen: !state.isCartOpen,
+      };
+    default:
+      throw new Error(`Unhandled type of ${type} in userReducer`);
+  }
+}
+
 export function CartProvider({ children }) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [cartTotalPrice, setCartTotalPrice] = useState(0);
+  const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
+  const { isCartOpen, cartItems, cartCount, cartTotalPrice } = state;
 
-  // Update the number of items in the cart whenever an item is added to the cart
-  // The total is displayed in the cart icon
-  useEffect(() => {
-    const newCartCount = cartItems.reduce((totalCount, item) => totalCount + item.quantity, 0);
+  function updateCartItemReducer(newCartItems) {
+    const newCartCount = newCartItems.reduce((totalCount, item) => totalCount + item.quantity, 0);
 
-    setCartCount(newCartCount);
-  }, [cartItems]);
+    const newTotalCartPrice = newCartItems.reduce((totalPrice, item) => totalPrice + item.priceByQuantity, 0);
 
-  // Update the total price for all that have been added to the cart
-  // The total is displayed in the cart dropdown and checkout page
-  useEffect(() => {
-    const totalCartPrice = cartItems.reduce((totalPrice, item) => totalPrice + item.priceByQuantity, 0);
+    // Update the total item price according to the quantity
+    newCartItems.map((item) => (item.priceByQuantity = item.price * item.quantity));
 
-    setCartTotalPrice(totalCartPrice);
-  }, [cartItems]);
-
-  function addItemToCart(itemToAdd) {
-    setCartItems(addCartItem(itemToAdd, cartItems));
-  }
-
-  function removeItemFromCart(itemToRemove) {
-    setCartItems(removeCartItem(itemToRemove, cartItems));
-  }
-
-  function clearItemFromCart(itemToClear) {
-    setCartItems(clearCartItem(itemToClear, cartItems));
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+        cartItems: newCartItems,
+        cartCount: newCartCount,
+        cartTotalPrice: newTotalCartPrice,
+      })
+    );
   }
 
   function toggleCartDropdown() {
-    return setIsCartOpen(!isCartOpen);
+    dispatch(createAction(CART_ACTION_TYPES.TOGGLE_CART_DROPDOWN, null));
+  }
+
+  function addItemToCart(itemToAdd) {
+    const newCartItems = addCartItem(itemToAdd, cartItems);
+    updateCartItemReducer(newCartItems);
+  }
+
+  function removeItemFromCart(itemToRemove) {
+    const newCartItems = removeCartItem(itemToRemove, cartItems);
+    updateCartItemReducer(newCartItems);
+  }
+
+  function clearItemFromCart(itemToClear) {
+    const newCartItems = clearCartItem(itemToClear, cartItems);
+    updateCartItemReducer(newCartItems);
   }
 
   const value = {
