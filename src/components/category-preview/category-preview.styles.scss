@@ -1,6 +1,7 @@
 .category-preview-container {
   display: flex;
   flex-direction: column;
+  overflow-y: visible;
   margin-bottom: 50px;
 
   .category-preview-header {
@@ -34,5 +35,22 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 20px;
+  }
+}
+
+@media (max-width: 840px) {
+  .category-preview-container {
+    .preview {
+      display: flex;
+      overflow-x: scroll;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .category-preview-container {
+    .category-preview-header {
+      justify-content: space-between;
+    }
   }
 }

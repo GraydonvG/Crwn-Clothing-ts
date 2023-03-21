@@ -12,3 +12,14 @@
     justify-content: space-between;
   }
 }
+
+@media (max-width: 860px) {
+  .sign-in-container {
+    width: fit-content;
+
+    .sign-in-buttons-container {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+}

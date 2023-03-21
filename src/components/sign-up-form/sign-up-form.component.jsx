@@ -105,7 +105,9 @@ function SignUpForm() {
             onChange: handleInputChange,
           }}
         />
-        <Button type="submit">Sign up</Button>
+        <div className="sign-up-button-container">
+          <Button type="submit">Sign up</Button>
+        </div>
       </form>
     </div>
   );
