@@ -1,6 +1,5 @@
 .cart-dropdown-container {
   position: absolute;
-  width: fit-content;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -16,7 +15,6 @@
   }
 
   .cart-items {
-    min-width: 335px;
     max-height: 380px;
     display: flex;
     flex-direction: column;
@@ -31,16 +29,5 @@
 
   button {
     margin-top: 15px;
-  }
-}
-
-@media (max-width: 450px) {
-  .cart-dropdown-container {
-    width: 280px;
-
-    // .cart-items {
-    //   width: 200px;
-    //   max-height: 380px;
-    // }
   }
 }
