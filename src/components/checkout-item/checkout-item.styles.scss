@@ -41,3 +41,9 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: 450px) {
+  .checkout-item-container {
+    font-size: 12px;
+  }
+}

@@ -29,3 +29,20 @@
     font-size: 36px;
   }
 }
+
+@media (max-width: 450px) {
+  .checkout-container {
+    width: 100%;
+    font-size: 12px;
+
+    .header-block {
+      &:last-child {
+        margin-right: 5px;
+      }
+    }
+
+    .total-checkout-price {
+      font-size: 28px;
+    }
+  }
+}
