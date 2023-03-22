@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: visible;
-  margin-bottom: 50px;
+  // margin-bottom: 50px;
 
   .category-preview-header {
     display: flex;
@@ -32,6 +32,7 @@
   }
 
   .preview {
+    height: 260px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 20px;
@@ -41,8 +42,8 @@
 @media (max-width: 840px) {
   .category-preview-container {
     .preview {
-      display: flex;
-      overflow-x: scroll;
+      overflow: auto;
+      overscroll-behavior-inline: contain;
     }
   }
 }

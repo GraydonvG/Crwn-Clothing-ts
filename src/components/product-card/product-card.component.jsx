@@ -21,8 +21,8 @@ function ProductCard({ product }) {
         alt={`${name}`}
       />
       <div className="footer">
-        <span className="name">{name}</span>
-        <span className="price">${price}</span>
+        <div className="name">{name}</div>
+        <div className="price">${price}</div>
       </div>
       <Button
         type="button"
