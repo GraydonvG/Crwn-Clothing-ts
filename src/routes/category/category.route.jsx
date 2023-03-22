@@ -31,12 +31,15 @@ function Category() {
       </div>
       <div className="category-products-container">
         {products &&
-          products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
-          ))}
+          products.map((product) => {
+            console.log(product);
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+            );
+          })}
       </div>
     </div>
   );
