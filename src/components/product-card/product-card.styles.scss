@@ -1,7 +1,7 @@
 .product-card-container {
   display: flex;
   flex-direction: column;
-  aspect-ratio: 3/4;
+  height: 400px;
   align-items: center;
   position: relative;
 
@@ -47,6 +47,16 @@
     .price {
       width: fit-content;
       margin-left: 30px;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .product-card-container {
+    height: 200px;
+
+    .footer {
+      font-size: 14px;
     }
   }
 }

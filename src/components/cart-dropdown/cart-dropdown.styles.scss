@@ -1,5 +1,6 @@
 .cart-dropdown-container {
   position: absolute;
+  width: 350px;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -29,5 +30,6 @@
 
   button {
     margin-top: 15px;
+    width: 100%;
   }
 }
