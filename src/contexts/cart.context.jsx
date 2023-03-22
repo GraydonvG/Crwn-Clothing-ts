@@ -88,10 +88,11 @@ export function CartProvider({ children }) {
   function updateCartItemReducer(newCartItems) {
     const newCartCount = newCartItems.reduce((totalCount, item) => totalCount + item.quantity, 0);
 
-    const newTotalCartPrice = newCartItems.reduce((totalPrice, item) => totalPrice + item.priceByQuantity, 0);
-
-    // Update the total item price according to the quantity
+    // Update the total item price according to the quantity.
+    // !!!! MUST COME BEFORE newTotalCartPrice otherwise total is incorrect
     newCartItems.map((item) => (item.priceByQuantity = item.price * item.quantity));
+
+    const newTotalCartPrice = newCartItems.reduce((totalPrice, item) => totalPrice + item.priceByQuantity, 0);
 
     dispatch(
       createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
