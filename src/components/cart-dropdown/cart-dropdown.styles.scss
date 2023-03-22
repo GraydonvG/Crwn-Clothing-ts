@@ -33,3 +33,9 @@
     width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .cart-dropdown-container {
+    width: 280px;
+  }
+}
