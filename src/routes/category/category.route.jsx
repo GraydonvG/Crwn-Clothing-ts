@@ -1,7 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { CategoriesContext } from '../../contexts/categories.context';
+import { selectCategoriesMap } from '../../store/categories/categories.selector';
+
 import { NavigationContext } from '../../contexts/navigation.context';
 
 import ProductCard from '../../components/product-card/product-card.component';
@@ -10,7 +12,7 @@ import './category.styles.scss';
 
 function Category() {
   const { category } = useParams();
-  const { categoriesMap } = useContext(CategoriesContext);
+  const categoriesMap = useSelector(selectCategoriesMap);
   const { previousPage } = useContext(NavigationContext);
   const [products, setProducts] = useState(categoriesMap[category]);
 

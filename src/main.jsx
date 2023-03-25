@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { CategoriesProvider } from './contexts/categories.context';
 import { CartProvider } from './contexts/cart.context';
 import { NavigationProvider, ScrollToTop } from './contexts/navigation.context';
 
@@ -18,13 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <BrowserRouter>
         <ScrollToTop />
-        <CategoriesProvider>
-          <CartProvider>
-            <NavigationProvider>
-              <App />
-            </NavigationProvider>
-          </CartProvider>
-        </CategoriesProvider>
+        <CartProvider>
+          <NavigationProvider>
+            <App />
+          </NavigationProvider>
+        </CartProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
