@@ -6,6 +6,7 @@ import './checkout-item.styles.scss';
 
 function CheckoutItem({ cartItem }) {
   const { imageUrl, name, quantity, priceByQuantity } = cartItem;
+
   const { addItemToCart, removeItemFromCart, clearItemFromCart } = useContext(CartContext);
 
   function addProductToCart() {

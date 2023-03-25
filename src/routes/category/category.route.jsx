@@ -11,9 +11,12 @@ import ProductCard from '../../components/product-card/product-card.component';
 import './category.styles.scss';
 
 function Category() {
-  const { category } = useParams();
   const categoriesMap = useSelector(selectCategoriesMap);
+
+  const { category } = useParams();
+
   const { previousPage } = useContext(NavigationContext);
+
   const [products, setProducts] = useState(categoriesMap[category]);
 
   useEffect(() => {

@@ -17,6 +17,7 @@ import './navigation-bar.styles.scss';
 
 function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
+
   const { isCartOpen } = useContext(CartContext);
 
   return (

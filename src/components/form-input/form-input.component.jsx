@@ -2,6 +2,7 @@ import './form-input.styles.scss';
 
 function FormInput({ labelOptions, inputOptions }) {
   const { label, htmlFor } = labelOptions;
+
   return (
     <div className="group">
       <input

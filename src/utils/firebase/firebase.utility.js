@@ -21,6 +21,7 @@ const firebaseConfig = {
 
 // eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
+
 const db = getFirestore();
 
 const googleProvider = new GoogleAuthProvider();
@@ -29,6 +30,7 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
+
 export function signInWithGooglePopup() {
   signInWithPopup(auth, googleProvider);
 }

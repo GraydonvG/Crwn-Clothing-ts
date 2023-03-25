@@ -6,6 +6,7 @@ import './cart-item.styles.scss';
 
 function CartItem({ cartItem }) {
   const { name, imageUrl, quantity, priceByQuantity } = cartItem;
+
   const { clearItemFromCart } = useContext(CartContext);
 
   function clearProductFromCart() {

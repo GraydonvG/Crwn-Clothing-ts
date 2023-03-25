@@ -9,8 +9,9 @@ import Button from '../button/button.component';
 import './cart-dropdown.styles.scss';
 
 function CartDropdown() {
-  const { cartItems, cartTotalPrice, toggleCartDropdown } = useContext(CartContext);
   const navigate = useNavigate();
+
+  const { cartItems, cartTotalPrice, toggleCartDropdown } = useContext(CartContext);
 
   function goToCheckoutHandler() {
     navigate('/checkout');

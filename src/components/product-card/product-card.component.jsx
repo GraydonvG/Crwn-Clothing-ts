@@ -8,6 +8,7 @@ import './product-card.styles.scss';
 
 function ProductCard({ product }) {
   const { name, price, imageUrl } = product;
+
   const { addItemToCart } = useContext(CartContext);
 
   function addToCard() {
