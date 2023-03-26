@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { CartProvider } from './contexts/cart.context';
-
 import { store } from './store/store';
 
 import App from './App';
@@ -16,10 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <CartProvider>
-          <ScrollToTop />
-          <App />
-        </CartProvider>
+        <ScrollToTop />
+        <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

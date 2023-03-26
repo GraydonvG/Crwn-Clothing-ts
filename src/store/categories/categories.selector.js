@@ -9,9 +9,10 @@ function selectCategoryReducer(state) {
 // Memoized selector
 // Only runs if the categories object changes
 // Returns categories array from the categories slice
-export const selectCategories = createSelector([selectCategoryReducer], (categoriesSlice) => {
-  return categoriesSlice.categories;
-});
+export const selectCategories = createSelector(
+  [selectCategoryReducer],
+  (categoriesSlice) => categoriesSlice.categories
+);
 
 // Memoized selector
 // Only runs if the categories array changes
