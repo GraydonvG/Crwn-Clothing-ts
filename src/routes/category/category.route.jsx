@@ -11,9 +11,9 @@ import ProductCard from '../../components/product-card/product-card.component';
 import './category.styles.scss';
 
 function Category() {
-  const categoriesMap = useSelector(selectCategoriesMap);
-
   const { category } = useParams();
+
+  const categoriesMap = useSelector(selectCategoriesMap);
 
   const { previousPage } = useContext(NavigationContext);
 
@@ -37,7 +37,6 @@ function Category() {
       <div className="category-products-container">
         {products &&
           products.map((product) => {
-            console.log(product);
             return (
               <ProductCard
                 key={product.id}
