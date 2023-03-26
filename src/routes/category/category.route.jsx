@@ -1,10 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectCategoriesMap } from '../../store/categories/categories.selector';
-
-import { NavigationContext } from '../../contexts/navigation.context';
 
 import ProductCard from '../../components/product-card/product-card.component';
 
@@ -14,8 +12,6 @@ function Category() {
   const { category } = useParams();
 
   const categoriesMap = useSelector(selectCategoriesMap);
-
-  const { previousPage } = useContext(NavigationContext);
 
   const [products, setProducts] = useState(categoriesMap[category]);
 
@@ -27,7 +23,7 @@ function Category() {
     <div className="category-container">
       <div className="category-header-container">
         <div className="back-container">
-          <Link to={previousPage}>
+          <Link to="/shop">
             <span className="back-arrows">&#10094;&#10094;</span>
             <span className="back">back</span>
           </Link>

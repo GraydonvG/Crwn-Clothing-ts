@@ -4,23 +4,21 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { CartProvider } from './contexts/cart.context';
-import { NavigationProvider, ScrollToTop } from './contexts/navigation.context';
 
 import { store } from './store/store';
 
 import App from './App';
 
 import './main.scss';
+import ScrollToTop from './helpers/scroll-to-top/scroll-to-top.helper';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ScrollToTop />
         <CartProvider>
-          <NavigationProvider>
-            <App />
-          </NavigationProvider>
+          <ScrollToTop />
+          <App />
         </CartProvider>
       </BrowserRouter>
     </Provider>
