@@ -2,6 +2,7 @@ import { compose, legacy_createStore as createStore, applyMiddleware } from 'red
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import { rootReducer } from './root-reducer';
 
@@ -13,9 +14,12 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middelWares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean);
+const middelWares = [process.env.NODE_ENV !== 'production' && logger, thunk].filter(Boolean);
 
-const composedEnhancers = compose(applyMiddleware(...middelWares));
+const composeEnhancer =
+  (process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+const composedEnhancers = composeEnhancer(applyMiddleware(...middelWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
