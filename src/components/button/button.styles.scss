@@ -41,3 +41,12 @@
     }
   }
 }
+
+@media (hover: none) {
+  .button-container {
+    &.inverted {
+      background-color: black;
+      color: white;
+    }
+  }
+}

@@ -13,11 +13,6 @@
 
 @media (max-width: 860px) {
   .authentication-container {
-    // display: flex;
-    // flex-direction: column;
-    // align-items: flex-start;
-    // width: auto;
-    // gap: 50px;
     display: grid;
     grid-template-rows: 1fr 1fr;
     width: fit-content;
