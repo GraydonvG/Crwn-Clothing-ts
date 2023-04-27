@@ -20,7 +20,8 @@ function App() {
       if (user) {
         createUserDocumentFromAuth(user);
       }
-      dispatch(setCurrentUser(user));
+      const selectedUserDetails = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+      dispatch(setCurrentUser(selectedUserDetails));
     });
     return unsubscribe;
   }, [dispatch]);
