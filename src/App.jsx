@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
 
-import { setCurrentUser } from './store/user/user.action';
+import { setCurrentUser } from './store/user/user.slice';
 
 import Navigation from './routes/navigation-bar/navigation-bar.route';
 import Home from './routes/home/home.route';
