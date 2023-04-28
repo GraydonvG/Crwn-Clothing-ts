@@ -7,10 +7,10 @@ import { selectIsCartOpen } from '../../store/cart/cart.selector';
 
 import { signOutUser } from '../../utils/firebase/firebase.utility';
 
-import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
-
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
+
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 
 import './navigation-bar.styles.scss';
 
