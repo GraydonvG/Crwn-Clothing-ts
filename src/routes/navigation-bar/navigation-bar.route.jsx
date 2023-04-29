@@ -35,7 +35,6 @@ function Navigation() {
           {currentUser ? (
             <Link
               className="nav-link"
-              to="/auth"
               onClick={signOutUser}>
               SIGN OUT
             </Link>
