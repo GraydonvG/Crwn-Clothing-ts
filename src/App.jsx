@@ -11,7 +11,8 @@ import Home from './routes/home/home.route';
 import Authentication from './routes/authentication/authentication.route';
 import Shop from './routes/shop/shop.route';
 import Checkout from './routes/checkout/checkout.route';
-import AddressAndPaymentForm from './routes/address-and-payment/address-and-payment-form.route';
+import AddressAndPaymentForm from './routes/address-and-payment-form/address-and-payment-form.route';
+import SuccessfulPayment from './routes/successful-payment/successful-payment.route';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,10 @@ function App() {
         <Route
           path="payment"
           element={<AddressAndPaymentForm />}
+        />
+        <Route
+          path="payment-successful"
+          element={<SuccessfulPayment />}
         />
       </Route>
     </Routes>

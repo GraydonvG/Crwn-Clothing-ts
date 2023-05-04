@@ -6,6 +6,6 @@ export const stripePromise = loadStripe(stripePublishableKey);
 
 export const options = {
   mode: 'payment',
-  amount: 1099,
   currency: 'usd',
+  amount: 1234,
 };

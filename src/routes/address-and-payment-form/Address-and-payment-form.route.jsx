@@ -11,6 +11,7 @@ import './address-and-payment-form.styles.scss';
 
 function AddressAndPaymentForm() {
   const [isProcessingPayment, setIsProcessingPayment] = useState();
+  const [errorMessage, setErrorMessage] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
   const amount = useSelector(selectTotalCartPrice);
@@ -23,9 +24,8 @@ function AddressAndPaymentForm() {
     }
 
     const { error: submitError } = await elements.submit();
-
     if (submitError) {
-      console.log(submitError);
+      setErrorMessage(`Error: ${submitError.message}`);
       return;
     }
 
@@ -36,7 +36,7 @@ function AddressAndPaymentForm() {
       hearders: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ amount: amount * 100 }),
+      body: JSON.stringify({ amount: amount * 100, currency: 'usd' }),
     }).then((resp) => resp.json());
 
     const {
@@ -47,15 +47,15 @@ function AddressAndPaymentForm() {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: 'http://localhost:8888/payment',
+        return_url: `${window.location.href}-successful`,
       },
     });
 
     setIsProcessingPayment(false);
 
     if (error) {
-      alert(`error code: ${error.code}`);
-      console.log(error);
+      setErrorMessage(`Error: ${error.message}`);
+      alert(error.message);
     }
   }
 
@@ -79,6 +79,7 @@ function AddressAndPaymentForm() {
             Pay now
           </Button>
         )}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
     </form>
   );
