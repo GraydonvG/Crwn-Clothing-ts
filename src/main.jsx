@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { Elements } from '@stripe/react-stripe-js';
 
 import { store, persistor } from './store/store';
+
+import { stripePromise, options } from './utils/stripe/stripe.utility';
 
 import App from './App';
 
@@ -19,7 +22,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         persistor={persistor}>
         <BrowserRouter>
           <ScrollToTop />
-          <App />
+          <Elements
+            stripe={stripePromise}
+            options={options}>
+            <App />
+          </Elements>
         </BrowserRouter>
       </PersistGate>
     </Provider>

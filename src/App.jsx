@@ -11,6 +11,7 @@ import Home from './routes/home/home.route';
 import Authentication from './routes/authentication/authentication.route';
 import Shop from './routes/shop/shop.route';
 import Checkout from './routes/checkout/checkout.route';
+import AddressAndPaymentForm from './routes/address-and-payment/address-and-payment-form.route';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,10 @@ function App() {
         <Route
           path="checkout"
           element={<Checkout />}
+        />
+        <Route
+          path="payment"
+          element={<AddressAndPaymentForm />}
         />
       </Route>
     </Routes>
