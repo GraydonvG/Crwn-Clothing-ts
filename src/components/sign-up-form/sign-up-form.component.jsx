@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { selectCurrentUser } from '../../store/user/user.selector';
+import { selectIsLoadingUser } from '../../store/user/user.selector';
+import { setIsLoadingUser } from '../../store/user/user.slice';
 
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-  updateUserProfile,
+  updateUserProfileDisplayName,
 } from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
+import Spinner from '../spinner/spinner.component';
 
 import './sign-up-form.styles.scss';
 import { useNavigate } from 'react-router-dom';
@@ -23,10 +25,11 @@ const defaultFromFields = {
 };
 
 function SignUpForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoadingUser = useSelector(selectIsLoadingUser);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { displayName, email, password, confirmPassword } = formFields;
-  const currentUser = useSelector(selectCurrentUser);
-  const navigate = useNavigate();
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -40,30 +43,33 @@ function SignUpForm() {
 
   async function handleSubmitSignUpForm(event) {
     event.preventDefault();
-    if (currentUser) {
-      alert('Please sign out before creating a new account.');
-      return;
-    }
 
     if (password !== confirmPassword) {
       alert('Passwords do not match.');
       return;
     }
+    dispatch(setIsLoadingUser(true));
 
     try {
+      // throw new Error('random error');
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
-      await updateUserProfile(user, { displayName });
+      await updateUserProfileDisplayName(user, displayName);
       await createUserDocumentFromAuth(user, { displayName });
       resetFromFields();
       navigate('/');
       window.location.reload();
     } catch (error) {
+      dispatch(setIsLoadingUser(false));
       if (error.code === 'auth/email-already-in-use') {
         alert('Error creating user account');
+        // make error masseage
+        // make spinner for signin
       } else {
         alert(error);
       }
     }
+
+    dispatch(setIsLoadingUser(false));
   }
 
   return (
@@ -124,7 +130,15 @@ function SignUpForm() {
           }}
         />
         <div className="sign-up-button-container">
-          <Button type="submit">Sign up</Button>
+          {isLoadingUser ? (
+            <Spinner />
+          ) : (
+            <Button
+              disabled={isLoadingUser}
+              type="submit">
+              Sign up
+            </Button>
+          )}
         </div>
       </form>
     </div>

@@ -104,12 +104,11 @@ export async function getCategoriesAndDocuments() {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 }
 
-export async function updateUserProfile(userAuth, updatedUserProfileInfo = {}) {
+export async function updateUserProfileDisplayName(userAuth, displayName) {
   if (!userAuth) return;
 
-  console.log(updatedUserProfileInfo);
   await updateProfile(userAuth, {
-    ...updatedUserProfileInfo,
+    displayName,
   });
   await reload(auth.currentUser);
   return auth.currentUser;

@@ -6,6 +6,7 @@ import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 
 import './sign-in-form.styles.scss';
+import { useNavigate } from 'react-router-dom';
 
 const defaultFromFields = {
   email: '',
@@ -13,6 +14,7 @@ const defaultFromFields = {
 };
 
 function SignInForm() {
+  const navigate = useNavigate();
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
 
@@ -32,6 +34,7 @@ function SignInForm() {
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
       resetFromFields();
+      navigate('/');
     } catch (error) {
       if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
         alert('Unable to sign in. Incorrect email or password.');
