@@ -16,12 +16,12 @@
   }
 
   .nav-links-container {
-    // width: 50%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
     .nav-link {
+      border-right: 1px solid grey;
       min-width: fit-content;
       padding: 10px 15px;
       cursor: pointer;
@@ -30,6 +30,19 @@
         text-decoration: underline;
         text-underline-offset: 5px;
       }
+
+      &:first-of-type {
+        border-left: 1px solid grey;
+      }
+
+      &:nth-last-of-type(2) {
+        border: none;
+      }
+    }
+
+    .welcome-user-nav {
+      font-family: cursive;
+      padding: 10px 15px;
     }
   }
 }

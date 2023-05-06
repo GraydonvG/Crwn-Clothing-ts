@@ -7,6 +7,8 @@ import {
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
+  updateProfile,
+  reload,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
@@ -43,7 +45,6 @@ export async function createAuthUserWithEmailAndPassword(email, password) {
 
 export async function signInAuthUserWithEmailAndPassword(email, password) {
   if (!email || !password) return;
-
   return await signInWithEmailAndPassword(auth, email, password);
 }
 
@@ -54,9 +55,10 @@ export async function createUserDocumentFromAuth(userAuth, additionalInformation
   const userSnapshot = await getDoc(userDocRef);
 
   if (userSnapshot.exists()) {
-    return userDocRef;
+    // console.log(userDocRef);
+    return;
   } else {
-    const { displayName, email } = userAuth;
+    const { email, displayName } = userAuth;
     const createdAt = new Date();
 
     try {
@@ -100,4 +102,15 @@ export async function getCategoriesAndDocuments() {
 
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+}
+
+export async function updateUserProfile(userAuth, updatedUserProfileInfo = {}) {
+  if (!userAuth) return;
+
+  console.log(updatedUserProfileInfo);
+  await updateProfile(userAuth, {
+    ...updatedUserProfileInfo,
+  });
+  await reload(auth.currentUser);
+  return auth.currentUser;
 }

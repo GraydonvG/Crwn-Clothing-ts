@@ -1,11 +1,19 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utility';
+import { selectCurrentUser } from '../../store/user/user.selector';
+
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+  updateUserProfile,
+} from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 
 import './sign-up-form.styles.scss';
+import { useNavigate } from 'react-router-dom';
 
 const defaultFromFields = {
   displayName: '',
@@ -17,6 +25,8 @@ const defaultFromFields = {
 function SignUpForm() {
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { displayName, email, password, confirmPassword } = formFields;
+  const currentUser = useSelector(selectCurrentUser);
+  const navigate = useNavigate();
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -30,21 +40,28 @@ function SignUpForm() {
 
   async function handleSubmitSignUpForm(event) {
     event.preventDefault();
+    if (currentUser) {
+      alert('Please sign out before creating a new account.');
+      return;
+    }
 
     if (password !== confirmPassword) {
-      alert('passwords do not match');
+      alert('Passwords do not match.');
       return;
     }
 
     try {
-      const response = await createAuthUserWithEmailAndPassword(email, password);
-      await createUserDocumentFromAuth(response.user, { displayName });
+      const { user } = await createAuthUserWithEmailAndPassword(email, password);
+      await updateUserProfile(user, { displayName });
+      await createUserDocumentFromAuth(user, { displayName });
       resetFromFields();
+      navigate('/');
+      window.location.reload();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         alert('Error creating user account');
       } else {
-        console.log('error signing up', error);
+        alert(error);
       }
     }
   }

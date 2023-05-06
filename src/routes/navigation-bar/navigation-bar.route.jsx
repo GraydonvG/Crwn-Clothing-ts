@@ -18,6 +18,10 @@ function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
 
+  function handleSignOut() {
+    signOutUser();
+  }
+
   return (
     <Fragment>
       <div className="navigation">
@@ -27,24 +31,17 @@ function Navigation() {
           <CrwnLogo className="logo" />
         </Link>
         <div className="nav-links-container">
+          {currentUser && currentUser.displayName && (
+            <span className="welcome-user-nav">{`Welcome, ${currentUser.displayName}`}</span>
+          )}
           <Link
             className="nav-link"
             to="/shop">
             SHOP
           </Link>
-          {currentUser ? (
-            <Link
-              className="nav-link"
-              onClick={signOutUser}>
-              SIGN OUT
-            </Link>
-          ) : (
-            <Link
-              className="nav-link"
-              to="/auth">
-              SIGN IN
-            </Link>
-          )}
+          <div className="nav-link ">
+            {currentUser ? <span onClick={handleSignOut}>SIGN OUT</span> : <Link to="/auth">SIGN IN</Link>}
+          </div>
           <CartIcon />
         </div>
         {isCartOpen && <CartDropdown />}

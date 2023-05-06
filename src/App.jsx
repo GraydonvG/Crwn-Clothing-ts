@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
-
 import { setCurrentUser } from './store/user/user.slice';
+
+import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
 
 import Navigation from './routes/navigation-bar/navigation-bar.route';
 import Home from './routes/home/home.route';
@@ -20,14 +20,14 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
       if (user) {
+        // create user doc if user signs in with google
         createUserDocumentFromAuth(user);
       }
-      const selectedUserDetails = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+      const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
       dispatch(setCurrentUser(selectedUserDetails));
     });
     return unsubscribe;
-  }, [dispatch]);
-  // dispatch does not change
+  });
 
   return (
     <Routes>

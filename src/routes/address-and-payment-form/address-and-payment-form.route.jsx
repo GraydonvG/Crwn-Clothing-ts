@@ -55,8 +55,11 @@ function AddressAndPaymentForm() {
 
     if (error) {
       setErrorMessage(`Error: ${error.message}`);
-      alert(error.message);
     }
+  }
+
+  function clearErrorMessage() {
+    setErrorMessage(null);
   }
 
   return (
@@ -65,11 +68,16 @@ function AddressAndPaymentForm() {
       onSubmit={handleSubmitPayment}>
       <div className="address-container">
         <h2>Delivery Address</h2>
-        <AddressElement options={{ mode: 'shipping' }} />
+        <AddressElement
+          onChange={clearErrorMessage}
+          options={{
+            mode: 'shipping',
+          }}
+        />
       </div>
       <div className="payment-container">
         <h2>Pay With Card</h2>
-        <PaymentElement />
+        <PaymentElement onChange={clearErrorMessage} />
         {isProcessingPayment ? (
           <Spinner />
         ) : (
