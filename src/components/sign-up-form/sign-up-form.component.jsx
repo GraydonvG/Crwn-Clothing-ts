@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { selectUserDidUpdateProfile } from '../../store/user/user.selector';
-import { setUserDidUpdateProfile } from '../../store/user/user.slice';
+import { setCurrentUser } from '../../store/user/user.slice';
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -27,7 +26,6 @@ const defaultFromFields = {
 function SignUpForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userDidUpdateProfile = useSelector(selectUserDidUpdateProfile);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
@@ -61,16 +59,22 @@ function SignUpForm() {
 
       // Unable to set displayName with createAuthUserWithEmailAndPassword
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
-      // The user auth is returned and, as a result of the onAuthStateChanged observer, the currentUser state is updated ***BEFORE*** displayName is updated in the user's profile.
-      // Therefore, displayName in the currentUser state is null.
-      // Set displayName in the user auth by updating the user's profile.
-      await updateUserProfile(user, displayName);
+      // The user's auth instance is returned containing the user's email address, but the displayName = null.
 
-      // The users displayName and email come from the user auth and ***NOT*** the user document.
+      // As a result of the onAuthStateChanged observer, the currentUser state is updated (in the useEffect in App.jsx) ***BEFORE*** we are able to update displayName in the user's auth instance.
+
+      // This creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
       await createUserDocumentFromAuth(user, { displayName });
 
-      // The dispatch below triggers the useEffect in App.jsx to update the currentUser state after the user's profile is updated. This triggers a rerender which allows the user's displayName to appear in the nav-bar's welcome message.
-      dispatch(setUserDidUpdateProfile(!userDidUpdateProfile));
+      // Set displayName in the user's auth instance by updating the user's profile.
+      await updateUserProfile(user, displayName);
+
+      // The users displayName and email come from the user's auth instance and ***NOT*** the user document.
+      const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
+
+      // The dispatch below updates the currentUser state once the user's displayName has been updated.
+      dispatch(setCurrentUser(selectedUserDetails));
+
       //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
