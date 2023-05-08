@@ -6,9 +6,8 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signOut,
-  onAuthStateChanged,
   updateProfile,
-  reload,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
@@ -33,8 +32,8 @@ googleProvider.setCustomParameters({
 
 export const auth = getAuth();
 
-export function signInWithGooglePopup() {
-  signInWithPopup(auth, googleProvider);
+export async function signInWithGooglePopup() {
+  return await signInWithPopup(auth, googleProvider);
 }
 
 export async function createAuthUserWithEmailAndPassword(email, password) {
@@ -104,12 +103,8 @@ export async function getCategoriesAndDocuments() {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 }
 
-export async function updateUserProfileDisplayName(userAuth, displayName) {
+export async function updateUserProfile(userAuth, displayName) {
   if (!userAuth) return;
 
-  await updateProfile(userAuth, {
-    displayName,
-  });
-  await reload(auth.currentUser);
-  return auth.currentUser;
+  await updateProfile(userAuth, { displayName });
 }

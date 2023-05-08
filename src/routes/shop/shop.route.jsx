@@ -21,6 +21,7 @@ function Shop() {
         element={<CategoriesPreview />}
       />
       <Route
+        // gets the category title for path from the 'Link' component in category-preview.component
         path=":category"
         element={<Category />}
       />

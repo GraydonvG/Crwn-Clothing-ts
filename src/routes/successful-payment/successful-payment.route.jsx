@@ -21,7 +21,7 @@ function SuccessfulPayment() {
   }
 
   return (
-    <div className="payment-success">
+    <div className="payment-successful">
       <h2>Payment successful!</h2>
       <h3>Thank you for your order.</h3>
       <Button onClick={handleReturnToHome}>Home</Button>

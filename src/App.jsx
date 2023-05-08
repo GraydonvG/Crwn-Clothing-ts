@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { selectUserDidUpdateProfile } from './store/user/user.selector';
 import { setCurrentUser } from './store/user/user.slice';
 
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
@@ -16,18 +17,22 @@ import SuccessfulPayment from './routes/successful-payment/successful-payment.ro
 
 function App() {
   const dispatch = useDispatch();
+  const userDidUpdateProfile = useSelector(selectUserDidUpdateProfile);
 
   useEffect(() => {
+    console.log('auth change');
     const unsubscribe = onAuthStateChangedListener((user) => {
       if (user) {
         // create user doc if user signs in with google
         createUserDocumentFromAuth(user);
       }
       const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
+      console.log('setCurrentUser in App.jsx');
       dispatch(setCurrentUser(selectedUserDetails));
     });
+    console.log('unsub');
     return unsubscribe;
-  });
+  }, [userDidUpdateProfile, dispatch]);
 
   return (
     <Routes>

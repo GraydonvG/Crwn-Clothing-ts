@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect, Fragment } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
+import Spinner from '../spinner/spinner.component';
 
 import './sign-in-form.styles.scss';
-import { useNavigate } from 'react-router-dom';
 
 const defaultFromFields = {
   email: '',
@@ -15,11 +17,16 @@ const defaultFromFields = {
 
 function SignInForm() {
   const navigate = useNavigate();
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
 
   function handleInputChange(event) {
     const { name, value } = event.target;
+
+    setErrorMessage(null);
 
     setFormFields({ ...formFields, [name]: value });
   }
@@ -31,22 +38,38 @@ function SignInForm() {
   async function handleSubmitSignInForm(event) {
     event.preventDefault();
 
+    setIsLoadingUser(true);
+
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
       resetFromFields();
       navigate('/');
     } catch (error) {
-      if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-        alert('Unable to sign in. Incorrect email or password.');
-      } else {
-        console.log('error signing in', error);
-      }
+      setErrorMessage('Error signing in. Please try again.');
     }
+
+    setIsLoadingUser(false);
   }
 
-  async function signInWithGoogle() {
-    signInWithGooglePopup();
+  async function handleSignInWithGoogle() {
+    setErrorMessage(null);
+    setIsLoadingUser(true);
+    try {
+      await signInWithGooglePopup();
+      navigate('/');
+    } catch (error) {
+      setErrorMessage('Error signing in. Please try again.');
+    }
+    setIsLoadingUser(false);
   }
+
+  useEffect(() => {
+    if (errorMessage || isLoadingUser) {
+      setButtonIsDisabled(true);
+    } else {
+      setButtonIsDisabled(false);
+    }
+  }, [errorMessage, isLoadingUser]);
 
   return (
     <div className="sign-in-container">
@@ -80,14 +103,26 @@ function SignInForm() {
           }}
         />
         <div className="sign-in-buttons-container">
-          <Button type="submit">Sign in</Button>
-          <Button
-            type="button"
-            buttonType={'google'}
-            onClick={signInWithGoogle}>
-            Sign in with google
-          </Button>
+          {isLoadingUser ? (
+            <Spinner />
+          ) : (
+            <Fragment>
+              <Button
+                disabled={buttonIsDisabled}
+                type="submit">
+                Sign in
+              </Button>
+              <Button
+                disabled={buttonIsDisabled}
+                type="button"
+                buttonType={'google'}
+                onClick={handleSignInWithGoogle}>
+                Sign in with google
+              </Button>
+            </Fragment>
+          )}
         </div>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>
     </div>
   );

@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectIsLoadingUser } from '../../store/user/user.selector';
-import { setIsLoadingUser } from '../../store/user/user.slice';
+import { selectUserDidUpdateProfile } from '../../store/user/user.selector';
+import { setUserDidUpdateProfile } from '../../store/user/user.slice';
 
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-  updateUserProfileDisplayName,
+  updateUserProfile,
 } from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../form-input/form-input.component';
@@ -15,7 +16,6 @@ import Button from '../button/button.component';
 import Spinner from '../spinner/spinner.component';
 
 import './sign-up-form.styles.scss';
-import { useNavigate } from 'react-router-dom';
 
 const defaultFromFields = {
   displayName: '',
@@ -27,12 +27,17 @@ const defaultFromFields = {
 function SignUpForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoadingUser = useSelector(selectIsLoadingUser);
+  const userDidUpdateProfile = useSelector(selectUserDidUpdateProfile);
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
   function handleInputChange(event) {
     const { name, value } = event.target;
+
+    setErrorMessage(null);
 
     setFormFields({ ...formFields, [name]: value });
   }
@@ -45,32 +50,47 @@ function SignUpForm() {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match.');
+      setErrorMessage('Passwords do not match.');
       return;
     }
-    dispatch(setIsLoadingUser(true));
+    setIsLoadingUser(true);
 
     try {
-      // throw new Error('random error');
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+      // Unable to set displayName with createAuthUserWithEmailAndPassword
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
-      await updateUserProfileDisplayName(user, displayName);
+      // The user auth is returned and, as a result of the onAuthStateChanged observer, the currentUser state is updated ***BEFORE*** displayName is updated in the user's profile.
+      // Therefore, displayName in the currentUser state is null.
+      // Set displayName in the user auth by updating the user's profile.
+      await updateUserProfile(user, displayName);
+
+      // The users displayName and email come from the user auth and ***NOT*** the user document.
       await createUserDocumentFromAuth(user, { displayName });
+
+      // The dispatch below triggers the useEffect in App.jsx to update the currentUser state after the user's profile is updated. This triggers a rerender which allows the user's displayName to appear in the nav-bar's welcome message.
+      dispatch(setUserDidUpdateProfile(!userDidUpdateProfile));
+      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
       resetFromFields();
       navigate('/');
-      window.location.reload();
     } catch (error) {
-      dispatch(setIsLoadingUser(false));
-      if (error.code === 'auth/email-already-in-use') {
-        alert('Error creating user account');
-        // make error masseage
-        // make spinner for signin
-      } else {
-        alert(error);
-      }
+      setIsLoadingUser(false);
+      setErrorMessage('Error signing up. Please try again.');
     }
 
-    dispatch(setIsLoadingUser(false));
+    setIsLoadingUser(false);
   }
+
+  useEffect(() => {
+    if (errorMessage || isLoadingUser) {
+      setButtonIsDisabled(true);
+    } else {
+      setButtonIsDisabled(false);
+    }
+  }, [errorMessage, isLoadingUser]);
 
   return (
     <div className="sign-up-container">
@@ -134,11 +154,12 @@ function SignUpForm() {
             <Spinner />
           ) : (
             <Button
-              disabled={isLoadingUser}
+              disabled={buttonIsDisabled}
               type="submit">
               Sign up
             </Button>
           )}
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
       </form>
     </div>
