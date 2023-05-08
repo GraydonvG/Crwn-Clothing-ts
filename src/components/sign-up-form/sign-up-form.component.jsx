@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -29,7 +29,6 @@ function SignUpForm() {
   const dispatch = useDispatch();
   const userDidUpdateProfile = useSelector(selectUserDidUpdateProfile);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { displayName, email, password, confirmPassword } = formFields;
@@ -48,6 +47,7 @@ function SignUpForm() {
 
   async function handleSubmitSignUpForm(event) {
     event.preventDefault();
+    setErrorMessage(null);
 
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match.');
@@ -77,20 +77,15 @@ function SignUpForm() {
       resetFromFields();
       navigate('/');
     } catch (error) {
-      setIsLoadingUser(false);
-      setErrorMessage('Error signing up. Please try again.');
+      if (error.code === 'auth/weak-password') {
+        setErrorMessage('Error signing up. Error code: auth/weak-password.');
+      } else {
+        setErrorMessage('Error signing up. Please try again.');
+      }
     }
 
     setIsLoadingUser(false);
   }
-
-  useEffect(() => {
-    if (errorMessage || isLoadingUser) {
-      setButtonIsDisabled(true);
-    } else {
-      setButtonIsDisabled(false);
-    }
-  }, [errorMessage, isLoadingUser]);
 
   return (
     <div className="sign-up-container">
@@ -154,7 +149,7 @@ function SignUpForm() {
             <Spinner />
           ) : (
             <Button
-              disabled={buttonIsDisabled}
+              disabled={isLoadingUser}
               type="submit">
               Sign up
             </Button>

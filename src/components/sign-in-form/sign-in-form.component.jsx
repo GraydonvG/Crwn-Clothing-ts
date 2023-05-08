@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -18,7 +18,6 @@ const defaultFromFields = {
 function SignInForm() {
   const navigate = useNavigate();
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
@@ -37,7 +36,7 @@ function SignInForm() {
 
   async function handleSubmitSignInForm(event) {
     event.preventDefault();
-
+    setErrorMessage(null);
     setIsLoadingUser(true);
 
     try {
@@ -58,18 +57,15 @@ function SignInForm() {
       await signInWithGooglePopup();
       navigate('/');
     } catch (error) {
-      setErrorMessage('Error signing in. Please try again.');
+      console.log(error.code);
+      if (error.code === 'auth/popup-closed-by-user') {
+        setErrorMessage('Error code: auth/popup-closed-by-user');
+      } else {
+        setErrorMessage('Error signing in. Please try again.');
+      }
     }
     setIsLoadingUser(false);
   }
-
-  useEffect(() => {
-    if (errorMessage || isLoadingUser) {
-      setButtonIsDisabled(true);
-    } else {
-      setButtonIsDisabled(false);
-    }
-  }, [errorMessage, isLoadingUser]);
 
   return (
     <div className="sign-in-container">
@@ -108,12 +104,12 @@ function SignInForm() {
           ) : (
             <Fragment>
               <Button
-                disabled={buttonIsDisabled}
+                disabled={isLoadingUser}
                 type="submit">
                 Sign in
               </Button>
               <Button
-                disabled={buttonIsDisabled}
+                disabled={isLoadingUser}
                 type="button"
                 buttonType={'google'}
                 onClick={handleSignInWithGoogle}>
