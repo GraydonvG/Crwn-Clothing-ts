@@ -2,16 +2,22 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AddressElement, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
+import { updateUserDoc } from '../../utils/firebase/firebase.utility';
+
 import { selectTotalCartPrice } from '../../store/cart/cart.selector';
 
 import Button from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
+
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 import './address-and-payment-form.styles.scss';
 
 function AddressAndPaymentForm() {
   const [isProcessingPayment, setIsProcessingPayment] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
+  const [userShippingDetails, setUserShippingDetails] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
   const amount = useSelector(selectTotalCartPrice);
@@ -62,18 +68,41 @@ function AddressAndPaymentForm() {
     setErrorMessage(null);
   }
 
+  function handleGetUserShippingDetails(event) {
+    setErrorMessage(null);
+    if (event.complete) {
+      setUserShippingDetails(event.value);
+    }
+  }
+
+  function handleSaveUserAddress() {
+    updateUserDoc(userShippingDetails);
+  }
+
   return (
     <form
+      onClick={clearErrorMessage}
       className="address-and-payment-container"
       onSubmit={handleSubmitPayment}>
       <div className="address-container">
         <h2>Delivery Address</h2>
         <AddressElement
-          onChange={clearErrorMessage}
+          onChange={handleGetUserShippingDetails}
           options={{
             mode: 'shipping',
           }}
         />
+        <div className="use-saved-address">
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="Use saved address"
+          />
+        </div>
+        <Button
+          type="button"
+          onClick={handleSaveUserAddress}>
+          Save
+        </Button>
       </div>
       <div className="payment-container">
         <h2>Pay With Card</h2>

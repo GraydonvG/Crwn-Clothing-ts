@@ -63,7 +63,8 @@ function SignUpForm() {
 
       // As a result of the onAuthStateChanged observer, the currentUser state is updated (in the useEffect in App.jsx) ***BEFORE*** we are able to update displayName in the user's auth instance.
 
-      // This creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
+      // createUserDocumentFromAuth creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
+      // Must come before updateUserProfile, otherwise the document's displayName is occasionally set to null.
       await createUserDocumentFromAuth(user, { displayName });
 
       // Set displayName in the user's auth instance by updating the user's profile.

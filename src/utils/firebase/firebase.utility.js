@@ -9,7 +9,17 @@ import {
   updateProfile,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDk7C6MsLlS4PkkBxDrq1-OjIsfhzyZyRg',
@@ -65,6 +75,8 @@ export async function createUserDocumentFromAuth(userAuth, additionalInformation
         displayName,
         email,
         createdAt,
+        name: '',
+        address: {},
         ...additionalInformation,
       });
     } catch (error) {
@@ -107,4 +119,17 @@ export async function updateUserProfile(userAuth, displayName) {
   if (!userAuth) return;
 
   await updateProfile(userAuth, { displayName });
+}
+
+export async function updateUserDoc(userData) {
+  if (!auth.currentUser || !userData) return;
+
+  console.log(auth);
+  console.log(userData);
+
+  const userDocRef = doc(db, 'users', auth.currentUser.uid);
+
+  await updateDoc(userDocRef, {
+    ...userData,
+  });
 }

@@ -6,9 +6,9 @@ import { clearAllItemsFromCart } from '../../store/cart/cart.slice';
 
 import Button from '../../components/button/button.component';
 
-import './successful-payment.styles.scss';
+import './payment-successful.styles.scss';
 
-function SuccessfulPayment() {
+function PaymentSuccessful() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,4 +29,4 @@ function SuccessfulPayment() {
   );
 }
 
-export default SuccessfulPayment;
+export default PaymentSuccessful;

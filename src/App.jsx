@@ -13,7 +13,7 @@ import Authentication from './routes/authentication/authentication.route';
 import Shop from './routes/shop/shop.route';
 import Checkout from './routes/checkout/checkout.route';
 import AddressAndPaymentForm from './routes/address-and-payment-form/address-and-payment-form.route';
-import SuccessfulPayment from './routes/successful-payment/successful-payment.route';
+import PaymentSuccessful from './routes/payment-successful/payment-successful.route';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
       if (user) {
-        // create user doc if user signs in with google
+        // create user doc if user signs in with google.
         // This creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
         createUserDocumentFromAuth(user);
       }
@@ -60,7 +60,7 @@ function App() {
         />
         <Route
           path="payment-successful"
-          element={<SuccessfulPayment />}
+          element={<PaymentSuccessful />}
         />
       </Route>
     </Routes>
