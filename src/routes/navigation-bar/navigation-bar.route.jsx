@@ -14,7 +14,7 @@ import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 
 import './navigation-bar.styles.scss';
 
-function Navigation() {
+function NavigationBar() {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
 
@@ -51,4 +51,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+export default NavigationBar;

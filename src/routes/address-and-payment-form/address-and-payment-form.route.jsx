@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { AddressElement, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
@@ -8,6 +8,7 @@ import { selectTotalCartPrice } from '../../store/cart/cart.selector';
 
 import Button from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
+import Modal from '../../components/modal/modal.component';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -15,9 +16,11 @@ import Checkbox from '@mui/material/Checkbox';
 import './address-and-payment-form.styles.scss';
 
 function AddressAndPaymentForm() {
-  const [isProcessingPayment, setIsProcessingPayment] = useState();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalText, setModalText] = useState(null);
   const [userShippingDetails, setUserShippingDetails] = useState(null);
+  const [isSavingShippingDetails, setIsSavingShippingDetails] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const amount = useSelector(selectTotalCartPrice);
@@ -31,7 +34,6 @@ function AddressAndPaymentForm() {
 
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setErrorMessage(`Error: ${submitError.message}`);
       return;
     }
 
@@ -60,65 +62,88 @@ function AddressAndPaymentForm() {
     setIsProcessingPayment(false);
 
     if (error) {
-      setErrorMessage(`Error: ${error.message}`);
+      setModalText(`Error: ${error.message}`);
+      setIsModalOpen(true);
     }
-  }
-
-  function clearErrorMessage() {
-    setErrorMessage(null);
+    // setMessage('Payment successful!');
+    // setIsModalOpen(true);
   }
 
   function handleGetUserShippingDetails(event) {
-    setErrorMessage(null);
+    setModalText(null);
     if (event.complete) {
       setUserShippingDetails(event.value);
     }
   }
 
-  function handleSaveUserAddress() {
-    updateUserDoc(userShippingDetails);
+  async function handleSaveUserAddress() {
+    setIsSavingShippingDetails(true);
+    try {
+      await updateUserDoc(userShippingDetails);
+      setModalText('Shipping details saved');
+      setIsModalOpen(true);
+    } catch (error) {
+      console.log(error);
+      setModalText('Error saving shipping details');
+    }
+    setIsSavingShippingDetails(false);
+  }
+
+  function handleIsModalOpen() {
+    setIsModalOpen(false);
   }
 
   return (
-    <form
-      onClick={clearErrorMessage}
-      className="address-and-payment-container"
-      onSubmit={handleSubmitPayment}>
-      <div className="address-container">
-        <h2>Delivery Address</h2>
-        <AddressElement
-          onChange={handleGetUserShippingDetails}
-          options={{
-            mode: 'shipping',
-          }}
-        />
-        <div className="use-saved-address">
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Use saved address"
+    <Fragment>
+      <form
+        className="address-and-payment-container"
+        onSubmit={handleSubmitPayment}>
+        <div className="address-container">
+          <h2>Shipping Details</h2>
+          <AddressElement
+            onChange={handleGetUserShippingDetails}
+            options={{
+              mode: 'shipping',
+            }}
           />
+          <div className="use-saved-address">
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Use saved shipping details"
+            />
+          </div>
+          {isSavingShippingDetails ? (
+            <Spinner />
+          ) : (
+            <Button
+              type="button"
+              onClick={handleSaveUserAddress}>
+              Save
+            </Button>
+          )}
         </div>
-        <Button
-          type="button"
-          onClick={handleSaveUserAddress}>
-          Save
-        </Button>
-      </div>
-      <div className="payment-container">
-        <h2>Pay With Card</h2>
-        <PaymentElement onChange={clearErrorMessage} />
-        {isProcessingPayment ? (
-          <Spinner />
-        ) : (
-          <Button
-            disabled={isProcessingPayment}
-            type="submit">
-            Pay now
-          </Button>
-        )}
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
-      </div>
-    </form>
+        <div className="payment-container">
+          <h2>Pay With Card</h2>
+          <PaymentElement />
+          {isProcessingPayment ? (
+            <Spinner />
+          ) : (
+            <Button
+              disabled={isProcessingPayment}
+              type="submit">
+              Pay now
+            </Button>
+          )}
+        </div>
+      </form>
+      {isModalOpen && (
+        <Modal
+          onClose={handleIsModalOpen}
+          isOpen={isModalOpen}>
+          <h3 className="modal-text">{modalText}</h3>
+        </Modal>
+      )}
+    </Fragment>
   );
 }
 

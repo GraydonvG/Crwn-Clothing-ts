@@ -57,26 +57,26 @@ export async function signInAuthUserWithEmailAndPassword(email, password) {
   return await signInWithEmailAndPassword(auth, email, password);
 }
 
-export async function createUserDocumentFromAuth(userAuth, additionalInformation = {}) {
-  if (!userAuth) return;
+export async function createUserDocumentFromAuth(additionalInformation = {}) {
+  if (!auth.currentUser) return;
 
-  const userDocRef = doc(db, 'users', userAuth.uid);
+  const userDocRef = doc(db, 'users', auth.currentUser.uid);
   const userSnapshot = await getDoc(userDocRef);
 
   if (userSnapshot.exists()) {
     // console.log(userDocRef);
     return;
   } else {
-    const { email, displayName } = userAuth;
+    const { email, displayName } = auth.currentUser;
     const createdAt = new Date();
 
     try {
       await setDoc(userDocRef, {
+        createdAt,
         displayName,
         email,
-        createdAt,
-        name: '',
-        address: {},
+        name: null,
+        address: null,
         ...additionalInformation,
       });
     } catch (error) {
@@ -115,17 +115,16 @@ export async function getCategoriesAndDocuments() {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 }
 
-export async function updateUserProfile(userAuth, displayName) {
-  if (!userAuth) return;
+export async function updateUserProfile(displayName) {
+  if (!auth.currentUser) return;
 
-  await updateProfile(userAuth, { displayName });
+  await updateProfile(auth.currentUser, { displayName });
+
+  return auth.currentUser;
 }
 
 export async function updateUserDoc(userData) {
   if (!auth.currentUser || !userData) return;
-
-  console.log(auth);
-  console.log(userData);
 
   const userDocRef = doc(db, 'users', auth.currentUser.uid);
 

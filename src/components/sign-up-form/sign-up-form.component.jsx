@@ -58,23 +58,23 @@ function SignUpForm() {
       //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       // Unable to set displayName with createAuthUserWithEmailAndPassword
-      const { user } = await createAuthUserWithEmailAndPassword(email, password);
+      await createAuthUserWithEmailAndPassword(email, password);
       // The user's auth instance is returned containing the user's email address, but the displayName = null.
 
       // As a result of the onAuthStateChanged observer, the currentUser state is updated (in the useEffect in App.jsx) ***BEFORE*** we are able to update displayName in the user's auth instance.
 
-      // createUserDocumentFromAuth creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
-      // Must come before updateUserProfile, otherwise the document's displayName is occasionally set to null.
-      await createUserDocumentFromAuth(user, { displayName });
-
-      // Set displayName in the user's auth instance by updating the user's profile.
-      await updateUserProfile(user, displayName);
+      // Update displayName in the user's auth instance by updating the user's profile.
+      // Update profile allows us to update a user's displayName and photoURL.
+      const user = await updateUserProfile(displayName);
 
       // The users displayName and email come from the user's auth instance and ***NOT*** the user document.
       const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
 
       // The dispatch below updates the currentUser state once the user's displayName has been updated.
       dispatch(setCurrentUser(selectedUserDetails));
+
+      // createUserDocumentFromAuth creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
+      createUserDocumentFromAuth({ displayName });
 
       //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
