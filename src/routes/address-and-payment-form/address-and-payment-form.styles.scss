@@ -13,22 +13,10 @@
     margin-top: 50px;
   }
 
-  .address-container {
-    .use-saved-address {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-    }
-  }
-
   .payment-container {
     display: flex;
     flex-direction: column;
   }
-}
-
-.modal-text {
-  font-size: 24px;
 }
 
 @media (max-width: 980px) {

@@ -9,17 +9,7 @@ import {
   updateProfile,
   onAuthStateChanged,
 } from 'firebase/auth';
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  collection,
-  writeBatch,
-  query,
-  getDocs,
-  updateDoc,
-} from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDk7C6MsLlS4PkkBxDrq1-OjIsfhzyZyRg',
@@ -76,7 +66,6 @@ export async function createUserDocumentFromAuth(additionalInformation = {}) {
         displayName,
         email,
         name: null,
-        address: null,
         ...additionalInformation,
       });
     } catch (error) {
@@ -115,20 +104,21 @@ export async function getCategoriesAndDocuments() {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 }
 
+export async function getUserDoc() {
+  if (!auth.currentUser) return;
+
+  const userDocRef = doc(db, 'users', auth.currentUser.uid);
+  const docSnap = await getDoc(userDocRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  }
+}
+
 export async function updateUserProfile(displayName) {
   if (!auth.currentUser) return;
 
   await updateProfile(auth.currentUser, { displayName });
 
   return auth.currentUser;
-}
-
-export async function updateUserDoc(userData) {
-  if (!auth.currentUser || !userData) return;
-
-  const userDocRef = doc(db, 'users', auth.currentUser.uid);
-
-  await updateDoc(userDocRef, {
-    ...userData,
-  });
 }

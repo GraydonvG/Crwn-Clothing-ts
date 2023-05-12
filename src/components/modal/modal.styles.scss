@@ -11,8 +11,8 @@
   z-index: 999;
 
   .modal-container {
-    width: 600px;
-    height: 300px;
+    // width: 600px;
+    // height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,8 +22,25 @@
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
 
     .modal-content {
-      button {
-        margin-top: 30px;
+      padding: 40px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .modal-header {
+        font-size: 2rem;
+        margin: 0;
+        margin-bottom: 20px;
+      }
+      .modal-text {
+        font-size: 1.3rem;
+        margin: 0;
+        margin-bottom: 20px;
+      }
+      .modal-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
       }
     }
   }

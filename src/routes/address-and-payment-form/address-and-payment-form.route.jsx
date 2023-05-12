@@ -2,28 +2,21 @@ import { useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { AddressElement, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-import { updateUserDoc } from '../../utils/firebase/firebase.utility';
-
 import { selectTotalCartPrice } from '../../store/cart/cart.selector';
 
-import Button from '../../components/button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
 import Modal from '../../components/modal/modal.component';
-
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 
 import './address-and-payment-form.styles.scss';
 
 function AddressAndPaymentForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalText, setModalText] = useState(null);
-  const [userShippingDetails, setUserShippingDetails] = useState(null);
-  const [isSavingShippingDetails, setIsSavingShippingDetails] = useState(false);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const amount = useSelector(selectTotalCartPrice);
   const stripe = useStripe();
   const elements = useElements();
-  const amount = useSelector(selectTotalCartPrice);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalText, setModalText] = useState(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   async function handleSubmitPayment(event) {
     event.preventDefault();
@@ -62,31 +55,11 @@ function AddressAndPaymentForm() {
     setIsProcessingPayment(false);
 
     if (error) {
-      setModalText(`Error: ${error.message}`);
+      setModalText({ header: 'Error', message: `${error.message}` });
       setIsModalOpen(true);
     }
     // setMessage('Payment successful!');
     // setIsModalOpen(true);
-  }
-
-  function handleGetUserShippingDetails(event) {
-    setModalText(null);
-    if (event.complete) {
-      setUserShippingDetails(event.value);
-    }
-  }
-
-  async function handleSaveUserAddress() {
-    setIsSavingShippingDetails(true);
-    try {
-      await updateUserDoc(userShippingDetails);
-      setModalText('Shipping details saved');
-      setIsModalOpen(true);
-    } catch (error) {
-      console.log(error);
-      setModalText('Error saving shipping details');
-    }
-    setIsSavingShippingDetails(false);
   }
 
   function handleIsModalOpen() {
@@ -101,26 +74,10 @@ function AddressAndPaymentForm() {
         <div className="address-container">
           <h2>Shipping Details</h2>
           <AddressElement
-            onChange={handleGetUserShippingDetails}
             options={{
               mode: 'shipping',
             }}
           />
-          <div className="use-saved-address">
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Use saved shipping details"
-            />
-          </div>
-          {isSavingShippingDetails ? (
-            <Spinner />
-          ) : (
-            <Button
-              type="button"
-              onClick={handleSaveUserAddress}>
-              Save
-            </Button>
-          )}
         </div>
         <div className="payment-container">
           <h2>Pay With Card</h2>
@@ -139,8 +96,13 @@ function AddressAndPaymentForm() {
       {isModalOpen && (
         <Modal
           onClose={handleIsModalOpen}
-          isOpen={isModalOpen}>
-          <h3 className="modal-text">{modalText}</h3>
+          isOpen={isModalOpen}
+          modalText={modalText}>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.inverted}
+            onClick={handleIsModalOpen}>
+            Close
+          </Button>
         </Modal>
       )}
     </Fragment>
