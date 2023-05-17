@@ -6,7 +6,7 @@ import { selectTotalCartPrice } from '../../store/cart/cart.selector';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import Modal from '../../components/modal/modal.component';
+import Modal, { MODAL_ICON_TYPES } from '../../components/modal/modal.component';
 
 import './address-and-payment-form.styles.scss';
 
@@ -58,8 +58,6 @@ function AddressAndPaymentForm() {
       setModalText({ header: 'Error', message: `${error.message}` });
       setIsModalOpen(true);
     }
-    // setMessage('Payment successful!');
-    // setIsModalOpen(true);
   }
 
   function handleIsModalOpen() {
@@ -97,7 +95,9 @@ function AddressAndPaymentForm() {
         <Modal
           onClose={handleIsModalOpen}
           isOpen={isModalOpen}
-          modalText={modalText}>
+          modalHeader={modalText.header}
+          modalMessage={modalText.message}
+          ModalIconType={MODAL_ICON_TYPES.failed}>
           <Button
             buttonType={BUTTON_TYPE_CLASSES.inverted}
             onClick={handleIsModalOpen}>

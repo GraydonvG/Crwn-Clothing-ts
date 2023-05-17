@@ -11,36 +11,76 @@
   z-index: 999;
 
   .modal-container {
-    // width: 600px;
-    // height: 300px;
+    width: 450px;
+    // height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
     background-color: whitesmoke;
     border-radius: 2%;
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
 
     .modal-content {
-      padding: 40px 60px;
+      padding: 60px 50px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
 
       .modal-header {
-        font-size: 2rem;
         margin: 0;
-        margin-bottom: 20px;
+        font-size: 36px;
       }
-      .modal-text {
-        font-size: 1.3rem;
-        margin: 0;
-        margin-bottom: 20px;
+
+      .modal-icon {
+        width: 250px;
+
+        &.failed {
+          transform: scale(1.36) translateY(7px);
+        }
+
+        &.alert {
+          transform: scale(0.73) translateY(12px);
+        }
       }
+
+      .modal-message-container {
+        height: auto;
+        max-height: 150px;
+        overflow-y: auto;
+        .modal-message {
+          font-size: 28px;
+        }
+      }
+
       .modal-buttons {
         display: flex;
         flex-direction: row;
         gap: 30px;
+        margin-top: 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    .modal-container {
+      width: 300px;
+
+      .modal-content {
+        .modal-header {
+          font-size: 26px;
+        }
+        .modal-message-container {
+          max-height: 100px;
+          .modal-message {
+            font-size: 18px;
+          }
+        }
+        .modal-icon {
+          width: 200px;
+        }
       }
     }
   }

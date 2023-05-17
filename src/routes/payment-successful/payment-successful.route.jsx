@@ -1,31 +1,49 @@
-import { useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { clearAllItemsFromCart } from '../../store/cart/cart.slice';
 
 import Button from '../../components/button/button.component';
+import Modal, { MODAL_ICON_TYPES } from '../../components/modal/modal.component';
 
 import './payment-successful.styles.scss';
 
 function PaymentSuccessful() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   useEffect(() => {
     dispatch(clearAllItemsFromCart());
-  });
+  }, [dispatch]);
 
-  function handleReturnToHome() {
+  function returnToHome() {
     navigate('/');
   }
 
+  function closeModal() {
+    setIsModalOpen(false);
+  }
+
   return (
-    <div className="payment-successful">
-      <h2>Payment successful!</h2>
-      <h3>Thank you for your order.</h3>
-      <Button onClick={handleReturnToHome}>Home</Button>
-    </div>
+    <Fragment>
+      {isModalOpen ? (
+        <div>
+          <Modal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            modalHeader={'Payment successful'}
+            modalMessage={'Thank you for your order!'}
+            ModalIconType={MODAL_ICON_TYPES.success}>
+            <Button onClick={returnToHome}>home</Button>
+            <Button onClick={closeModal}>close</Button>
+          </Modal>
+        </div>
+      ) : (
+        <div className="order-summary"></div>
+      )}
+    </Fragment>
   );
 }
 

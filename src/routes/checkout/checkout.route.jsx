@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,14 +7,13 @@ import { clearAllItemsFromCart } from '../../store/cart/cart.slice';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/button.component';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
-import Modal from '../../components/modal/modal.component';
+import Modal, { MODAL_ICON_TYPES } from '../../components/modal/modal.component';
 
 import './checkout.styles.scss';
 
 const headersArray = ['Product', 'Description', 'Quantity', 'Price', 'Remove'];
 
 function Checkout() {
-  const modalRef = useRef();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cartItems = useSelector(selectCartItems);
   const cartTotalPrice = useSelector(selectTotalCartPrice);
@@ -35,22 +34,8 @@ function Checkout() {
 
   function handleIsModalOpen() {
     if (cartItems.length === 0) return;
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   }
-
-  useEffect(() => {
-    function handleOutsideClick(event) {
-      if (isModalOpen && modalRef.current === event.target) {
-        setIsModalOpen(false);
-      }
-    }
-
-    document.addEventListener('click', handleOutsideClick, true);
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick, true);
-    };
-  }, [isModalOpen]);
 
   return (
     <Fragment>
@@ -84,13 +69,15 @@ function Checkout() {
         </div>
       </div>
       {isModalOpen && (
-        <div
-          className="modal-overlay"
-          ref={modalRef}>
-          <Modal modalText={'Are you sure?'}>
-            <Button onClick={handleClearAllCartItems}>Clear cart</Button>
-          </Modal>
-        </div>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleIsModalOpen}
+          modalHeader={'Clear cart'}
+          modalMessage={'Are you sure?'}
+          ModalIconType={MODAL_ICON_TYPES.alert}>
+          <Button onClick={handleClearAllCartItems}>Clear</Button>
+          <Button onClick={handleIsModalOpen}>Cancel</Button>
+        </Modal>
       )}
     </Fragment>
   );
