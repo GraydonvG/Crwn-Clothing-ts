@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import Lottie from 'lottie-react';
-import success from '../../assets/svg-animation/circle-alert-animation.json';
+import success from '../../assets/svg-animation/green-check-animation.json';
 import failed from '../../assets/svg-animation/red-x-animation.json';
 import alert from '../../assets/svg-animation/circle-alert-animation.json';
 
