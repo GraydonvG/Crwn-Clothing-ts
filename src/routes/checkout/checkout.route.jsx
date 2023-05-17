@@ -61,11 +61,15 @@ function Checkout() {
         <span className="total-checkout-price">Total: ${cartTotalPrice}</span>
         <div className="checkout-buttons-container">
           <Button
-            buttonType={BUTTON_TYPE_CLASSES.inverted}
+            buttonType={BUTTON_TYPE_CLASSES.white}
             onClick={handleIsModalOpen}>
             Clear cart
           </Button>
-          <Button onClick={handleProceedToPayment}>Proceed to payment</Button>
+          <Button
+            onClick={handleProceedToPayment}
+            buttonType={BUTTON_TYPE_CLASSES.black}>
+            Proceed to payment
+          </Button>
         </div>
       </div>
       {isModalOpen && (
@@ -75,8 +79,16 @@ function Checkout() {
           modalHeader={'Clear cart'}
           modalMessage={'Are you sure?'}
           ModalIconType={MODAL_ICON_TYPES.alert}>
-          <Button onClick={handleClearAllCartItems}>Clear</Button>
-          <Button onClick={handleIsModalOpen}>Cancel</Button>
+          <Button
+            onClick={handleClearAllCartItems}
+            buttonType={BUTTON_TYPE_CLASSES.warning}>
+            Clear
+          </Button>
+          <Button
+            onClick={handleIsModalOpen}
+            buttonType={BUTTON_TYPE_CLASSES.black}>
+            Cancel
+          </Button>
         </Modal>
       )}
     </Fragment>

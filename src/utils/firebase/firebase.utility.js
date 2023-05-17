@@ -65,7 +65,6 @@ export async function createUserDocumentFromAuth(additionalInformation = {}) {
         createdAt,
         displayName,
         email,
-        name: null,
         ...additionalInformation,
       });
     } catch (error) {

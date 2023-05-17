@@ -30,6 +30,17 @@
     }
   }
 
+  &.white {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+
+  &.black {
+    background-color: black;
+    color: white;
+  }
+
   &.inverted {
     background-color: white;
     color: black;
@@ -40,13 +51,27 @@
       color: white;
     }
   }
-}
 
-@media (hover: none) {
-  .button-container {
-    &.inverted {
-      background-color: black;
+  &.warning {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+
+    &:hover {
+      background-color: red;
       color: white;
     }
   }
 }
+
+// @media (hover: none) {
+//   .button-container {
+//     background-color: black;
+//     color: white;
+
+//     &.inverted {
+//       background-color: white;
+//       color: black;
+//     }
+//   }
+// }
