@@ -29,6 +29,10 @@
     .quantity-arrow {
       user-select: none;
       cursor: pointer;
+
+      &:hover {
+        transform: scale(1.5);
+      }
     }
 
     .quantity-value {
@@ -39,6 +43,10 @@
   .clear-product-from-checkout {
     padding-left: 12px;
     cursor: pointer;
+
+    &:hover {
+      transform: scale(1.5);
+    }
   }
 }
 

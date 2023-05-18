@@ -40,36 +40,40 @@ function Checkout() {
   return (
     <Fragment>
       <div className="checkout-container">
-        <div className="checkout-header">
-          {headersArray.map((header) => {
-            return (
-              <div
-                className="header-block"
-                key={header}>
-                <span>{header}</span>
-              </div>
-            );
-          })}
+        <div className="checkout-left-container">
+          <div className="checkout-header">
+            {headersArray.map((header) => {
+              return (
+                <div
+                  className="header-block"
+                  key={header}>
+                  <span>{header}</span>
+                </div>
+              );
+            })}
+          </div>
+          {cartItems.length > 0 &&
+            cartItems.map((item) => (
+              <CheckoutItem
+                key={item.id}
+                cartItem={item}
+              />
+            ))}
         </div>
-        {cartItems.length > 0 &&
-          cartItems.map((item) => (
-            <CheckoutItem
-              key={item.id}
-              cartItem={item}
-            />
-          ))}
-        <span className="total-checkout-price">Total: ${cartTotalPrice}</span>
-        <div className="checkout-buttons-container">
-          <Button
-            buttonType={BUTTON_TYPE_CLASSES.white}
-            onClick={handleIsModalOpen}>
-            Clear cart
-          </Button>
-          <Button
-            onClick={handleProceedToPayment}
-            buttonType={BUTTON_TYPE_CLASSES.black}>
-            Proceed to payment
-          </Button>
+        <div className="checkout-right-container">
+          <span className="total-checkout-price">Total: ${cartTotalPrice}</span>
+          <div className="checkout-buttons-container">
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.white}
+              onClick={handleIsModalOpen}>
+              Clear cart
+            </Button>
+            <Button
+              onClick={handleProceedToPayment}
+              buttonType={BUTTON_TYPE_CLASSES.black}>
+              Continue to payment
+            </Button>
+          </div>
         </div>
       </div>
       {isModalOpen && (
@@ -84,11 +88,7 @@ function Checkout() {
             buttonType={BUTTON_TYPE_CLASSES.warning}>
             Clear
           </Button>
-          <Button
-            onClick={handleIsModalOpen}
-            buttonType={BUTTON_TYPE_CLASSES.black}>
-            Cancel
-          </Button>
+          <Button onClick={handleIsModalOpen}>Cancel</Button>
         </Modal>
       )}
     </Fragment>

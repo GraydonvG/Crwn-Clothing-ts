@@ -5,7 +5,6 @@ export const BUTTON_TYPE_CLASSES = {
   inverted: 'inverted',
   warning: 'warning',
   white: 'white',
-  black: 'black',
 };
 
 function Button({ children, buttonType, ...otherProps }) {

@@ -1,60 +1,88 @@
 .checkout-container {
-  width: 55%;
-  min-height: 90vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 50px auto 0;
+  gap: 100px;
 
-  .checkout-header {
-    width: 100%;
-    padding: 10px 0;
+  .checkout-left-container {
+    min-height: 90vh;
     display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0;
 
-    .header-block {
-      text-transform: capitalize;
-      width: 23%;
+    .checkout-header {
+      width: 100%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid darkgrey;
 
-      &:last-child {
-        width: 8%;
+      .header-block {
+        text-transform: capitalize;
+        width: 23%;
+
+        &:last-child {
+          width: 10%;
+        }
       }
     }
   }
 
-  .total-checkout-price {
-    margin-top: 30px;
-    margin-left: auto;
-    font-size: 36px;
-  }
-
-  .checkout-buttons-container {
-    margin-top: 30px;
+  .checkout-right-container {
     display: flex;
+    height: fit-content;
     flex-direction: column;
-    align-items: center;
-    gap: 30px;
+    justify-content: flex-start;
+    margin: 50px 0;
 
-    button {
-      width: 100%;
+    .total-checkout-price {
+      font-size: 28px;
+    }
+
+    .checkout-buttons-container {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+
+      button {
+        width: 100%;
+      }
     }
   }
 }
 
 @media (max-width: 750px) {
   .checkout-container {
-    width: 100%;
-    font-size: 12px;
+    flex-direction: column;
+    gap: 30px;
 
-    .header-block {
-      &:last-child {
-        margin-right: 5px;
-      }
+    .checkout-left-container {
+      min-height: fit-content;
     }
 
-    .total-checkout-price {
-      font-size: 28px;
+    .checkout-right-container {
+      align-items: flex-end;
+
+      .total-checkout-price {
+        margin-top: 0px;
+        font-size: 28px;
+      }
     }
   }
 }
+
+// .checkout-left-container {
+// 	width: 100%;
+// 	font-size: 12px;
+
+// 	.header-block {
+// 		&:last-child {
+// 			margin-right: 5px;
+// 		}
+// 	}
+
+// 	.total-checkout-price {
+// 		font-size: 28px;
+// 	}
+// }
