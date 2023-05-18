@@ -15,17 +15,19 @@ function Shop() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route
-        index
-        element={<CategoriesPreview />}
-      />
-      <Route
-        // gets the category title for path from the 'Link' component in category-preview.component
-        path=":category"
-        element={<Category />}
-      />
-    </Routes>
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <Routes>
+        <Route
+          index
+          element={<CategoriesPreview />}
+        />
+        <Route
+          // gets the category title for path from the 'Link' component in category-preview.component
+          path=":category"
+          element={<Category />}
+        />
+      </Routes>
+    </div>
   );
 }
 

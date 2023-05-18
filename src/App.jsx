@@ -32,36 +32,39 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<NavigationBar />}>
+    <div>
+      <Routes>
         <Route
-          index={true}
-          element={<Home />}
-        />
-        <Route
-          path="shop/*"
-          element={<Shop />}
-        />
-        <Route
-          path="auth"
-          element={<Authentication />}
-        />
-        <Route
-          path="checkout"
-          element={<Checkout />}
-        />
-        <Route
-          path="payment"
-          element={<AddressAndPaymentForm />}
-        />
-        <Route
-          path="payment-successful"
-          element={<PaymentSuccessful />}
-        />
-      </Route>
-    </Routes>
+          path="/"
+          element={<NavigationBar />}>
+          <Route
+            index={true}
+            element={<Home />}
+          />
+          <Route
+            path="shop/*"
+            element={<Shop />}
+          />
+          <Route
+            path="auth"
+            element={<Authentication />}
+          />
+          <Route
+            path="checkout"
+            element={<Checkout />}
+          />
+          <Route
+            path="payment"
+            element={<AddressAndPaymentForm />}
+          />
+          <Route
+            path="payment-successful"
+            element={<PaymentSuccessful />}
+          />
+        </Route>
+      </Routes>
+      <div style={{ height: '50px', backgroundColor: 'transparent' }}></div>
+    </div>
   );
 }
 

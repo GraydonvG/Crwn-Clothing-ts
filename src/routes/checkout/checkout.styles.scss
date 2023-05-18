@@ -1,13 +1,16 @@
 .checkout-container {
   display: flex;
+  width: fit-content;
   gap: 100px;
+  margin: 0 auto;
 
   .checkout-left-container {
     min-height: 90vh;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 50px 0;
+    margin-top: 50px;
 
     .checkout-header {
       width: 100%;
@@ -18,7 +21,7 @@
 
       .header-block {
         text-transform: capitalize;
-        width: 23%;
+        width: 8%;
 
         &:last-child {
           width: 10%;
@@ -30,9 +33,10 @@
   .checkout-right-container {
     display: flex;
     height: fit-content;
+    width: 30%;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 50px 0;
+    margin-top: 50px;
 
     .total-checkout-price {
       font-size: 28px;
@@ -55,18 +59,37 @@
 @media (max-width: 750px) {
   .checkout-container {
     flex-direction: column;
+    width: auto;
     gap: 30px;
 
     .checkout-left-container {
       min-height: fit-content;
+      width: auto;
     }
 
     .checkout-right-container {
       align-items: flex-end;
+      width: auto;
+      margin-top: 0;
 
       .total-checkout-price {
         margin-top: 0px;
         font-size: 28px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-left-container {
+    .checkout-header {
+      .header-block {
+        // width: 8%;
+        font-size: 12px;
+
+        &:last-child {
+          width: 10%;
+        }
       }
     }
   }

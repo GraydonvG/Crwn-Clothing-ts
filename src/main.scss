@@ -3,6 +3,7 @@
 }
 
 body {
+  width: 100%;
   margin: 0;
   padding: 20px 40px;
   font-family: 'Open Sans Condensed', sans-serif;
@@ -20,7 +21,7 @@ a {
   color: red;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 550px) {
   body {
     padding: 10px 20px;
   }

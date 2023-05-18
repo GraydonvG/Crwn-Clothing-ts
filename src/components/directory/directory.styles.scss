@@ -1,6 +1,12 @@
-.categories-container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.direcory-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: auto;
+
+  .directory {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
