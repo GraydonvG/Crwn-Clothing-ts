@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -27,11 +27,11 @@ function SignUpForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
-  function handleInputChange(event) {
+  function inputChangeHandler(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
 
     setErrorMessage(null);
@@ -43,7 +43,7 @@ function SignUpForm() {
     setFormFields(defaultFromFields);
   }
 
-  async function handleSubmitSignUpForm(event) {
+  async function submitSignUpFormHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrorMessage(null);
 
@@ -96,7 +96,7 @@ function SignUpForm() {
     <div className="sign-up-container">
       <h2>Dont have an account?</h2>
       <span>Sign up with your email and password</span>
-      <form onSubmit={handleSubmitSignUpForm}>
+      <form onSubmit={submitSignUpFormHandler}>
         <FormInput
           labelOptions={{
             label: 'Display Name',
@@ -107,7 +107,7 @@ function SignUpForm() {
             type: 'text',
             name: 'displayName',
             value: displayName,
-            onChange: handleInputChange,
+            onChange: inputChangeHandler,
           }}
         />
         <FormInput
@@ -120,7 +120,7 @@ function SignUpForm() {
             type: 'email',
             name: 'email',
             value: email,
-            onChange: handleInputChange,
+            onChange: inputChangeHandler,
           }}
         />
         <FormInput
@@ -133,7 +133,7 @@ function SignUpForm() {
             type: 'password',
             name: 'password',
             value: password,
-            onChange: handleInputChange,
+            onChange: inputChangeHandler,
           }}
         />
         <FormInput
@@ -146,7 +146,7 @@ function SignUpForm() {
             type: 'password',
             name: 'confirmPassword',
             value: confirmPassword,
-            onChange: handleInputChange,
+            onChange: inputChangeHandler,
           }}
         />
         <div className="sign-up-button-container">

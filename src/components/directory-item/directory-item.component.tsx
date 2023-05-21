@@ -2,7 +2,13 @@ import { useNavigate } from 'react-router-dom';
 
 import './directory-item.styles.scss';
 
-function DirectoryItem({ title, imageUrl, route }) {
+type DirectoryItemProps = {
+  title: string;
+  imageUrl: string;
+  route: string;
+};
+
+function DirectoryItem({ title, imageUrl, route }: DirectoryItemProps) {
   const navigate = useNavigate();
 
   function navigateToCategoryHandler() {

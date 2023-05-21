@@ -4,14 +4,32 @@ import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.utility
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
   try {
-    const categoriesArray = await getCategoriesAndDocuments('categories');
+    const categoriesArray = await getCategoriesAndDocuments();
     return categoriesArray;
   } catch (error) {
     console.log('Error fetching categories.', error);
+    return [];
   }
 });
 
-export const CATEGORIES_INITIAL_STATE = {
+export type CategoryItem = {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+};
+
+export type Category = {
+  title: string;
+  items: CategoryItem[];
+};
+
+export type CategoriesState = {
+  readonly categories: Category[];
+  readonly isLoading: boolean;
+};
+
+export const CATEGORIES_INITIAL_STATE: CategoriesState = {
   categories: [],
   isLoading: false,
 };
@@ -19,6 +37,7 @@ export const CATEGORIES_INITIAL_STATE = {
 export const categoriesSlice = createSlice({
   name: 'categories',
   initialState: CATEGORIES_INITIAL_STATE,
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCategories.pending, (state) => {
       state.isLoading = true;

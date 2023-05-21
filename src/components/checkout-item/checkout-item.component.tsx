@@ -1,10 +1,14 @@
 import { useDispatch } from 'react-redux';
 
-import { addItemToCart, removeItemFromCart, clearItemFromCart } from '../../store/cart/cart.slice';
+import { addItemToCart, removeItemFromCart, clearItemFromCart, type CartItem } from '../../store/cart/cart.slice';
 
 import './checkout-item.styles.scss';
 
-function CheckoutItem({ cartItem }) {
+type CheckoutItemProps = {
+  cartItem: CartItem;
+};
+
+function CheckoutItem({ cartItem }: CheckoutItemProps) {
   const { imageUrl, name, quantity, priceByQuantity } = cartItem;
   const dispatch = useDispatch();
 

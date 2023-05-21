@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 
+import { type Category } from '../../store/categories/categories.slice';
+
 import ProductCard from '../product-card/product-card.component';
 
 import './category-preview.styles.scss';
 
-function CategoryPreview({ title, products }) {
+function CategoryPreview({ title, items }: Category) {
   return (
     <div className="category-preview-container">
       <div className="category-preview-header">
@@ -27,7 +29,7 @@ function CategoryPreview({ title, products }) {
         </div>
       </div>
       <div className="preview">
-        {products
+        {items
           .filter((_, index) => index < 4)
           .map((product) => (
             <ProductCard

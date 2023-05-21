@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, type ChangeEvent, type FormEvent } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -18,11 +18,11 @@ const defaultFromFields = {
 function SignInForm() {
   const navigate = useNavigate();
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
 
-  function handleInputChange(event) {
+  function inputChangeHandler(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
 
     setErrorMessage(null);
@@ -34,7 +34,7 @@ function SignInForm() {
     setFormFields(defaultFromFields);
   }
 
-  async function handleSubmitSignInForm(event) {
+  async function submitSignInFormHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrorMessage(null);
     setIsLoadingUser(true);
@@ -57,10 +57,8 @@ function SignInForm() {
       await signInWithGooglePopup();
       navigate('/');
     } catch (error) {
-      console.log(error.code);
-      if (error.code === 'auth/popup-closed-by-user') {
-        setErrorMessage('Error code: auth/popup-closed-by-user');
-      } else {
+      console.log(error);
+      if (error) {
         setErrorMessage('Error signing in. Please try again.');
       }
     }
@@ -71,7 +69,7 @@ function SignInForm() {
     <div className="sign-in-container">
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
-      <form onSubmit={handleSubmitSignInForm}>
+      <form onSubmit={submitSignInFormHandler}>
         <FormInput
           labelOptions={{
             label: 'Email',
@@ -82,7 +80,7 @@ function SignInForm() {
             type: 'email',
             name: 'email',
             value: email,
-            onChange: handleInputChange,
+            onChange: inputChangeHandler,
           }}
         />
         <FormInput
@@ -95,7 +93,7 @@ function SignInForm() {
             type: 'password',
             name: 'password',
             value: password,
-            onChange: handleInputChange,
+            onChange: inputChangeHandler,
           }}
         />
         <div className="sign-in-buttons-container">

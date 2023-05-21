@@ -1,3 +1,4 @@
+// import { useDispatch } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -18,9 +19,13 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(logger),
 });
+export type RootState = ReturnType<typeof rootReducer>;
+
+// export type AppDispatch = typeof store.dispatch;
+// export const useAppDispatch: () => AppDispatch = useDispatch;
 
 export const persistor = persistStore(store);

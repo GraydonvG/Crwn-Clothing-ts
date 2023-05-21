@@ -7,28 +7,32 @@ import { Elements } from '@stripe/react-stripe-js';
 
 import { store, persistor } from './store/store';
 
-import { stripePromise, options } from './utils/stripe/stripe.utility';
+import { stripePromise } from './utils/stripe/stripe.utility';
 
 import App from './App';
 
-import './main.scss';
 import ScrollToTop from './helpers/scroll-to-top/scroll-to-top.helper';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate
-        loading={null}
-        persistor={persistor}>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Elements
-            stripe={stripePromise}
-            options={options}>
-            <App />
-          </Elements>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>
-);
+import './main.scss';
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <PersistGate
+          loading={null}
+          persistor={persistor}>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Elements stripe={stripePromise}>
+              <App />
+            </Elements>
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </React.StrictMode>
+  );
+} else {
+  console.log('Root element not found');
+}

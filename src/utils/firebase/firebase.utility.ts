@@ -8,8 +8,12 @@ import {
   signOut,
   updateProfile,
   onAuthStateChanged,
+  type NextOrObserver,
+  type User,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
+
+import { type Category } from '../../store/categories/categories.slice';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDk7C6MsLlS4PkkBxDrq1-OjIsfhzyZyRg',
@@ -20,7 +24,7 @@ const firebaseConfig = {
   appId: '1:171035978542:web:c0db8299e92eaf1aa228bf',
 };
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore();
@@ -36,13 +40,12 @@ export async function signInWithGooglePopup() {
   return await signInWithPopup(auth, googleProvider);
 }
 
-export async function createAuthUserWithEmailAndPassword(email, password) {
+export async function createAuthUserWithEmailAndPassword(email: string, password: string) {
   if (!email || !password) return;
-
   return await createUserWithEmailAndPassword(auth, email, password);
 }
 
-export async function signInAuthUserWithEmailAndPassword(email, password) {
+export async function signInAuthUserWithEmailAndPassword(email: string, password: string) {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 }
@@ -54,7 +57,6 @@ export async function createUserDocumentFromAuth(additionalInformation = {}) {
   const userSnapshot = await getDoc(userDocRef);
 
   if (userSnapshot.exists()) {
-    // console.log(userDocRef);
     return;
   } else {
     const { email, displayName } = auth.currentUser;
@@ -77,11 +79,15 @@ export async function signOutUser() {
   signOut(auth);
 }
 
-export function onAuthStateChangedListener(callback) {
+export function onAuthStateChangedListener(callback: NextOrObserver<User>) {
   onAuthStateChanged(auth, callback);
 }
 
-export async function addCollectionAndDocuments(collectionKey, objectsToAdd) {
+export type ObjectToAdd = {
+  title: string;
+};
+
+export async function addCollectionAndDocuments<T extends ObjectToAdd>(collectionKey: string, objectsToAdd: T[]) {
   const collectionRef = collection(db, collectionKey);
 
   const batch = writeBatch(db);
@@ -95,12 +101,12 @@ export async function addCollectionAndDocuments(collectionKey, objectsToAdd) {
   console.log('done');
 }
 
-export async function getCategoriesAndDocuments() {
+export async function getCategoriesAndDocuments(): Promise<Category[]> {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data() as Category);
 }
 
 export async function getUserDoc() {
@@ -114,7 +120,7 @@ export async function getUserDoc() {
   }
 }
 
-export async function updateUserProfile(displayName) {
+export async function updateUserProfile(displayName: string) {
   if (!auth.currentUser) return;
 
   await updateProfile(auth.currentUser, { displayName });
