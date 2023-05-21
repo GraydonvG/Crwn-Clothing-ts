@@ -31,10 +31,10 @@ function CategoryPreview({ title, items }: Category) {
       <div className="preview">
         {items
           .filter((_, index) => index < 4)
-          .map((product) => (
+          .map((item) => (
             <ProductCard
-              key={product.id}
-              product={product}
+              key={item.id}
+              item={item}
             />
           ))}
       </div>
