@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addItemToCart } from '../../store/cart/cart.slice';
 import { type CategoryItem } from '../../store/categories/categories.slice';
 
-import Button from '../button/button.component';
+import Button, { ButtonType } from '../button/button.component';
 
 import './product-card.styles.scss';
 
@@ -31,7 +31,7 @@ function ProductCard({ item }: ProductCardProps) {
       </div>
       <Button
         type="button"
-        buttonType="inverted"
+        buttonType={ButtonType.Inverted}
         onClick={addToCard}>
         Add to cart
       </Button>

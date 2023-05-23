@@ -9,12 +9,16 @@
 
   .image-container {
     width: 23%;
-    padding-right: 15px;
 
     img {
       width: 100%;
       height: 100%;
     }
+  }
+
+  .image-container,
+  .name {
+    padding-right: 15px;
   }
   .name,
   .quantity-container,

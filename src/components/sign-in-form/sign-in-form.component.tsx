@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase/firebase.utility';
 
 import FormInput from '../form-input/form-input.component';
-import Button from '../button/button.component';
+import Button, { ButtonType } from '../button/button.component';
 import Spinner from '../spinner/spinner.component';
 
 import './sign-in-form.styles.scss';
@@ -109,7 +109,7 @@ function SignInForm() {
               <Button
                 disabled={isLoadingUser}
                 type="button"
-                buttonType={'google'}
+                buttonType={ButtonType.Google}
                 onClick={handleSignInWithGoogle}>
                 Sign in with google
               </Button>

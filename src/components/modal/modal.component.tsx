@@ -7,6 +7,11 @@ import alert from '../../assets/svg-animation/circle-alert-animation.json';
 
 import './modal.styles.scss';
 
+export type ModalText = {
+  header: string;
+  message: string;
+};
+
 export enum ModalIconTypes {
   Success = 'success',
   Failed = 'failed',

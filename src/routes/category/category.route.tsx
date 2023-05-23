@@ -11,13 +11,15 @@ import './category.styles.scss';
 
 function Category() {
   const { category } = useParams();
-
   const isLoading = useSelector(selectCategoriesIsLoading);
   const categoriesMap = useSelector(selectCategoriesMap);
 
-  const [products, setProducts] = useState(categoriesMap[category]);
+  const initialProducts = categoriesMap && category ? categoriesMap[category] : [];
+
+  const [products, setProducts] = useState(initialProducts);
 
   useEffect(() => {
+    if (!category) return;
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
 
@@ -30,7 +32,7 @@ function Category() {
             <span className="back">back</span>
           </Link>
         </div>
-        <h2 className="category-title">{category.toUpperCase()}</h2>
+        <h2 className="category-title">{category?.toUpperCase()}</h2>
       </div>
       {isLoading ? (
         <Spinner />
@@ -41,7 +43,7 @@ function Category() {
               return (
                 <ProductCard
                   key={product.id}
-                  product={product}
+                  item={product}
                 />
               );
             })}

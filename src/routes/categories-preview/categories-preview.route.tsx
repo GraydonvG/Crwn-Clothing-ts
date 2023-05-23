@@ -17,12 +17,12 @@ function CategoriesPreview() {
       ) : (
         <div className="categories-preview-container">
           {Object.keys(categoriesMap).map((title) => {
-            const products = categoriesMap[title];
+            const items = categoriesMap[title];
             return (
               <CategoryPreview
                 key={title}
                 title={title}
-                products={products}
+                items={items}
               />
             );
           })}

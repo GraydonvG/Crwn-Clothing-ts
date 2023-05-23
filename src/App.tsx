@@ -11,7 +11,6 @@ import Home from './routes/home/home.route';
 import Authentication from './routes/authentication/authentication.route';
 import Shop from './routes/shop/shop.route';
 import Checkout from './routes/checkout/checkout.route';
-import AddressAndPaymentForm from './routes/address-and-payment-form/address-and-payment-form.route';
 import PaymentSuccessful from './routes/payment-successful/payment-successful.route';
 
 function App() {
@@ -52,10 +51,6 @@ function App() {
           <Route
             path="checkout"
             element={<Checkout />}
-          />
-          <Route
-            path="payment"
-            element={<AddressAndPaymentForm />}
           />
           <Route
             path="payment-successful"

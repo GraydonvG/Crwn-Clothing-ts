@@ -1,4 +1,4 @@
-import { useState, Fragment, type FormEvent } from 'react';
+import { useState, Fragment, type FormEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { AddressElement, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
@@ -6,27 +6,25 @@ import { selectTotalCartPrice } from '../../store/cart/cart.selector';
 
 import Button, { ButtonType } from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import Modal, { ModalIconTypes } from '../../components/modal/modal.component';
+import Modal, { ModalIconTypes, type ModalText } from '../../components/modal/modal.component';
 
 import './address-and-payment-form.styles.scss';
 
-type ModalText = {
-  header: string;
-  message: string;
-};
-
 function AddressAndPaymentForm() {
-  const amount = useSelector(selectTotalCartPrice);
   const stripe = useStripe();
   const elements = useElements();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setModalText] = useState<ModalText | undefined>(undefined);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const cartTotalPrice = useSelector(selectTotalCartPrice);
+  const [totalToPay, setTotalToPay] = useState(cartTotalPrice);
+  const standardDeliveryFee = 6;
+  const [deliveryFee, setDeliveryFee] = useState(standardDeliveryFee);
 
   async function submitPaymentHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!stripe || !elements) {
+    if (!stripe || !elements || totalToPay === 0) {
       return;
     }
 
@@ -42,7 +40,7 @@ function AddressAndPaymentForm() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ amount: amount * 100, currency: 'usd' }),
+      body: JSON.stringify({ amount: totalToPay * 100, currency: 'usd' }),
     }).then((resp) => resp.json());
 
     const {
@@ -65,9 +63,19 @@ function AddressAndPaymentForm() {
     }
   }
 
-  function handleIsModalOpen() {
+  function isModalOpenHandler() {
     setIsModalOpen(false);
   }
+
+  useEffect(() => {
+    if (cartTotalPrice > 50 || cartTotalPrice === 0) {
+      setDeliveryFee(0);
+      setTotalToPay(cartTotalPrice);
+    } else if (cartTotalPrice < 50) {
+      setDeliveryFee(standardDeliveryFee);
+      setTotalToPay(cartTotalPrice + standardDeliveryFee);
+    }
+  }, [cartTotalPrice, deliveryFee]);
 
   return (
     <Fragment>
@@ -81,6 +89,14 @@ function AddressAndPaymentForm() {
               mode: 'shipping',
             }}
           />
+        </div>
+        <div className="checkout-total-container">
+          <h2>Your Order</h2>
+          <span className="total-cart-price">Cart Total: ${cartTotalPrice}</span>
+          <span className="total-shipping">
+            Delivery fee: {cartTotalPrice === 0 ? `$${deliveryFee}` : cartTotalPrice < 50 ? `$${deliveryFee}` : 'Free'}
+          </span>
+          <span className="total-checkout-price">Total To Pay: ${totalToPay}</span>
         </div>
         <div className="payment-container">
           <h2>Pay With Card</h2>
@@ -99,13 +115,13 @@ function AddressAndPaymentForm() {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={handleIsModalOpen}
+          onClose={isModalOpenHandler}
           modalHeader={modalText?.header}
           modalMessage={modalText?.message}
           modalIconType={ModalIconTypes.Failed}>
           <Button
             buttonType={ButtonType.Inverted}
-            onClick={handleIsModalOpen}>
+            onClick={isModalOpenHandler}>
             Close
           </Button>
         </Modal>

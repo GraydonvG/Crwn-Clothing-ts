@@ -1,13 +1,13 @@
 import { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { selectCartItems, selectTotalCartPrice } from '../../store/cart/cart.selector';
 import { clearAllItemsFromCart } from '../../store/cart/cart.slice';
 
-import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/button.component';
+import AddressAndPaymentForm from '../../components/address-and-payment-form/address-and-payment-form.component';
+import Button, { ButtonType } from '../../components/button/button.component';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
-import Modal, { MODAL_ICON_TYPES } from '../../components/modal/modal.component';
+import Modal, { ModalIconTypes } from '../../components/modal/modal.component';
 
 import './checkout.styles.scss';
 
@@ -18,9 +18,9 @@ function Checkout() {
   const cartItems = useSelector(selectCartItems);
   const cartTotalPrice = useSelector(selectTotalCartPrice);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const freeShippingMinimumSpend = 50;
 
-  function handleClearAllCartItems() {
+  function clearAllCartItemsHandler() {
     dispatch(clearAllItemsFromCart());
 
     if (isModalOpen) {
@@ -28,20 +28,27 @@ function Checkout() {
     }
   }
 
-  function handleProceedToPayment() {
-    navigate('/payment');
-  }
-
-  function handleIsModalOpen() {
+  function isModalOpenHandler() {
     if (cartItems.length === 0) return;
     setIsModalOpen(!isModalOpen);
   }
 
   return (
     <Fragment>
+      <div className="get-free-shipping">
+        {freeShippingMinimumSpend - cartTotalPrice > 0 ? (
+          <span>
+            Spend another ${freeShippingMinimumSpend - cartTotalPrice} to earn{' '}
+            <span className="underline">free shipping!</span>
+          </span>
+        ) : (
+          <span>You have earned free shipping!</span>
+        )}
+      </div>
       <div className="checkout-container">
-        <div className="checkout-left-container">
-          <div className="checkout-header">
+        <div className="checkout-items-container">
+          <h2 className="cart-items-header">Cart Items</h2>
+          <div className="checkout-column-header">
             {headersArray.map((header) => {
               return (
                 <div
@@ -59,36 +66,30 @@ function Checkout() {
                 cartItem={item}
               />
             ))}
-        </div>
-        <div className="checkout-right-container">
           <span className="total-checkout-price">Total: ${cartTotalPrice}</span>
-          <div className="checkout-buttons-container">
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.white}
-              onClick={handleIsModalOpen}>
-              Clear cart
-            </Button>
-            <Button
-              onClick={handleProceedToPayment}
-              buttonType={BUTTON_TYPE_CLASSES.black}>
-              Continue to payment
-            </Button>
-          </div>
+          <Button
+            buttonType={ButtonType.White}
+            onClick={isModalOpenHandler}>
+            Clear cart
+          </Button>
+        </div>
+        <div className="checkout-payment-container">
+          <AddressAndPaymentForm />
         </div>
       </div>
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={handleIsModalOpen}
+          onClose={isModalOpenHandler}
           modalHeader={'Clear cart'}
           modalMessage={'Are you sure?'}
-          ModalIconType={MODAL_ICON_TYPES.alert}>
+          modalIconType={ModalIconTypes.Alert}>
           <Button
-            onClick={handleClearAllCartItems}
-            buttonType={BUTTON_TYPE_CLASSES.warning}>
+            onClick={clearAllCartItemsHandler}
+            buttonType={ButtonType.Warning}>
             Clear
           </Button>
-          <Button onClick={handleIsModalOpen}>Cancel</Button>
+          <Button onClick={isModalOpenHandler}>Cancel</Button>
         </Modal>
       )}
     </Fragment>

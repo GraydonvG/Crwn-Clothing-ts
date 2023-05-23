@@ -12,7 +12,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
   }
 });
 
-export type CategoryItem = {
+export type CategoryItemType = {
   id: number;
   name: string;
   imageUrl: string;
@@ -21,7 +21,7 @@ export type CategoryItem = {
 
 export type CategoryType = {
   title: string;
-  items: CategoryItem[];
+  items: CategoryItemType[];
 };
 
 export type CategoriesState = {

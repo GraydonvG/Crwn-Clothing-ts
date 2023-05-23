@@ -1,17 +1,11 @@
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, type StripeElementsOptions } from '@stripe/stripe-js';
 
 const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 
 export const stripePromise = loadStripe(stripePublishableKey);
 
-// type StripeOptionTypes = {
-//   mode: string;
-//   currency: string;
-//   amount: number;
-// };
-
-// export const stripeOptions: StripeOptionTypes = {
-//   mode: 'payment',
-//   currency: 'usd',
-//   amount: 1234,
-// };
+export const stripeOptions: StripeElementsOptions = {
+  mode: 'payment',
+  amount: 123,
+  currency: 'usd',
+};

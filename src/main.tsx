@@ -7,7 +7,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 import { store, persistor } from './store/store';
 
-import { stripePromise } from './utils/stripe/stripe.utility';
+import { stripeOptions, stripePromise } from './utils/stripe/stripe.utility';
 
 import App from './App';
 
@@ -25,7 +25,9 @@ if (rootElement) {
           persistor={persistor}>
           <BrowserRouter>
             <ScrollToTop />
-            <Elements stripe={stripePromise}>
+            <Elements
+              stripe={stripePromise}
+              options={stripeOptions}>
               <App />
             </Elements>
           </BrowserRouter>

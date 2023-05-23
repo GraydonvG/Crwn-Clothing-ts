@@ -29,29 +29,37 @@ function NavigationBar() {
 
   return (
     <Fragment>
-      <div className="navigation">
-        <Link
-          className="logo-container"
-          to="/">
-          <CrwnLogo className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          {currentUser && currentUser.displayName && (
-            <span className="welcome-user-nav">{`Welcome, ${currentUser.displayName}`}</span>
-          )}
+      <div className="nav-container">
+        <div className="navigation">
           <Link
-            className="nav-link"
-            to="/shop">
-            SHOP
+            className="logo-container"
+            to="/">
+            <CrwnLogo className="logo" />
           </Link>
-          <div className="nav-link ">
-            {currentUser ? <span onClick={handleSignOut}>SIGN OUT</span> : <span onClick={goToSignIn}>SIGN IN</span>}
+          <div className="nav-links-container">
+            {currentUser && currentUser.displayName && (
+              <span className="welcome-user-nav">{`Welcome, ${currentUser.displayName}`}</span>
+            )}
+            <Link
+              className="nav-link"
+              to="/shop">
+              SHOP
+            </Link>
+            <div className="nav-link ">
+              {currentUser ? <span onClick={handleSignOut}>SIGN OUT</span> : <span onClick={goToSignIn}>SIGN IN</span>}
+            </div>
+            <div className="cart-icon-container">
+              <CartIcon />
+              {isCartOpen && <CartDropdown />}
+            </div>
           </div>
-          <CartIcon />
         </div>
-        {isCartOpen && <CartDropdown />}
       </div>
-      <Outlet />
+      <div
+        className="layout"
+        style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <Outlet />
+      </div>
     </Fragment>
   );
 }
