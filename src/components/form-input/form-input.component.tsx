@@ -2,12 +2,12 @@ import { type ChangeEventHandler } from 'react';
 
 import './form-input.styles.scss';
 
-type LabelOptions = {
+type LabelOptionsType = {
   label: string;
   htmlFor: string;
 };
 
-type InputOptions = {
+type InputOptionsType = {
   required: boolean;
   type: string;
   name: string;
@@ -16,8 +16,8 @@ type InputOptions = {
 };
 
 type FormInputProps = {
-  labelOptions: LabelOptions;
-  inputOptions: InputOptions;
+  labelOptions: LabelOptionsType;
+  inputOptions: InputOptionsType;
 };
 
 function FormInput({ labelOptions, inputOptions }: FormInputProps) {

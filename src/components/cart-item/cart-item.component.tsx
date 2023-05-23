@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { clearItemFromCart, type CartItem } from '../../store/cart/cart.slice';
+import { clearItemFromCart, type CartItemType } from '../../store/cart/cart.slice';
 
 import './cart-item.styles.scss';
 
 type CartItemProps = {
-  cartItem: CartItem;
+  cartItem: CartItemType;
 };
 
 function CartItem({ cartItem }: CartItemProps) {

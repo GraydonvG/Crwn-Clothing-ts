@@ -19,13 +19,13 @@ export type CategoryItem = {
   price: number;
 };
 
-export type Category = {
+export type CategoryType = {
   title: string;
   items: CategoryItem[];
 };
 
 export type CategoriesState = {
-  readonly categories: Category[];
+  readonly categories: CategoryType[];
   readonly isLoading: boolean;
 };
 

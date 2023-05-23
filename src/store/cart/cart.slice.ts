@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type CartItem = {
+export type CartItemType = {
   id: number;
   name: string;
   imageUrl: string;
@@ -10,11 +10,11 @@ export type CartItem = {
 };
 
 // Checks if an item has already been added to the cart
-function checkIfItemExists(itemToCheck: CartItem, cartItems: CartItem[]) {
+function checkIfItemExists(itemToCheck: CartItemType, cartItems: CartItemType[]) {
   return cartItems.find((cartItem) => cartItem.id === itemToCheck.id);
 }
 
-function addCartItem(itemToAdd: CartItem, cartItems: CartItem[]): CartItem[] {
+function addCartItem(itemToAdd: CartItemType, cartItems: CartItemType[]): CartItemType[] {
   const itemExists = checkIfItemExists(itemToAdd, cartItems);
 
   // If the item exisis - increment the quantity
@@ -31,7 +31,7 @@ function addCartItem(itemToAdd: CartItem, cartItems: CartItem[]): CartItem[] {
   return [...cartItems, { ...itemToAdd, quantity: 1, priceByQuantity: itemToAdd.price }];
 }
 
-function removeCartItem(itemToRemove: CartItem, cartItems: CartItem[]): CartItem[] {
+function removeCartItem(itemToRemove: CartItemType, cartItems: CartItemType[]): CartItemType[] {
   const itemExists = checkIfItemExists(itemToRemove, cartItems);
 
   // Remove item from cart if quantity < 1
@@ -48,19 +48,19 @@ function removeCartItem(itemToRemove: CartItem, cartItems: CartItem[]): CartItem
 }
 
 // Remove item from cart
-function clearCartItem(itemToClear: CartItem, cartItems: CartItem[]) {
+function clearCartItem(itemToClear: CartItemType, cartItems: CartItemType[]) {
   return cartItems.filter((item) => !(item.id === itemToClear.id));
 }
 
 // Adjust the items total price when the items quantity changes
 // This is the price displayed in the *****cart dropdown AND checkout page*****
-function adjustItemPriceByQuantity(itemsArray: CartItem[]): CartItem[] {
+function adjustItemPriceByQuantity(itemsArray: CartItemType[]): CartItemType[] {
   return itemsArray.map((item) => ({ ...item, priceByQuantity: item.price * item.quantity }));
 }
 
 type CartState = {
   isCartOpen: boolean;
-  cartItems: CartItem[];
+  cartItems: CartItemType[];
 };
 
 export const CART_INITIAL_STATE: CartState = {

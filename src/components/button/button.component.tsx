@@ -1,16 +1,22 @@
+import { type ReactNode, type ButtonHTMLAttributes } from 'react';
 import './button.styles.scss';
 
-export const BUTTON_TYPE_CLASSES = {
-  google: 'google-sign-in',
-  inverted: 'inverted',
-  warning: 'warning',
-  white: 'white',
-};
+export enum ButtonType {
+  Google = 'google-sign-in',
+  Inverted = 'inverted',
+  Warning = 'warning',
+  White = 'white',
+}
 
-function Button({ children, buttonType, ...otherProps }) {
+type ButtonProps = {
+  children: ReactNode;
+  buttonType?: ButtonType;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+function Button({ children, buttonType, ...otherProps }: ButtonProps) {
   return (
     <button
-      className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}
+      className={`button-container ${[buttonType]}`}
       {...otherProps}>
       {children}
     </button>

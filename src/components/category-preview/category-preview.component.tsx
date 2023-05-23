@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { type Category } from '../../store/categories/categories.slice';
+import { type CategoryType } from '../../store/categories/categories.slice';
 
 import ProductCard from '../product-card/product-card.component';
 
 import './category-preview.styles.scss';
 
-function CategoryPreview({ title, items }: Category) {
+function CategoryPreview({ title, items }: CategoryType) {
   return (
     <div className="category-preview-container">
       <div className="category-preview-header">

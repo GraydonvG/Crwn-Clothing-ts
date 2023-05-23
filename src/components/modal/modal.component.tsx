@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 
 import Lottie from 'lottie-react';
 import success from '../../assets/svg-animation/green-check-animation.json';
@@ -7,26 +7,35 @@ import alert from '../../assets/svg-animation/circle-alert-animation.json';
 
 import './modal.styles.scss';
 
-export const MODAL_ICON_TYPES = {
-  success: 'success',
-  failed: 'failed',
-  alert: 'alert',
+export enum ModalIconTypes {
+  Success = 'success',
+  Failed = 'failed',
+  Alert = 'alert',
+}
+
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  modalHeader?: string;
+  modalMessage?: string;
+  modalIconType?: ModalIconTypes;
+  children: ReactNode;
 };
 
-function Modal({ isOpen, onClose, modalHeader, modalMessage, ModalIconType, children }) {
-  const modalRef = useRef();
+function Modal({ isOpen, onClose, modalHeader, modalMessage, modalIconType, children }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleOutsideClick(event) {
-      if (isOpen && !modalRef.current.contains(event.target)) {
+    function outsideClickHandler(event: MouseEvent) {
+      if (isOpen && modalRef.current && !modalRef.current.contains(event.target as Node)) {
         onClose();
       }
     }
 
-    document.addEventListener('click', handleOutsideClick, true);
+    document.addEventListener('click', outsideClickHandler, true);
 
     return () => {
-      document.removeEventListener('click', handleOutsideClick, true);
+      document.removeEventListener('click', outsideClickHandler, true);
     };
   }, [isOpen, onClose]);
 
@@ -37,15 +46,15 @@ function Modal({ isOpen, onClose, modalHeader, modalMessage, ModalIconType, chil
         ref={modalRef}>
         <div className="modal-content">
           {modalHeader && <h2 className="modal-header">{modalHeader}</h2>}
-          {ModalIconType && (
+          {modalIconType && (
             <Lottie
-              className={`modal-icon  ${MODAL_ICON_TYPES[ModalIconType]}`}
+              className={`modal-icon  ${modalIconType}`}
               animationData={
-                ModalIconType === 'success'
+                modalIconType === 'success'
                   ? success
-                  : ModalIconType === 'failed'
+                  : modalIconType === 'failed'
                   ? failed
-                  : ModalIconType === 'alert'
+                  : modalIconType === 'alert'
                   ? alert
                   : null
               }
