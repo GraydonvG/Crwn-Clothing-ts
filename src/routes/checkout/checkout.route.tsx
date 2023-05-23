@@ -42,7 +42,7 @@ function Checkout() {
             <span className="underline">free shipping!</span>
           </span>
         ) : (
-          <span>You have earned free shipping!</span>
+          <span>You've earned free shipping!</span>
         )}
       </div>
       <div className="checkout-container">

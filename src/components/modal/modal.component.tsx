@@ -1,13 +1,14 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
 import Lottie from 'lottie-react';
-import success from '../../assets/svg-animation/green-check-animation.json';
-import failed from '../../assets/svg-animation/red-x-animation.json';
-import alert from '../../assets/svg-animation/circle-alert-animation.json';
+import Success from '../../assets/svg-animation/green-check-animation.json';
+import Failed from '../../assets/svg-animation/red-x-animation.json';
+import Alert from '../../assets/svg-animation/circle-alert-animation.json';
+import Pending from '../../assets/svg-animation/process-pending.json';
 
 import './modal.styles.scss';
 
-export type ModalText = {
+export type ModalTextType = {
   header: string;
   message: string;
 };
@@ -16,6 +17,7 @@ export enum ModalIconTypes {
   Success = 'success',
   Failed = 'failed',
   Alert = 'alert',
+  Pending = 'pending',
 }
 
 type ModalProps = {
@@ -56,11 +58,13 @@ function Modal({ isOpen, onClose, modalHeader, modalMessage, modalIconType, chil
               className={`modal-icon  ${modalIconType}`}
               animationData={
                 modalIconType === 'success'
-                  ? success
+                  ? Success
                   : modalIconType === 'failed'
-                  ? failed
+                  ? Failed
                   : modalIconType === 'alert'
-                  ? alert
+                  ? Alert
+                  : modalIconType === 'pending'
+                  ? Pending
                   : null
               }
               loop={false}

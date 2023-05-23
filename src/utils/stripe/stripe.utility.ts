@@ -4,8 +4,12 @@ const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 
 export const stripePromise = loadStripe(stripePublishableKey);
 
-export const stripeOptions: StripeElementsOptions = {
-  mode: 'payment',
-  amount: 123,
-  currency: 'usd',
-};
+const clientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret') || null;
+
+export const stripeOptions: StripeElementsOptions = clientSecret
+  ? { clientSecret }
+  : {
+      mode: 'payment',
+      amount: 123,
+      currency: 'usd',
+    };

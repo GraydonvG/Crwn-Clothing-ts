@@ -6,7 +6,7 @@ import { selectTotalCartPrice } from '../../store/cart/cart.selector';
 
 import Button, { ButtonType } from '../../components/button/button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import Modal, { ModalIconTypes, type ModalText } from '../../components/modal/modal.component';
+import Modal, { ModalIconTypes, type ModalTextType } from '../../components/modal/modal.component';
 
 import './address-and-payment-form.styles.scss';
 
@@ -14,7 +14,7 @@ function AddressAndPaymentForm() {
   const stripe = useStripe();
   const elements = useElements();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalText, setModalText] = useState<ModalText | undefined>(undefined);
+  const [modalText, setModalText] = useState<ModalTextType | undefined>(undefined);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const cartTotalPrice = useSelector(selectTotalCartPrice);
   const [totalToPay, setTotalToPay] = useState(cartTotalPrice);
@@ -51,7 +51,7 @@ function AddressAndPaymentForm() {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.href}-successful`,
+        return_url: `${window.location.origin}/payment-status`,
       },
     });
 
@@ -118,7 +118,7 @@ function AddressAndPaymentForm() {
           onClose={isModalOpenHandler}
           modalHeader={modalText?.header}
           modalMessage={modalText?.message}
-          modalIconType={ModalIconTypes.Failed}>
+          modalIconType={ModalIconTypes.Alert}>
           <Button
             buttonType={ButtonType.Inverted}
             onClick={isModalOpenHandler}>

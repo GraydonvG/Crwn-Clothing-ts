@@ -41,6 +41,10 @@
         &.alert {
           transform: scale(0.73) translateY(12px);
         }
+
+        &.pending {
+          transform: scale(1.1) translateY(12px);
+        }
       }
 
       .modal-message-container {

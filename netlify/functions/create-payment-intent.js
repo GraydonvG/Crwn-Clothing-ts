@@ -1,11 +1,7 @@
-import type { BackgroundHandler, HandlerEvent } from '@netlify/functions';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
+require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-export const handler: BackgroundHandler = async (event: HandlerEvent) => {
+export const handler = async (event) => {
   console.log('event', event);
   try {
     const { amount, currency } = JSON.parse(event.body);
