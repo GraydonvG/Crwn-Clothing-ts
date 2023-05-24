@@ -43,8 +43,6 @@ function AddressAndPaymentForm() {
       body: JSON.stringify({ amount: totalToPay * 100, currency: 'usd' }),
     }).then((resp) => resp.json());
 
-    console.log(response);
-
     const {
       paymentIntent: { client_secret: clientSecret },
     } = response;
