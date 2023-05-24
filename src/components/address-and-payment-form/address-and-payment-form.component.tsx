@@ -35,7 +35,7 @@ function AddressAndPaymentForm() {
 
     setIsProcessingPayment(true);
 
-    const response = await fetch('/.netlify/functions/create-payment-intent', {
+    await fetch('/.netlify/functions/create-payment-intent', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -43,13 +43,13 @@ function AddressAndPaymentForm() {
       body: JSON.stringify({ amount: totalToPay * 100, currency: 'usd' }),
     }).then((resp) => resp.json());
 
-    const {
-      paymentIntent: { client_secret: clientSecret },
-    } = response;
+    // const {
+    //   paymentIntent: { client_secret: clientSecret },
+    // } = response;
 
     const { error } = await stripe.confirmPayment({
       elements,
-      clientSecret,
+      // clientSecret,
       confirmParams: {
         return_url: `${window.location.origin}/payment-status`,
       },
