@@ -13,7 +13,7 @@ import {
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
-import { type Category } from '../../store/categories/categories.slice';
+import type { CategoryType } from '../../store/categories/categories.slice';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDk7C6MsLlS4PkkBxDrq1-OjIsfhzyZyRg',
@@ -101,12 +101,12 @@ export async function addCollectionAndDocuments<T extends ObjectToAdd>(collectio
   console.log('done');
 }
 
-export async function getCategoriesAndDocuments(): Promise<Category[]> {
+export async function getCategoriesAndDocuments(): Promise<CategoryType[]> {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data() as Category);
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data() as CategoryType);
 }
 
 export async function getUserDoc() {

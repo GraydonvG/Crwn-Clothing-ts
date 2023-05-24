@@ -41,25 +41,37 @@ function PaymentStatus() {
       // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
       switch (paymentIntent.status) {
         case 'succeeded':
-          setModalText({ header: 'Success!', message: ' Payment received. Thank you for your order!' });
+          setModalText({
+            header: 'Success!',
+            message: ' Payment received. Thank you for your order!',
+          });
           setModalIconType(ModalIconTypes.Success);
           setIsModalOpen(true);
           dispatch(clearAllItemsFromCart());
           break;
         case 'processing':
-          setModalText({ header: 'Payment processing.', message: " We'll update you when payment is received." });
+          setModalText({
+            header: 'Payment processing.',
+            message: " We'll update you when payment is received.",
+          });
           setModalIconType(ModalIconTypes.Pending);
           setIsModalOpen(true);
           dispatch(clearAllItemsFromCart());
           break;
         case 'requires_payment_method':
           // Redirect your user back to your payment page to attempt collecting payment again
-          setModalText({ header: 'Payment failed.', message: ' Please try another payment method.' });
+          setModalText({
+            header: 'Payment failed.',
+            message: ' Please try another payment method.',
+          });
           setModalIconType(ModalIconTypes.Failed);
           setIsModalOpen(true);
           break;
         default:
-          setModalText({ header: 'Error', message: 'Something went wrong.' });
+          setModalText({
+            header: 'Error',
+            message: 'Something went wrong.',
+          });
           setModalIconType(ModalIconTypes.Alert);
           setIsModalOpen(true);
           break;

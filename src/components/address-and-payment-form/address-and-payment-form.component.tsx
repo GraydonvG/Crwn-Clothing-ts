@@ -58,7 +58,10 @@ function AddressAndPaymentForm() {
     setIsProcessingPayment(false);
 
     if (error) {
-      setModalText({ header: 'Error', message: `${error.message}` });
+      setModalText({
+        header: 'Error',
+        message: `${error.message}`,
+      });
       setIsModalOpen(true);
     }
   }

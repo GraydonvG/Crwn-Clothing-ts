@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { type RootState } from '../store';
-import { type CategoryItem } from './categories.slice';
+import { type CategoryItemType } from './categories.slice';
 
 // Returns categories slice from the redux store
 // state = entire redux state
@@ -20,7 +20,7 @@ export const selectCategories = createSelector(
 // Only runs if the categories array changes
 // Returns object of categories
 export const selectCategoriesMap = createSelector([selectCategories], (categories) =>
-  categories.reduce((acc: { [key: string]: CategoryItem[] }, category) => {
+  categories.reduce((acc: { [key: string]: CategoryItemType[] }, category) => {
     const { title, items } = category;
     acc[title.toLowerCase()] = items;
     return acc;

@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import { setCurrentUser } from '../../store/user/user.slice';
 
+import { AuthErrorCodes, type AuthError } from 'firebase/auth';
+
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -13,6 +15,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import Spinner from '../spinner/spinner.component';
+import Modal, { ModalIconTypes, type ModalTextType } from '../modal/modal.component';
 
 import './sign-up-form.styles.scss';
 
@@ -27,14 +30,13 @@ function SignUpForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalText, setModalText] = useState<ModalTextType | undefined>(undefined);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
   function inputChangeHandler(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
-
-    setErrorMessage(null);
 
     setFormFields({ ...formFields, [name]: value });
   }
@@ -45,10 +47,13 @@ function SignUpForm() {
 
   async function submitSignUpFormHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setErrorMessage(null);
 
     if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match.');
+      setModalText({
+        header: 'Sign Up Error',
+        message: 'Passwords do not match.',
+      });
+      setIsModalOpen(true);
       return;
     }
     setIsLoadingUser(true);
@@ -68,7 +73,7 @@ function SignUpForm() {
       const user = await updateUserProfile(displayName);
 
       // The users displayName and email come from the user's auth instance and ***NOT*** the user document.
-      const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
+      const selectedUserDetails = (user && (({ displayName, email }) => ({ displayName, email }))(user)) || null;
 
       // The dispatch below updates the currentUser state once the user's displayName has been updated.
       dispatch(setCurrentUser(selectedUserDetails));
@@ -82,30 +87,45 @@ function SignUpForm() {
       resetFromFields();
       navigate('/');
     } catch (error) {
-      if (error.code === 'auth/weak-password') {
-        setErrorMessage('Error signing up. Error code: auth/weak-password.');
+      if ((error as AuthError).code === AuthErrorCodes.WEAK_PASSWORD) {
+        setModalText({
+          header: 'Sign Up Error',
+          message: `Error code: ${AuthErrorCodes.WEAK_PASSWORD}. Your password should consist of at least 6 characters.`,
+        });
+        setIsModalOpen(true);
       } else {
-        setErrorMessage('Error signing up. Please try again.');
+        setModalText({
+          header: 'Sign Up Error',
+          message: 'Error signing up. Please try again.',
+        });
+        setIsModalOpen(true);
       }
     }
 
     setIsLoadingUser(false);
   }
 
+  function isModalOpenHandler() {
+    setIsModalOpen(false);
+  }
+
   return (
     <div className="sign-up-container">
       <h2>Dont have an account?</h2>
       <span>Sign up with your email and password</span>
-      <form onSubmit={submitSignUpFormHandler}>
+      <form
+        onSubmit={submitSignUpFormHandler}
+        autoComplete="on">
         <FormInput
           labelOptions={{
             label: 'Display Name',
-            htmlFor: 'displayName',
+            htmlFor: 'sign-up-displayName',
           }}
           inputOptions={{
             required: true,
             type: 'text',
             name: 'displayName',
+            id: 'sign-up-displayName',
             value: displayName,
             onChange: inputChangeHandler,
           }}
@@ -113,12 +133,13 @@ function SignUpForm() {
         <FormInput
           labelOptions={{
             label: 'Email',
-            htmlFor: 'email',
+            htmlFor: 'sign-up-email',
           }}
           inputOptions={{
             required: true,
             type: 'email',
             name: 'email',
+            id: 'sign-up-email',
             value: email,
             onChange: inputChangeHandler,
           }}
@@ -126,12 +147,13 @@ function SignUpForm() {
         <FormInput
           labelOptions={{
             label: 'Password',
-            htmlFor: 'password',
+            htmlFor: 'sign-up-password',
           }}
           inputOptions={{
             required: true,
             type: 'password',
             name: 'password',
+            id: 'sign-up-password',
             value: password,
             onChange: inputChangeHandler,
           }}
@@ -139,12 +161,13 @@ function SignUpForm() {
         <FormInput
           labelOptions={{
             label: 'Confirm Password',
-            htmlFor: 'confirmPassword',
+            htmlFor: 'sign-up-confirmPassword',
           }}
           inputOptions={{
             required: true,
             type: 'password',
             name: 'confirmPassword',
+            id: 'sign-up-confirmPassword',
             value: confirmPassword,
             onChange: inputChangeHandler,
           }}
@@ -159,9 +182,18 @@ function SignUpForm() {
               Sign up
             </Button>
           )}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
       </form>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={isModalOpenHandler}
+          modalHeader={modalText?.header}
+          modalMessage={modalText?.message}
+          modalIconType={ModalIconTypes.Alert}>
+          <Button onClick={isModalOpenHandler}>Close</Button>
+        </Modal>
+      )}
     </div>
   );
 }

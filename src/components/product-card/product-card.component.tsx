@@ -1,14 +1,14 @@
 import { useDispatch } from 'react-redux';
 
 import { addItemToCart } from '../../store/cart/cart.slice';
-import { type CategoryItem } from '../../store/categories/categories.slice';
+import { type CategoryItemType } from '../../store/categories/categories.slice';
 
 import Button, { ButtonType } from '../button/button.component';
 
 import './product-card.styles.scss';
 
 type ProductCardProps = {
-  item: CategoryItem;
+  item: CategoryItemType;
 };
 
 function ProductCard({ item }: ProductCardProps) {

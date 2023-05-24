@@ -7,7 +7,7 @@ import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../..
 import FormInput from '../form-input/form-input.component';
 import Button, { ButtonType } from '../button/button.component';
 import Spinner from '../spinner/spinner.component';
-
+import Modal, { type ModalTextType, ModalIconTypes } from '../modal/modal.component';
 import './sign-in-form.styles.scss';
 
 const defaultFromFields = {
@@ -18,14 +18,13 @@ const defaultFromFields = {
 function SignInForm() {
   const navigate = useNavigate();
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalText, setModalText] = useState<ModalTextType | undefined>(undefined);
   const [formFields, setFormFields] = useState(defaultFromFields);
   const { email, password } = formFields;
 
   function inputChangeHandler(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
-
-    setErrorMessage(null);
 
     setFormFields({ ...formFields, [name]: value });
   }
@@ -36,7 +35,6 @@ function SignInForm() {
 
   async function submitSignInFormHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setErrorMessage(null);
     setIsLoadingUser(true);
 
     try {
@@ -44,14 +42,17 @@ function SignInForm() {
       resetFromFields();
       navigate('/');
     } catch (error) {
-      setErrorMessage('Error signing in. Please try again.');
+      setModalText({
+        header: 'Sign In Error',
+        message: 'Error signing in. Please try again.',
+      });
+      setIsModalOpen(true);
     }
 
     setIsLoadingUser(false);
   }
 
-  async function handleSignInWithGoogle() {
-    setErrorMessage(null);
+  async function signInWithGoogleHandler() {
     setIsLoadingUser(true);
     try {
       await signInWithGooglePopup();
@@ -59,26 +60,37 @@ function SignInForm() {
     } catch (error) {
       console.log(error);
       if (error) {
-        setErrorMessage('Error signing in. Please try again.');
+        setModalText({
+          header: 'Sign In Error',
+          message: 'Error signing in. Please try again.',
+        });
+        setIsModalOpen(true);
       }
     }
     setIsLoadingUser(false);
+  }
+
+  function isModalOpenHandler() {
+    setIsModalOpen(false);
   }
 
   return (
     <div className="sign-in-container">
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
-      <form onSubmit={submitSignInFormHandler}>
+      <form
+        onSubmit={submitSignInFormHandler}
+        autoComplete="on">
         <FormInput
           labelOptions={{
             label: 'Email',
-            htmlFor: 'email',
+            htmlFor: 'sign-in-email',
           }}
           inputOptions={{
             required: true,
             type: 'email',
             name: 'email',
+            id: 'sign-in-email',
             value: email,
             onChange: inputChangeHandler,
           }}
@@ -86,12 +98,13 @@ function SignInForm() {
         <FormInput
           labelOptions={{
             label: 'Password',
-            htmlFor: 'password',
+            htmlFor: 'sign-in-password',
           }}
           inputOptions={{
             required: true,
             type: 'password',
             name: 'password',
+            id: 'sign-in-password',
             value: password,
             onChange: inputChangeHandler,
           }}
@@ -110,14 +123,23 @@ function SignInForm() {
                 disabled={isLoadingUser}
                 type="button"
                 buttonType={ButtonType.Google}
-                onClick={handleSignInWithGoogle}>
+                onClick={signInWithGoogleHandler}>
                 Sign in with google
               </Button>
             </Fragment>
           )}
         </div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={isModalOpenHandler}
+          modalHeader={modalText?.header}
+          modalMessage={modalText?.message}
+          modalIconType={ModalIconTypes.Alert}>
+          <Button onClick={isModalOpenHandler}>Close</Button>
+        </Modal>
+      )}
     </div>
   );
 }

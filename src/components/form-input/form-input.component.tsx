@@ -1,4 +1,4 @@
-import { type ChangeEventHandler } from 'react';
+import { type InputHTMLAttributes } from 'react';
 
 import './form-input.styles.scss';
 
@@ -7,17 +7,9 @@ type LabelOptionsType = {
   htmlFor: string;
 };
 
-type InputOptionsType = {
-  required: boolean;
-  type: string;
-  name: string;
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
-
 type FormInputProps = {
   labelOptions: LabelOptionsType;
-  inputOptions: InputOptionsType;
+  inputOptions: InputHTMLAttributes<HTMLInputElement>;
 };
 
 function FormInput({ labelOptions, inputOptions }: FormInputProps) {
@@ -32,7 +24,11 @@ function FormInput({ labelOptions, inputOptions }: FormInputProps) {
       {label && (
         <label
           htmlFor={htmlFor}
-          className={`${inputOptions.value.length > 0 ? 'shrink' : null} form-input-label`}>
+          className={`${
+            inputOptions.value && typeof inputOptions.value === 'string' && inputOptions.value.length > 0
+              ? 'shrink'
+              : null
+          } form-input-label`}>
           {label}
         </label>
       )}
