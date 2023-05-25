@@ -28,7 +28,8 @@ function App() {
       dispatch(setCurrentUser(selectedUserDetails));
     });
     return unsubscribe;
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

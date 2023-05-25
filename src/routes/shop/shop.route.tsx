@@ -13,7 +13,8 @@ function Shop() {
 
   useEffect(() => {
     dispatch(fetchCategories());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
