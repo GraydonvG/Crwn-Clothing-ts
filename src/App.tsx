@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -6,12 +6,14 @@ import { setCurrentUser } from './store/user/user.slice';
 
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
 
-import NavigationBar from './routes/navigation-bar/navigation-bar.route';
-import Home from './routes/home/home.route';
-import Authentication from './routes/authentication/authentication.route';
-import Shop from './routes/shop/shop.route';
-import Checkout from './routes/checkout/checkout.route';
-import PaymentStatus from './routes/payment-status/payment-status.route';
+import Spinner from './components/spinner/spinner.component';
+
+const NavigationBar = lazy(() => import('./routes/navigation-bar/navigation-bar.route'));
+const Home = lazy(() => import('./routes/home/home.route'));
+const Authentication = lazy(() => import('./routes/authentication/authentication.route'));
+const Shop = lazy(() => import('./routes/shop/shop.route'));
+const Checkout = lazy(() => import('./routes/checkout/checkout.route'));
+const PaymentStatus = lazy(() => import('./routes/payment-status/payment-status.route'));
 
 function App() {
   const dispatch = useDispatch();
@@ -31,35 +33,37 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <Routes>
-        <Route
-          path="/"
-          element={<NavigationBar />}>
+    <Suspense fallback={<Spinner />}>
+      <div>
+        <Routes>
           <Route
-            index={true}
-            element={<Home />}
-          />
-          <Route
-            path="shop/*"
-            element={<Shop />}
-          />
-          <Route
-            path="auth"
-            element={<Authentication />}
-          />
-          <Route
-            path="checkout"
-            element={<Checkout />}
-          />
-          <Route
-            path="payment-status"
-            element={<PaymentStatus />}
-          />
-        </Route>
-      </Routes>
-      <div style={{ height: '50px', backgroundColor: 'transparent' }}></div>
-    </div>
+            path="/"
+            element={<NavigationBar />}>
+            <Route
+              index={true}
+              element={<Home />}
+            />
+            <Route
+              path="shop/*"
+              element={<Shop />}
+            />
+            <Route
+              path="auth"
+              element={<Authentication />}
+            />
+            <Route
+              path="checkout"
+              element={<Checkout />}
+            />
+            <Route
+              path="payment-status"
+              element={<PaymentStatus />}
+            />
+          </Route>
+        </Routes>
+        <div style={{ height: '50px', backgroundColor: 'transparent' }}></div>
+      </div>
+    </Suspense>
   );
 }
 
