@@ -78,7 +78,7 @@ function PaymentStatus() {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [stripe]);
 
   function returnToHome() {
     navigate('/');
