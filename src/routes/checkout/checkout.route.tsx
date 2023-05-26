@@ -20,7 +20,7 @@ function Checkout() {
   const dispatch = useDispatch();
   const freeShippingMinimumSpend = 50;
 
-  function clearAllCartItemsHandler() {
+  function clearAllCartItems() {
     dispatch(clearAllItemsFromCart());
 
     if (isModalOpen) {
@@ -28,7 +28,7 @@ function Checkout() {
     }
   }
 
-  function isModalOpenHandler() {
+  function handleIsModalOpen() {
     if (cartItems.length === 0) return;
     setIsModalOpen(!isModalOpen);
   }
@@ -69,7 +69,7 @@ function Checkout() {
           <span className="total-checkout-price">Total: ${cartTotalPrice}</span>
           <Button
             buttonType={ButtonType.White}
-            onClick={isModalOpenHandler}>
+            onClick={handleIsModalOpen}>
             Clear cart
           </Button>
         </div>
@@ -80,16 +80,16 @@ function Checkout() {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={isModalOpenHandler}
+          onClose={handleIsModalOpen}
           modalHeader={'Clear cart'}
           modalMessage={'Are you sure?'}
           modalIconType={ModalIconTypes.Alert}>
           <Button
-            onClick={clearAllCartItemsHandler}
+            onClick={clearAllCartItems}
             buttonType={ButtonType.Warning}>
             Clear
           </Button>
-          <Button onClick={isModalOpenHandler}>Cancel</Button>
+          <Button onClick={handleIsModalOpen}>Cancel</Button>
         </Modal>
       )}
     </Fragment>

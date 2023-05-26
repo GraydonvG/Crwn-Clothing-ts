@@ -18,7 +18,7 @@ function CartDropdown() {
   const cartItems = useSelector(selectCartItems);
   const cartTotalPrice = useSelector(selectTotalCartPrice);
 
-  function handleGoToCheckout() {
+  function goToCheckout() {
     navigate('/checkout');
     dispatch(setIsCartOpen(!isCartOpen));
   }
@@ -39,7 +39,7 @@ function CartDropdown() {
           <span className="total-cart-price">Cart Total: ${cartTotalPrice}</span>
           <Button
             type="button"
-            onClick={handleGoToCheckout}>
+            onClick={goToCheckout}>
             Got to checkout
           </Button>
         </Fragment>

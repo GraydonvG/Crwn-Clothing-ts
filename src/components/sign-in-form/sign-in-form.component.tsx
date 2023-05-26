@@ -52,7 +52,7 @@ function SignInForm() {
     setIsLoadingUser(false);
   }
 
-  async function signInWithGoogleHandler() {
+  async function signInWithGoogle() {
     setIsLoadingUser(true);
     try {
       await signInWithGooglePopup();
@@ -70,7 +70,7 @@ function SignInForm() {
     setIsLoadingUser(false);
   }
 
-  function isModalOpenHandler() {
+  function closeModal() {
     setIsModalOpen(false);
   }
 
@@ -123,7 +123,7 @@ function SignInForm() {
                 disabled={isLoadingUser}
                 type="button"
                 buttonType={ButtonType.Google}
-                onClick={signInWithGoogleHandler}>
+                onClick={signInWithGoogle}>
                 Sign in with google
               </Button>
             </Fragment>
@@ -133,11 +133,11 @@ function SignInForm() {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={isModalOpenHandler}
+          onClose={closeModal}
           modalHeader={modalText?.header}
           modalMessage={modalText?.message}
           modalIconType={ModalIconTypes.Alert}>
-          <Button onClick={isModalOpenHandler}>Close</Button>
+          <Button onClick={closeModal}>Close</Button>
         </Modal>
       )}
     </div>

@@ -23,7 +23,7 @@ function NavigationBar() {
     navigate('/auth');
   }
 
-  function handleSignOut() {
+  function signOut() {
     signOutUser();
   }
 
@@ -46,7 +46,7 @@ function NavigationBar() {
               SHOP
             </Link>
             <div className="nav-link ">
-              {currentUser ? <span onClick={handleSignOut}>SIGN OUT</span> : <span onClick={goToSignIn}>SIGN IN</span>}
+              {currentUser ? <span onClick={signOut}>SIGN OUT</span> : <span onClick={goToSignIn}>SIGN IN</span>}
             </div>
             <div className="cart-icon-container">
               <CartIcon />

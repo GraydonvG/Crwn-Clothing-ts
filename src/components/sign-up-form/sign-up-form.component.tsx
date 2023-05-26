@@ -105,7 +105,7 @@ function SignUpForm() {
     setIsLoadingUser(false);
   }
 
-  function isModalOpenHandler() {
+  function closeModal() {
     setIsModalOpen(false);
   }
 
@@ -187,11 +187,11 @@ function SignUpForm() {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={isModalOpenHandler}
+          onClose={closeModal}
           modalHeader={modalText?.header}
           modalMessage={modalText?.message}
           modalIconType={ModalIconTypes.Alert}>
-          <Button onClick={isModalOpenHandler}>Close</Button>
+          <Button onClick={closeModal}>Close</Button>
         </Modal>
       )}
     </div>

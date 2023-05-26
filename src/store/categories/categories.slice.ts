@@ -8,7 +8,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
     return categoriesArray;
   } catch (error) {
     console.log('Error fetching categories.', error);
-    return [];
+    return [] as CategoryType[];
   }
 });
 

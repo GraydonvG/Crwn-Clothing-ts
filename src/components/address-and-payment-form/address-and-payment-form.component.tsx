@@ -66,7 +66,7 @@ function AddressAndPaymentForm() {
     }
   }
 
-  function isModalOpenHandler() {
+  function closeModal() {
     setIsModalOpen(false);
   }
 
@@ -118,13 +118,13 @@ function AddressAndPaymentForm() {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={isModalOpenHandler}
+          onClose={closeModal}
           modalHeader={modalText?.header}
           modalMessage={modalText?.message}
           modalIconType={ModalIconTypes.Alert}>
           <Button
             buttonType={ButtonType.Inverted}
-            onClick={isModalOpenHandler}>
+            onClick={closeModal}>
             Close
           </Button>
         </Modal>

@@ -11,7 +11,7 @@ type DirectoryItemProps = {
 function DirectoryItem({ title, imageUrl, route }: DirectoryItemProps) {
   const navigate = useNavigate();
 
-  function navigateToCategoryHandler() {
+  function navigateToCategory() {
     navigate(route);
   }
 
@@ -22,7 +22,7 @@ function DirectoryItem({ title, imageUrl, route }: DirectoryItemProps) {
         style={{ backgroundImage: `url(${imageUrl})` }}></div>
       <div
         className="body"
-        onClick={navigateToCategoryHandler}>
+        onClick={navigateToCategory}>
         <h2>{title}</h2>
         <p>Shop Now</p>
       </div>
