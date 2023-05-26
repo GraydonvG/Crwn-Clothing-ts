@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { clearItemFromCart, type CartItemType } from '../../store/cart/cart.slice';
@@ -5,16 +6,16 @@ import { clearItemFromCart, type CartItemType } from '../../store/cart/cart.slic
 import './cart-item.styles.scss';
 
 type CartItemProps = {
-  cartItem: CartItemType;
+  item: CartItemType;
 };
 
-function CartItem({ cartItem }: CartItemProps) {
-  const { name, imageUrl, quantity, priceByQuantity } = cartItem;
+function CartItem({ item }: CartItemProps) {
+  const { name, imageUrl, quantity, priceByQuantity } = item;
 
   const dispatch = useDispatch();
 
   function clearProductFromCart() {
-    dispatch(clearItemFromCart(cartItem));
+    dispatch(clearItemFromCart(item));
   }
 
   return (
@@ -36,5 +37,4 @@ function CartItem({ cartItem }: CartItemProps) {
     </div>
   );
 }
-
-export default CartItem;
+export default memo(CartItem);

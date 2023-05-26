@@ -30,7 +30,7 @@ function CartDropdown() {
           cartItems.map((item) => (
             <CartItem
               key={item.id}
-              cartItem={item}
+              item={item}
             />
           ))}
       </div>
