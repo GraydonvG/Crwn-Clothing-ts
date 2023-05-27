@@ -3,17 +3,17 @@
   "name": "Crwn Clothing",
   "icons": [
     {
-      "src": "./favicon/favicon.ico",
+      "src": "/favicon/crwn-192x192.png",
       "sizes": "48x48",
       "type": "image/x-icon"
     },
     {
-      "src": "./favicon/crwn-192x192.png",
+      "src": "/favicon/crwn-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./favicon/crwn-512x512.png",
+      "src": "/favicon/crwn-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
