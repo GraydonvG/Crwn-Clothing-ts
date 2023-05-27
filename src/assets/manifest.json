@@ -1,0 +1,25 @@
+{
+  "short_name": "Crwn Clothing",
+  "name": "Crwn Clothing",
+  "icons": [
+    {
+      "src": "./favicon/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "./favicon/crwn-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./favicon/crwn-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
