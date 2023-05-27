@@ -26,7 +26,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
       },
       {
         src: 'src/assets/favicon/favicon.ico',
-        sizes: '512x512',
+        sizes: '32x32',
         type: 'image/x-icon',
       },
     ],
