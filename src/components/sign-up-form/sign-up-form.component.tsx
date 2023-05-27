@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setCurrentUser } from '../../store/user/user.slice';
+import { setCurrentUser, type CurrentUserType } from '../../store/user/user.slice';
 
 import { AuthErrorCodes, type AuthError } from 'firebase/auth';
 
@@ -48,6 +48,8 @@ function SignUpForm() {
   async function submitSignUpFormHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (!displayName || !email) return;
+
     if (password !== confirmPassword) {
       setModalText({
         header: 'Sign Up Error',
@@ -59,30 +61,11 @@ function SignUpForm() {
     setIsLoadingUser(true);
 
     try {
-      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-      // Unable to set displayName with createAuthUserWithEmailAndPassword
       await createAuthUserWithEmailAndPassword(email, password);
-      // The user's auth instance is returned containing the user's email address, but the displayName = null.
-
-      // As a result of the onAuthStateChanged observer, the currentUser state is updated (in the useEffect in App.jsx) ***BEFORE*** we are able to update displayName in the user's auth instance.
-
-      // Update displayName in the user's auth instance by updating the user's profile.
-      // Update profile allows us to update a user's displayName and photoURL.
+      await createUserDocumentFromAuth({ displayName });
       const user = await updateUserProfile(displayName);
-
-      // The users displayName and email come from the user's auth instance and ***NOT*** the user document.
-      const selectedUserDetails = (user && (({ displayName, email }) => ({ displayName, email }))(user)) || null;
-
-      // The dispatch below updates the currentUser state once the user's displayName has been updated.
-      dispatch(setCurrentUser(selectedUserDetails));
-
-      // createUserDocumentFromAuth creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
-      createUserDocumentFromAuth({ displayName });
-
-      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
+      dispatch(setCurrentUser(selectedUserDetails as CurrentUserType));
 
       resetFromFields();
       navigate('/');

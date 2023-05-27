@@ -2,7 +2,7 @@ import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setCurrentUser } from './store/user/user.slice';
+import { setCurrentUser, type CurrentUserType } from './store/user/user.slice';
 
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
 
@@ -27,42 +27,40 @@ function App() {
       }
       // The users displayName and email come from the user's auth instance and ***NOT*** the user document.
       const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
-      dispatch(setCurrentUser(selectedUserDetails));
+      dispatch(setCurrentUser(selectedUserDetails as CurrentUserType));
     });
     return unsubscribe;
   }, []);
 
   return (
     <Suspense fallback={<Spinner />}>
-      <div>
-        <Routes>
+      <Routes>
+        <Route
+          path="/"
+          element={<NavigationBar />}>
           <Route
-            path="/"
-            element={<NavigationBar />}>
-            <Route
-              index={true}
-              element={<Home />}
-            />
-            <Route
-              path="shop/*"
-              element={<Shop />}
-            />
-            <Route
-              path="auth"
-              element={<Authentication />}
-            />
-            <Route
-              path="checkout"
-              element={<Checkout />}
-            />
-            <Route
-              path="payment-status"
-              element={<PaymentStatus />}
-            />
-          </Route>
-        </Routes>
-        <div style={{ height: '50px', backgroundColor: 'transparent' }}></div>
-      </div>
+            index={true}
+            element={<Home />}
+          />
+          <Route
+            path="shop/*"
+            element={<Shop />}
+          />
+          <Route
+            path="auth"
+            element={<Authentication />}
+          />
+          <Route
+            path="checkout"
+            element={<Checkout />}
+          />
+          <Route
+            path="payment-status"
+            element={<PaymentStatus />}
+          />
+        </Route>
+      </Routes>
+      <div style={{ height: '50px', backgroundColor: 'transparent' }}></div>
     </Suspense>
   );
 }

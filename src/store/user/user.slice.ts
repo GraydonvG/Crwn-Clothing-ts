@@ -1,12 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export type CurrentUserType = {
-  displayName: string | null;
-  email: string | null;
-} | null;
+  displayName: string;
+  email: string;
+};
 
 export type UserState = {
-  readonly currentUser: CurrentUserType;
+  readonly currentUser: CurrentUserType | null;
 };
 
 const USER_INITIAL_STATE: UserState = {
