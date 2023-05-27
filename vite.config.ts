@@ -13,19 +13,19 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     description: 'An e-commerce site for buying clothing items',
     icons: [
       {
-        src: 'src/assets/favicon/crwn-192x192.png',
+        src: 'favicon/crwn-192x192.png',
         sizes: '192x192',
         type: 'image/png',
         purpose: 'any maskable',
       },
       {
-        src: 'src/assets/favicon/crwn-512x512.png',
+        src: 'favicon/crwn-512x512.png',
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any maskable',
       },
       {
-        src: 'src/assets/favicon/favicon.ico',
+        src: 'favicon/favicon.ico',
         sizes: '32x32',
         type: 'image/x-icon',
       },
