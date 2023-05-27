@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@jridgewell/sourcemap-codec": "^1.4.15",
     "@netlify/functions": "^1.6.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@rollup/plugin-terser": "^0.4.3",
     "@stripe/react-stripe-js": "^2.1.0",
     "@stripe/stripe-js": "^1.52.1",
     "dotenv": "^16.0.3",
