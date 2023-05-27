@@ -30,7 +30,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         type: 'image/x-icon',
       },
     ],
-    start_url: '.',
+    start_url: 'https://splendid-pothos-20d5ca.netlify.app/',
     scope: '/',
     display: 'standalone',
     theme_color: '#317EFB',
