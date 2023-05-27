@@ -15,12 +15,12 @@
       "purpose": "any maskable"
     },
     {
-      "src": "../../assets/favicon/crwn-512x512.png.png",
+      "src": "../../assets/favicon/crwn-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "theme_color": "#000000",
+  "theme_color": "#317EFB",
   "orientation": "portrait"
 }
