@@ -1,6 +1,7 @@
 {
   "short_name": "Crwn Clothing",
   "name": "Crwn Clothing",
+  "description": "An e-commerce website for buying clothes",
   "icons": [
     {
       "src": "/favicon/crwn-192x192.png",
