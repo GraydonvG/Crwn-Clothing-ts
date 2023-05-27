@@ -38,6 +38,8 @@
     "eslint-config-react-app": "^7.0.1",
     "typescript": "^5.0.4",
     "vite": "^4.1.0",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-pwa": "^0.15.1",
+    "workbox-window": "^6.6.0"
   }
 }
