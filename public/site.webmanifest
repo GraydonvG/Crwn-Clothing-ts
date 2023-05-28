@@ -1,0 +1,23 @@
+{
+  "name": "CRWN Clothing",
+  "short_name": "CRWN Clothing",
+  "description": "An e-commerce site for buying clothing items",
+  "id": "/",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "theme_color": "#317EFB",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait"
+}

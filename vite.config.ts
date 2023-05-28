@@ -10,28 +10,23 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     name: 'CRWN Clothing',
     short_name: 'CRWN Clothing',
     description: 'An e-commerce site for buying clothing items',
+    id: '/',
     icons: [
       {
-        src: 'favicon/crwn-192x192.png',
+        src: '/android-chrome-192x192.png',
         sizes: '192x192',
         type: 'image/png',
-        purpose: 'any maskable',
       },
       {
-        src: 'favicon/crwn-512x512.png',
+        src: '/android-chrome-512x512.png',
         sizes: '512x512',
         type: 'image/png',
-        purpose: 'any maskable',
-      },
-      {
-        src: 'favicon/favicon.ico',
-        sizes: '32x32',
-        type: 'image/x-icon',
       },
     ],
-    display: 'standalone',
+    start_url: '.',
     theme_color: '#317EFB',
     background_color: '#ffffff',
+    display: 'standalone',
     orientation: 'portrait',
   },
 };
