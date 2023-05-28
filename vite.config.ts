@@ -29,8 +29,6 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         type: 'image/x-icon',
       },
     ],
-    start_url: '/',
-    scope: '/',
     display: 'standalone',
     theme_color: '#317EFB',
     background_color: '#ffffff',
