@@ -1,12 +1,11 @@
 import { defineConfig } from 'vite';
 import { VitePWA, type VitePWAOptions } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react-swc';
-import eslint from 'vite-plugin-eslint';
 import svgr from 'vite-plugin-svgr';
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
   registerType: 'prompt',
-  includeAssets: ['favicon.icon', 'crown.svg', 'shopping-bag.svg'],
+  includeAssets: ['crown.svg', 'shopping-bag.svg'],
   manifest: {
     name: 'CRWN Clothing',
     short_name: 'CRWN Clothing',
@@ -30,7 +29,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         type: 'image/x-icon',
       },
     ],
-    start_url: 'https://splendid-pothos-20d5ca.netlify.app/',
+    start_url: '/',
     scope: '/',
     display: 'standalone',
     theme_color: '#317EFB',
@@ -41,7 +40,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr(), eslint(), VitePWA(manifestForPlugin)],
+  plugins: [react(), svgr(), VitePWA(manifestForPlugin)],
   build: {
     chunkSizeWarningLimit: 1600,
   },

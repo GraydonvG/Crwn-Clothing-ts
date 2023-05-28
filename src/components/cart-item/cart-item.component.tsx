@@ -9,7 +9,7 @@ type CartItemProps = {
   item: CartItemType;
 };
 
-function CartItem({ item }: CartItemProps) {
+const CartItem = memo(({ item }: CartItemProps) => {
   const { name, imageUrl, quantity, priceByQuantity } = item;
 
   const dispatch = useDispatch();
@@ -36,5 +36,5 @@ function CartItem({ item }: CartItemProps) {
       </div>
     </div>
   );
-}
-export default memo(CartItem);
+});
+export default CartItem;
