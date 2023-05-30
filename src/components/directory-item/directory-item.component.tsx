@@ -4,11 +4,11 @@ import './directory-item.styles.scss';
 
 type DirectoryItemProps = {
   title: string;
-  imageUrl: string;
+  src: string;
   route: string;
 };
 
-function DirectoryItem({ title, imageUrl, route }: DirectoryItemProps) {
+function DirectoryItem({ title, src, route }: DirectoryItemProps) {
   const navigate = useNavigate();
 
   function navigateToCategory() {
@@ -19,7 +19,7 @@ function DirectoryItem({ title, imageUrl, route }: DirectoryItemProps) {
     <div className="directory-item-container">
       <div
         className="background-image"
-        style={{ backgroundImage: `url(${imageUrl})` }}></div>
+        style={{ backgroundImage: `url(${src})` }}></div>
       <div
         className="body"
         onClick={navigateToCategory}>
