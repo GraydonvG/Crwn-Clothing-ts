@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
-  registerType: 'prompt',
   includeAssets: ['crown.svg', 'shopping-bag.svg'],
   manifest: {
     name: 'CRWN Clothing',

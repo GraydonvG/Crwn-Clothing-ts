@@ -8,11 +8,11 @@ function Directory() {
   return (
     <div className="direcory-container">
       <div className="directory">
-        {categoriesData.map(({ id, title, src, route }) => (
+        {categoriesData.map(({ id, title, imageSrc, route }) => (
           <DirectoryItem
             key={id}
             title={title}
-            src={src}
+            imageSrc={imageSrc}
             route={route}
           />
         ))}
