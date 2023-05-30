@@ -7,11 +7,9 @@ import { setCurrentUser, type CurrentUserType } from './store/user/user.slice';
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utility';
 
 import Spinner from './components/spinner/spinner.component';
-// import Home from './routes/home/home.route';
-// import NavigationBar from './routes/navigation-bar/navigation-bar.route';
+import Home from './routes/home/home.route';
+import NavigationBar from './routes/navigation-bar/navigation-bar.route';
 
-const NavigationBar = lazy(() => import('./routes/navigation-bar/navigation-bar.route'));
-const Home = lazy(() => import('./routes/home/home.route'));
 const Authentication = lazy(() => import('./routes/authentication/authentication.route'));
 const Shop = lazy(() => import('./routes/shop/shop.route'));
 const Checkout = lazy(() => import('./routes/checkout/checkout.route'));

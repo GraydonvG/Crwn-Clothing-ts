@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite --open",
     "build": "tsc && vite build",
-    "preview": "vite preview --open"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@jridgewell/sourcemap-codec": "^1.4.15",
