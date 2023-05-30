@@ -1,4 +1,4 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -18,7 +18,7 @@ import './main.scss';
 const rootElement = document.getElementById('root');
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
+    <StrictMode>
       <Provider store={store}>
         <PersistGate
           loading={null}
@@ -33,7 +33,7 @@ if (rootElement) {
           </BrowserRouter>
         </PersistGate>
       </Provider>
-    </React.StrictMode>
+    </StrictMode>
   );
 } else {
   console.log('Root element not found');
