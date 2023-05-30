@@ -86,20 +86,6 @@ export type ObjectToAdd = {
   title: string;
 };
 
-export async function addCollectionAndDocuments<T extends ObjectToAdd>(collectionKey: string, objectsToAdd: T[]) {
-  const collectionRef = collection(db, collectionKey);
-
-  const batch = writeBatch(db);
-
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.title.toLowerCase());
-    batch.set(docRef, object);
-  });
-
-  await batch.commit();
-  console.log('done');
-}
-
 export async function getCategoriesAndDocuments(): Promise<CategoryType[]> {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
