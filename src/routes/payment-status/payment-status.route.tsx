@@ -24,21 +24,14 @@ function PaymentStatus() {
       return;
     }
 
-    // Retrieve the "payment_intent_client_secret" query parameter appended to your return_url by Stripe.js
     const clientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret');
 
     if (!clientSecret) return;
 
-    // Retrieve the PaymentIntent
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       if (!paymentIntent) return;
       setPaymentStatus(paymentIntent.status);
-      // Inspect the PaymentIntent `status` to indicate the status of the payment to your customer.
-      //
-      // Some payment methods will [immediately succeed or fail][0] upon
-      // confirmation, while others will first enter a `processing` state.
-      //
-      // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
+
       switch (paymentIntent.status) {
         case 'succeeded':
           setModalText({
@@ -59,7 +52,6 @@ function PaymentStatus() {
           dispatch(clearAllItemsFromCart());
           break;
         case 'requires_payment_method':
-          // Redirect your user back to your payment page to attempt collecting payment again
           setModalText({
             header: 'Payment failed.',
             message: ' Please try another payment method.',

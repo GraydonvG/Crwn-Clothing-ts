@@ -11,7 +11,7 @@ import {
   type NextOrObserver,
   type User,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, query, getDocs } from 'firebase/firestore';
 
 import type { CategoryType } from '../../store/categories/categories.slice';
 

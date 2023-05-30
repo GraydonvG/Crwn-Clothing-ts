@@ -21,11 +21,9 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
       if (user) {
-        // create user doc if user signs in with google.
-        // This creates a separate document for the user in the Firestore Database. This document can contain any key-value pair we choose to include.
         createUserDocumentFromAuth();
       }
-      // The users displayName and email come from the user's auth instance and ***NOT*** the user document.
+
       const selectedUserDetails = user && (({ displayName, email }) => ({ displayName, email }))(user);
       dispatch(setCurrentUser(selectedUserDetails as CurrentUserType));
     });
