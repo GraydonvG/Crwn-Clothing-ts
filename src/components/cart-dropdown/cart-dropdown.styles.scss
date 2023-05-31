@@ -39,3 +39,9 @@
     width: 300px;
   }
 }
+
+@media screen and (max-width: 330px) {
+  .cart-dropdown-container {
+    right: -10px;
+  }
+}
