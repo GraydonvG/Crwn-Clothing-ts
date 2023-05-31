@@ -48,7 +48,7 @@
 
     button {
       width: 85%;
-      font-size: 12px;
+      font-size: 8px;
     }
 
     .footer {
@@ -60,7 +60,7 @@
 @media screen and (max-width: 610px) {
   .product-card-container {
     button {
-      font-size: 10px;
+      // font-size: 10px;
 
       &.inverted {
         &:hover {
@@ -80,10 +80,6 @@
 @media screen and (max-width: 480px) {
   .product-card-container {
     height: 200px;
-
-    button {
-      font-size: 7px;
-    }
 
     .footer {
       font-size: 14px;
