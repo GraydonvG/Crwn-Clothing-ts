@@ -44,6 +44,7 @@
       padding: 10px 0;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
+      place-items: center;
       border-bottom: 1px solid darkgrey;
 
       .header-block {
@@ -96,11 +97,6 @@
       .checkout-column-header {
         .header-block {
           font-size: 10px;
-
-          &:nth-child(3),
-          &:nth-child(4) {
-            transform: translateX(5px);
-          }
         }
       }
 
