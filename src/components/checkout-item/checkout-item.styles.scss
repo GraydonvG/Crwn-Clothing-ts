@@ -57,3 +57,9 @@
     font-size: 12px;
   }
 }
+
+@media screen and (max-width: 360px) {
+  .checkout-item-container {
+    font-size: 10px;
+  }
+}
