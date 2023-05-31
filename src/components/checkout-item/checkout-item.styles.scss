@@ -29,9 +29,8 @@
       cursor: pointer;
 
       &:hover {
-        font-weight: bold;
         &:active {
-          transform: scale(1.2);
+          transform: scale(1.5);
         }
       }
     }
@@ -45,8 +44,6 @@
     cursor: pointer;
 
     &:hover {
-      transform-origin: left;
-      transform: scale(1.2);
       &:active {
         transform: scale(1.5);
       }
@@ -63,5 +60,28 @@
 @media screen and (max-width: 360px) {
   .checkout-item-container {
     font-size: 10px;
+  }
+}
+
+@media screen and (hover: hover) {
+  .checkout-item-container {
+    .quantity-container {
+      .quantity-arrow {
+        &:hover {
+          transform: scale(1.2);
+          &:active {
+            transform: scale(1.5);
+          }
+        }
+      }
+    }
+    .clear-product-from-checkout {
+      &:hover {
+        transform: scale(1.2);
+        &:active {
+          transform: scale(1.5);
+        }
+      }
+    }
   }
 }
