@@ -5,7 +5,6 @@ export enum ButtonType {
   Google = 'google-sign-in',
   Inverted = 'inverted',
   Warning = 'warning',
-  White = 'white',
 }
 
 type ButtonProps = {

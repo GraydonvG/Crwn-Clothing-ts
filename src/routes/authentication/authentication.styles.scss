@@ -5,13 +5,13 @@
   margin: 30px auto;
 }
 
-@media (max-width: 980px) {
+@media screen and (max-width: 980px) {
   .authentication-container {
     width: auto;
   }
 }
 
-@media (max-width: 860px) {
+@media screen and (max-width: 860px) {
   .authentication-container {
     display: grid;
     grid-template-rows: 1fr 1fr;

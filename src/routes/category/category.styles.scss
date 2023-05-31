@@ -36,7 +36,7 @@
   }
 }
 
-@media (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
   .category-container {
     .category-products-container {
       grid-template-columns: repeat(3, 1fr);
@@ -44,7 +44,7 @@
   }
 }
 
-@media (max-width: 550px) {
+@media screen and (max-width: 550px) {
   .category-container {
     .category-header-container {
       .category-title {
@@ -57,7 +57,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .category-container {
     .category-products-container {
       grid-template-columns: repeat(2, minmax(150px, 1fr));

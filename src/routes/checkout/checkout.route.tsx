@@ -68,7 +68,7 @@ function Checkout() {
             ))}
           <span className="total-checkout-price">Total: ${cartTotalPrice}</span>
           <Button
-            buttonType={ButtonType.White}
+            buttonType={ButtonType.Inverted}
             onClick={handleIsModalOpen}>
             Clear cart
           </Button>

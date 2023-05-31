@@ -19,6 +19,11 @@
     border: 1px solid black;
     transform: scale(1.01);
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
+
+    &:active {
+      background-color: white;
+      color: black;
+    }
   }
 
   &.google-sign-in {
@@ -31,12 +36,6 @@
     }
   }
 
-  &.white {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-  }
-
   &.inverted {
     background-color: white;
     color: black;
@@ -45,6 +44,11 @@
     &:hover {
       background-color: black;
       color: white;
+
+      &:active {
+        background-color: white;
+        color: black;
+      }
     }
   }
 
@@ -59,15 +63,3 @@
     }
   }
 }
-
-// @media (hover: none) {
-//   .button-container {
-//     background-color: black;
-//     color: white;
-
-//     &.inverted {
-//       background-color: white;
-//       color: black;
-//     }
-//   }
-// }

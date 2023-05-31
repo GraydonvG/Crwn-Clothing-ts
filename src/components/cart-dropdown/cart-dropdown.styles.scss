@@ -34,7 +34,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .cart-dropdown-container {
     width: 300px;
   }

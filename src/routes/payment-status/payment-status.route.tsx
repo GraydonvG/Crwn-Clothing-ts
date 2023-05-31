@@ -94,7 +94,7 @@ function PaymentStatus() {
             modalMessage={modalText?.message}
             modalIconType={modalIconType}>
             <Button
-              buttonType={ButtonType.White}
+              buttonType={ButtonType.Inverted}
               onClick={returnToHome}>
               Home
             </Button>

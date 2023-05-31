@@ -60,7 +60,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .directory-item-container {
     height: 180px;
   }

@@ -79,7 +79,7 @@
   }
 }
 
-@media (max-width: 1050px) {
+@media screen and (max-width: 1050px) {
   .checkout-container {
     flex-direction: column;
     gap: 30px;
@@ -94,24 +94,7 @@
   }
 }
 
-// @media (max-width: 750px) {
-//   .checkout-container {
-//     .checkout-items-container {
-//       min-height: fit-content;
-//       width: auto;
-//     }
-
-//     .checkout-payment-container {
-//       align-items: flex-end;
-
-//       .total-checkout-price {
-//         font-size: 28px;
-//       }
-//     }
-//   }
-// }
-
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .checkout-container {
     .checkout-items-container {
       .checkout-column-header {

@@ -54,7 +54,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .checkout-item-container {
     font-size: 12px;
   }
