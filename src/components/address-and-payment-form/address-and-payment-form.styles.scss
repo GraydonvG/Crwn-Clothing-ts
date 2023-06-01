@@ -14,16 +14,13 @@
   .address-container,
   .checkout-total-container,
   .payment-container {
-    background-color: whitesmoke;
     padding: 20px;
-    border-radius: 2px;
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
   }
 
   .checkout-total-container {
     display: flex;
     flex-direction: column;
-    // gap: 20px;
 
     .total-cart-price,
     .total-shipping {
