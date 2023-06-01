@@ -1,8 +1,11 @@
 import { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Elements } from '@stripe/react-stripe-js';
 
 import { selectCartItems, selectTotalCartPrice } from '../../store/cart/cart.selector';
 import { clearAllItemsFromCart } from '../../store/cart/cart.slice';
+
+import { stripeOptions, stripePromise } from '../../utils/stripe/stripe.utility';
 
 import AddressAndPaymentForm from '../../components/address-and-payment-form/address-and-payment-form.component';
 import Button, { ButtonType } from '../../components/button/button.component';
@@ -74,7 +77,11 @@ function Checkout() {
           </Button>
         </div>
         <div className="checkout-payment-container">
-          <AddressAndPaymentForm />
+          <Elements
+            stripe={stripePromise}
+            options={stripeOptions}>
+            <AddressAndPaymentForm />
+          </Elements>
         </div>
       </div>
       {isModalOpen && (
