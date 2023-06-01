@@ -21,6 +21,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         src: './icons/android-chrome-512x512.png',
         sizes: '512x512',
         type: 'image/png',
+        purpose: 'any maskable',
       },
     ],
     start_url: '.',
